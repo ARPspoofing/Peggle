@@ -1,0 +1,207 @@
+//
+//  PeggleUITests.swift
+//  PeggleUITests
+//
+//  Created by Muhammad Reyaaz on 22/1/24.
+//
+
+import XCTest
+import SwiftUI
+
+final class PeggleUITests: XCTestCase {
+
+    let app = XCUIApplication()
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app.launch()
+    }
+
+    func test_startButton_launchObject() {
+        app.images["normalObject"].tap()
+
+        let backgroundImage = app.images["background"]
+        backgroundImage.tap()
+        app.buttons["START"].tap()
+        backgroundImage.tap()
+    }
+
+    func test_DeleteButton_normalObjectDeleted() {
+        app.images["normalObject"].tap()
+        app.images["background"].tap()
+        app.images["delete"].tap()
+
+    }
+
+    func test_DeleteButton_actionObjectDeleted() {
+        app.images["actionObject"].tap()
+        app.images["background"].tap()
+        app.images["delete"].tap()
+    }
+
+    func test_DeleteButton_untoggle() {
+        app.images["delete"].tap()
+        app.images["delete"].tap()
+    }
+
+    func test_OrangePeg_untoggle() {
+        app.images["actionObject"].tap()
+        app.images["actionObject"].tap()
+    }
+
+    func test_BluePeg_untoggle() {
+        app.images["normalObject"].tap()
+        app.images["normalObject"].tap()
+    }
+
+    func test_OrangePegBlue_untoggle() {
+        app.images["actionObject"].tap()
+        app.images["normalObject"].tap()
+    }
+
+    func test_BluePegOrange_untoggle() {
+        app.images["normalObject"].tap()
+        app.images["actionObject"].tap()
+    }
+
+    func test_BluePegDelete_untoggle() {
+        app.images["normalObject"].tap()
+        app.images["delete"].tap()
+    }
+
+    func test_OrangePegDelete_untoggle() {
+        app.images["actionObject"].tap()
+        app.images["delete"].tap()
+    }
+
+    func test_ResetButtonCanvas_cancelBlueReset() {
+
+        app.images["normalObject"].tap()
+
+        let backgroundImage = app.images["background"]
+        backgroundImage.tap()
+
+        let resetButton = app.buttons["RESET"]
+        XCTAssertTrue(resetButton.exists, "RESET button found")
+        resetButton.tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["Are you sure you want to reset?"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.buttons["Cancel"].tap()
+    }
+
+    func test_ResetButtonCanvas_cancelOrangeReset() {
+
+        app.images["actionObject"].tap()
+
+        let backgroundImage = app.images["background"]
+        backgroundImage.tap()
+
+        let resetButton = app.buttons["RESET"]
+        XCTAssertTrue(resetButton.exists, "RESET button found")
+        resetButton.tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["Are you sure you want to reset?"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.buttons["Cancel"].tap()
+    }
+
+    func test_ResetButtonCanvas_confirmBlueReset() {
+
+        app.images["normalObject"].tap()
+
+        let backgroundImage = app.images["background"]
+        backgroundImage.tap()
+
+        let resetButton = app.buttons["RESET"]
+        XCTAssertTrue(resetButton.exists, "RESET button found")
+        resetButton.tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["Are you sure you want to reset?"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.buttons["Reset"].tap()
+    }
+
+    func test_ResetButtonCanvas_confirmOrangeReset() {
+
+        app.images["actionObject"].tap()
+
+        let backgroundImage = app.images["background"]
+        backgroundImage.tap()
+
+        let resetButton = app.buttons["RESET"]
+        XCTAssertTrue(resetButton.exists, "RESET button found")
+        resetButton.tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["Are you sure you want to reset?"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.buttons["Reset"].tap()
+    }
+
+    func test_LoadButtonCanvas_shouldShowSheet() {
+        app.buttons["LOAD"].tap()
+        app.buttons["Cancel"].tap()
+
+    }
+
+    func test_SaveButtonEmptyCanvas_shouldNotSave() {
+        app.buttons["SAVE"].tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["There must be at least one peg on the game board"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.scrollViews.otherElements.buttons["OK"].tap()
+    }
+
+    func emptyCanvasSave() {
+        app.buttons["SAVE"].tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["There must be at least one peg on the game board"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.scrollViews.otherElements.buttons["OK"].tap()
+    }
+
+    func successfulSave() {
+        let saveButton = app.buttons["SAVE"]
+        XCTAssertTrue(saveButton.exists, "SAVE button found")
+        saveButton.tap()
+
+        let alert = app.alerts.firstMatch
+        let alertExists = alert.waitForExistence(timeout: 5)
+        XCTAssertTrue(alertExists)
+
+        let alertMessage = alert.staticTexts["Successfully saved level!"].exists
+        XCTAssertTrue(alertMessage)
+
+        alert.scrollViews.otherElements.buttons["OK"].tap()
+    }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GameObjectEntity" representedClassName="GameObjectEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LevelEntity" inverseName="gameObjects" inverseEntity="LevelEntity"/>
+        <relationship name="point" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PointEntity" inverseName="gameObject" inverseEntity="PointEntity"/>
+    </entity>
+    <entity name="LevelEntity" representedClassName="LevelEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" customClassName="Level"/>
+        <attribute name="isPreloadedLevel" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="gameObjects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GameObjectEntity" inverseName="level" inverseEntity="GameObjectEntity"/>
+    </entity>
+    <entity name="PointEntity" representedClassName="PointEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="radial" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="theta" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="xCoord" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yCoord" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="gameObject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameObjectEntity" inverseName="point" inverseEntity="GameObjectEntity"/>
+    </entity>
+</model>

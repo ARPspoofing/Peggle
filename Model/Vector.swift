@@ -1,0 +1,73 @@
+//
+//  Vector.swift
+//  Peggle
+//
+//  Created by Muhammad Reyaaz on 22/1/24.
+//
+
+import Foundation
+
+struct Vector: Codable, Equatable {
+
+    private(set) var horizontal: Double
+    private(set) var vertical: Double
+
+    mutating func setVectorCoord(horizontal: Double, vertical: Double) {
+        self.horizontal = horizontal
+        self.vertical = vertical
+    }
+
+    func squareLength() -> Double {
+        self.horizontal * self.horizontal + self.vertical * self.vertical
+    }
+
+    func getLength() -> Double {
+        sqrt(squareLength())
+    }
+
+    func add(vector: Vector) -> Vector {
+        Vector(horizontal: self.horizontal + vector.horizontal, vertical: self.vertical + vector.vertical)
+    }
+
+    func subtract(vector: Vector) -> Vector {
+        Vector(horizontal: self.horizontal - vector.horizontal, vertical: self.vertical - vector.vertical)
+    }
+
+    func scale(_ magnitude: Double) -> Vector {
+        Vector(horizontal: self.horizontal * magnitude, vertical: self.vertical * magnitude)
+    }
+
+    func dotProduct(with vector: Vector) -> Double {
+        self.horizontal * vector.horizontal + self.vertical * vector.vertical
+    }
+
+    func crossProduct(with vector: Vector) -> Double {
+        self.horizontal * vector.vertical - vector.horizontal * self.vertical
+    }
+
+    func rayTracingProduct(with vector: Vector) -> Double {
+        self.horizontal * vector.vertical + vector.horizontal * self.vertical
+    }
+
+    mutating func changeHorizontalDir() {
+        self.horizontal = -self.horizontal
+    }
+
+    mutating func changeVerticalDir() {
+        self.vertical = -self.vertical
+    }
+
+    func calcUnitVector() -> Vector? {
+        let magnitude: Double = sqrt(squareLength())
+        guard magnitude > 0 else {
+            return nil
+        }
+        return Vector(horizontal: horizontal / magnitude, vertical: vertical / magnitude)
+    }
+
+    func getAngleInRadians(with vector: Vector) -> Double {
+        let crossProduct = crossProduct(with: vector)
+        let dotProduct = dotProduct(with: vector)
+        return atan2(crossProduct, dotProduct)
+    }
+}
