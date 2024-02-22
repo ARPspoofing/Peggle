@@ -22,6 +22,23 @@
 		916211042B763C95002F51A9 /* GameEngineBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916211032B763C95002F51A9 /* GameEngineBody.swift */; };
 		916E677C2B85E98200960D5D /* CaptureObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677B2B85E98200960D5D /* CaptureObject.swift */; };
 		916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677D2B85EA3000960D5D /* CaptureObjectView.swift */; };
+		916E67802B8620E200960D5D /* TriangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677F2B8620E200960D5D /* TriangularMovableObject.swift */; };
+		916E67822B86CEDA00960D5D /* Sharp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67812B86CEDA00960D5D /* Sharp.swift */; };
+		916E67842B86D2CF00960D5D /* InactivePegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67832B86D2CF00960D5D /* InactivePegView.swift */; };
+		916E67862B86D32400960D5D /* ActivePegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67852B86D32400960D5D /* ActivePegView.swift */; };
+		916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67872B86D34500960D5D /* ImageWithOverlay.swift */; };
+		916E678A2B86D36E00960D5D /* CirclesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67892B86D36E00960D5D /* CirclesOverlay.swift */; };
+		916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E678B2B86D38D00960D5D /* ParticlesOverlay.swift */; };
+		916E678E2B86D3A400960D5D /* JaggedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E678D2B86D3A400960D5D /* JaggedCircle.swift */; };
+		916E67912B86D4D200960D5D /* ActionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67902B86D4D200960D5D /* ActionConstants.swift */; };
+		916E67932B86D4E900960D5D /* CanvasViewModelConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67922B86D4E900960D5D /* CanvasViewModelConstants.swift */; };
+		916E67952B86D4FC00960D5D /* ActionViewModelConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67942B86D4FC00960D5D /* ActionViewModelConstants.swift */; };
+		916E67972B86D50C00960D5D /* DeleteButtonConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67962B86D50C00960D5D /* DeleteButtonConstants.swift */; };
+		916E67992B86D51B00960D5D /* PointConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67982B86D51B00960D5D /* PointConstants.swift */; };
+		916E679B2B86D52C00960D5D /* PaletteButtonsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679A2B86D52C00960D5D /* PaletteButtonsConstants.swift */; };
+		916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */; };
+		916E679F2B86D94600960D5D /* SharpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679E2B86D94600960D5D /* SharpView.swift */; };
+		916E67A12B87829D00960D5D /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A02B87829D00960D5D /* Line.swift */; };
 		919753FD2B6DD05600DBF559 /* LevelManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 919753FB2B6DD05600DBF559 /* LevelManager.xcdatamodeld */; };
 		919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919753FE2B6DD83C00DBF559 /* CoreDataManager.swift */; };
 		91986E8F2B5E19B900D1C72C /* PeggleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986E8E2B5E19B900D1C72C /* PeggleApp.swift */; };
@@ -93,6 +110,23 @@
 		916211032B763C95002F51A9 /* GameEngineBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineBody.swift; sourceTree = "<group>"; };
 		916E677B2B85E98200960D5D /* CaptureObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureObject.swift; sourceTree = "<group>"; };
 		916E677D2B85EA3000960D5D /* CaptureObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureObjectView.swift; sourceTree = "<group>"; };
+		916E677F2B8620E200960D5D /* TriangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangularMovableObject.swift; sourceTree = "<group>"; };
+		916E67812B86CEDA00960D5D /* Sharp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sharp.swift; sourceTree = "<group>"; };
+		916E67832B86D2CF00960D5D /* InactivePegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactivePegView.swift; sourceTree = "<group>"; };
+		916E67852B86D32400960D5D /* ActivePegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePegView.swift; sourceTree = "<group>"; };
+		916E67872B86D34500960D5D /* ImageWithOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithOverlay.swift; sourceTree = "<group>"; };
+		916E67892B86D36E00960D5D /* CirclesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesOverlay.swift; sourceTree = "<group>"; };
+		916E678B2B86D38D00960D5D /* ParticlesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticlesOverlay.swift; sourceTree = "<group>"; };
+		916E678D2B86D3A400960D5D /* JaggedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaggedCircle.swift; sourceTree = "<group>"; };
+		916E67902B86D4D200960D5D /* ActionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionConstants.swift; sourceTree = "<group>"; };
+		916E67922B86D4E900960D5D /* CanvasViewModelConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModelConstants.swift; sourceTree = "<group>"; };
+		916E67942B86D4FC00960D5D /* ActionViewModelConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewModelConstants.swift; sourceTree = "<group>"; };
+		916E67962B86D50C00960D5D /* DeleteButtonConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonConstants.swift; sourceTree = "<group>"; };
+		916E67982B86D51B00960D5D /* PointConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointConstants.swift; sourceTree = "<group>"; };
+		916E679A2B86D52C00960D5D /* PaletteButtonsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteButtonsConstants.swift; sourceTree = "<group>"; };
+		916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkParticlesGeometryEffect.swift; sourceTree = "<group>"; };
+		916E679E2B86D94600960D5D /* SharpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpView.swift; sourceTree = "<group>"; };
+		916E67A02B87829D00960D5D /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		919753FC2B6DD05600DBF559 /* LevelManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LevelManager.xcdatamodel; sourceTree = "<group>"; };
 		919753FE2B6DD83C00DBF559 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		91986E8B2B5E19B900D1C72C /* Peggle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peggle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +223,20 @@
 			path = GameEngine;
 			sourceTree = "<group>";
 		};
+		916E678F2B86D3D500960D5D /* PegView */ = {
+			isa = PBXGroup;
+			children = (
+				91986ED52B5E6DA200D1C72C /* PegView.swift */,
+				916E67832B86D2CF00960D5D /* InactivePegView.swift */,
+				916E67852B86D32400960D5D /* ActivePegView.swift */,
+				916E67872B86D34500960D5D /* ImageWithOverlay.swift */,
+				916E67892B86D36E00960D5D /* CirclesOverlay.swift */,
+				916E678B2B86D38D00960D5D /* ParticlesOverlay.swift */,
+				916E678D2B86D3A400960D5D /* JaggedCircle.swift */,
+			);
+			path = PegView;
+			sourceTree = "<group>";
+		};
 		91986E822B5E19B900D1C72C = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +319,7 @@
 				91F3826D2B7F1DE20012C0D1 /* ShootersView */,
 				91F3826C2B7F1DBD0012C0D1 /* ButtonsView */,
 				916E677D2B85EA3000960D5D /* CaptureObjectView.swift */,
+				916E679E2B86D94600960D5D /* SharpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -290,6 +339,9 @@
 				91F382642B7E41760012C0D1 /* DisappearObject.swift */,
 				915E033A2B82346D005A41D1 /* MyCodingKey.swift */,
 				916E677B2B85E98200960D5D /* CaptureObject.swift */,
+				916E677F2B8620E200960D5D /* TriangularMovableObject.swift */,
+				916E67812B86CEDA00960D5D /* Sharp.swift */,
+				916E67A02B87829D00960D5D /* Line.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -308,6 +360,12 @@
 			isa = PBXGroup;
 			children = (
 				91986EE02B5FBE4E00D1C72C /* Constants.swift */,
+				916E67902B86D4D200960D5D /* ActionConstants.swift */,
+				916E67922B86D4E900960D5D /* CanvasViewModelConstants.swift */,
+				916E67942B86D4FC00960D5D /* ActionViewModelConstants.swift */,
+				916E67962B86D50C00960D5D /* DeleteButtonConstants.swift */,
+				916E67982B86D51B00960D5D /* PointConstants.swift */,
+				916E679A2B86D52C00960D5D /* PaletteButtonsConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -338,6 +396,7 @@
 				91F3826F2B7F1E1A0012C0D1 /* ParticlesModifier.swift */,
 				91F382662B7E48EB0012C0D1 /* ActiveView.swift */,
 				91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */,
+				916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */,
 			);
 			path = AnimationsView;
 			sourceTree = "<group>";
@@ -345,11 +404,11 @@
 		91F382732B7F1E8A0012C0D1 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				916E678F2B86D3D500960D5D /* PegView */,
 				91986EBF2B5E1D6300D1C72C /* BackgroundView.swift */,
 				91986EF42B63B35700D1C72C /* ClearBackgroundView.swift */,
 				91986EC52B5E1DC500D1C72C /* CanvasView.swift */,
 				91986EC32B5E1D7600D1C72C /* PaletteView.swift */,
-				91986ED52B5E6DA200D1C72C /* PegView.swift */,
 				91986EF02B63745300D1C72C /* LevelSelectionView.swift */,
 			);
 			path = MainView;
@@ -506,7 +565,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = ": '\nif [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n'\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -515,7 +574,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				916E67932B86D4E900960D5D /* CanvasViewModelConstants.swift in Sources */,
 				91AD1B3F2B78E544009E6BC6 /* GameEngineDelegate.swift in Sources */,
+				916E678E2B86D3A400960D5D /* JaggedCircle.swift in Sources */,
 				91AD1B472B7909F4009E6BC6 /* GameEngine.swift in Sources */,
 				91986EF32B63871C00D1C72C /* DeleteButtonView.swift in Sources */,
 				91517C092B720ABD00F1E45D /* PhysicsBody.swift in Sources */,
@@ -530,17 +591,23 @@
 				91986ED82B5EC57900D1C72C /* PegViewModel.swift in Sources */,
 				91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */,
 				91986ECE2B5E293A00D1C72C /* Level.swift in Sources */,
+				916E67802B8620E200960D5D /* TriangularMovableObject.swift in Sources */,
 				919753FD2B6DD05600DBF559 /* LevelManager.xcdatamodeld in Sources */,
+				916E67862B86D32400960D5D /* ActivePegView.swift in Sources */,
 				914BF7472B81DFA500032478 /* ActionButtonsViewAlert.swift in Sources */,
 				91986EE52B5FC6F900D1C72C /* MovableObject.swift in Sources */,
 				91F382722B7F1E610012C0D1 /* ParticlesModifier.swift in Sources */,
 				91986EE12B5FBE4E00D1C72C /* Constants.swift in Sources */,
+				916E678A2B86D36E00960D5D /* CirclesOverlay.swift in Sources */,
 				91517C0F2B7370E800F1E45D /* MotionObjectView.swift in Sources */,
 				914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */,
+				916E679F2B86D94600960D5D /* SharpView.swift in Sources */,
 				91AD1B3B2B78D3FE009E6BC6 /* StateChangeObject.swift in Sources */,
 				91986EE32B5FC56B00D1C72C /* GameObject.swift in Sources */,
+				916E67A12B87829D00960D5D /* Line.swift in Sources */,
 				914BF73B2B8074AE00032478 /* GravityGameEngine.swift in Sources */,
 				91986EC22B5E1D6C00D1C72C /* ActionButtonsView.swift in Sources */,
+				916E67992B86D51B00960D5D /* PointConstants.swift in Sources */,
 				91F382672B7E48EB0012C0D1 /* ActiveView.swift in Sources */,
 				915E033B2B82346D005A41D1 /* MyCodingKey.swift in Sources */,
 				91986EDC2B5F4A1700D1C72C /* CanvasViewModel.swift in Sources */,
@@ -551,13 +618,22 @@
 				91986EED2B61F6F800D1C72C /* LocalFileManager.swift in Sources */,
 				91F382692B7E49AC0012C0D1 /* RadiatingCirclesView.swift in Sources */,
 				91986E8F2B5E19B900D1C72C /* PeggleApp.swift in Sources */,
+				916E67952B86D4FC00960D5D /* ActionViewModelConstants.swift in Sources */,
+				916E67972B86D50C00960D5D /* DeleteButtonConstants.swift in Sources */,
 				91986EEF2B61FEA500D1C72C /* ActionButtonsViewModel.swift in Sources */,
+				916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */,
+				916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */,
 				914BF73D2B80823D00032478 /* PhysicsElasticCollision.swift in Sources */,
 				91517C0D2B72495900F1E45D /* ShooterView.swift in Sources */,
+				916E67842B86D2CF00960D5D /* InactivePegView.swift in Sources */,
 				91986ED42B5E6C6900D1C72C /* PaletteButtonsView.swift in Sources */,
 				916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */,
+				916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */,
 				91986EC02B5E1D6300D1C72C /* BackgroundView.swift in Sources */,
+				916E67912B86D4D200960D5D /* ActionConstants.swift in Sources */,
 				91986EE72B5FD61A00D1C72C /* CircularMovableObject.swift in Sources */,
+				916E679B2B86D52C00960D5D /* PaletteButtonsConstants.swift in Sources */,
+				916E67822B86CEDA00960D5D /* Sharp.swift in Sources */,
 				916211042B763C95002F51A9 /* GameEngineBody.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

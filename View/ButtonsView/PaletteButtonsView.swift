@@ -27,10 +27,17 @@ extension PaletteButtonsView {
     private var pegOptionsDisplay: some View {
         HStack {
             ForEach(viewModel.paletteObjects, id: \.self) { selectedObject in
-                PegView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
-                    .onTapGesture {_ in
-                        viewModel.tapObject(selectedObject)
-                    }
+                if !selectedObject.contains("sharp") {
+                    PegView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
+                        .onTapGesture {_ in
+                            viewModel.tapObject(selectedObject)
+                        }
+                } else {
+                    SharpView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
+                        .onTapGesture {_ in
+                            viewModel.tapObject(selectedObject)
+                        }
+                }
             }
         }.scaleEffect(constants.paletteButtonsScale, anchor: .leading)
     }

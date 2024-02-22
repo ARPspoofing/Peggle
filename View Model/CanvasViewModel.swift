@@ -32,7 +32,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var gameEngine: GameEngine?
     private(set) var displayLink: CADisplayLink?
 
-    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject]
+    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, "sharp"]
 
     init() {
         self.gameObjects = []
@@ -85,6 +85,16 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         return peg
     }
 
+    func checkIndexTriangle(index: Int) -> Sharp? {
+        guard index >= 0, index < gameObjects.count else {
+            return nil
+        }
+        guard let sharp = gameObjects[index] as? Sharp else {
+            return nil
+        }
+        return sharp
+    }
+
     func checkCanInsert(_ newObject: GameObject) -> Bool {
         guard let newPeg = newObject as? Peg, newPeg.checkBorders() else {
             return false
@@ -94,6 +104,19 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
                 continue
             }
             guard newPeg.checkSafeToInsert(with: pegObject) else {
+                return false
+            }
+        }
+        return true
+    }
+
+    // TODO: Merge with previous checkCanInsert
+    func checkCanInsertTriangle(_ newObject: GameObject) -> Bool {
+        guard let newTriangle = newObject as? TriangularMovableObject else {
+            return false
+        }
+        for object in gameObjects {
+            guard newTriangle.checkSafeToInsert(with: object) else {
                 return false
             }
         }
@@ -115,6 +138,22 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         return true
     }
 
+    func checkCanDragTriangle(_ newObject: GameObject, _ index: Int) -> Bool {
+        guard let newTriangle = newObject as? Sharp else {
+            return false
+        }
+        for (currentIndex, object) in gameObjects.enumerated() {
+            guard currentIndex != index else {
+                continue
+            }
+            guard newTriangle.checkSafeToInsert(with: object) else {
+                print("not safe to draggg!!!")
+                return false
+            }
+        }
+        return true
+    }
+
     func tapObject(_ tappedObject: String) {
         isDeleteState = false
         if tappedObject == selectedObject {
@@ -124,12 +163,23 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
     }
 
+    // TODO: Make this neater
     func addObject(_ point: Point, _ selectedObject: String) {
-        let objectToInsert: GameObject = Peg(center: point, name: selectedObject)
-        guard checkCanInsert(objectToInsert) else {
-            return
+        if selectedObject.contains("action") || selectedObject.contains("normal") {
+            let objectToInsert: GameObject = Peg(center: point, name: selectedObject)
+            guard checkCanInsert(objectToInsert) else {
+                return
+            }
+            gameObjects.append(objectToInsert)
+        } else if selectedObject.contains("sharp") {
+            print("selected object contains sharp")
+            let objectToInsert: GameObject = Sharp(center: point, name: selectedObject)
+            guard checkCanInsertTriangle(objectToInsert) else {
+                print("cannot insert triangle")
+                return
+            }
+            gameObjects.append(objectToInsert)
         }
-        gameObjects.append(objectToInsert)
     }
 
     func updateObjectPosition(index: Int, dragLocation: CGPoint) {
@@ -146,6 +196,24 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         peg.changeCenter(newCenter: newPoint)
         gameObjects[index] = peg
+    }
+
+    func updateTrianglePosition(index: Int, dragLocation: CGPoint) {
+        untoggleDelete()
+        guard let sharp = checkIndexTriangle(index: index) else {
+            return
+        }
+        let sharpDeepCopy: Sharp = sharp.makeDeepCopy()
+        let newPoint = Point(xCoord: dragLocation.x, yCoord: dragLocation.y)
+        sharpDeepCopy.changeCenter(newCenter: newPoint)
+
+        guard checkCanDragTriangle(sharpDeepCopy, index) else {
+            print("cannot draggg")
+            return
+        }
+
+        sharp.changeCenter(newCenter: newPoint)
+        gameObjects[index] = sharp
     }
 
     func backgroundOnDragGesture(point: Point) {
@@ -198,7 +266,6 @@ extension CanvasViewModel {
         guard !isShooting, !isAnimating else {
             return
         }
-        /*
         isShooting = true
         isDoneShooting = false
         isShowingCircle = true
@@ -206,17 +273,16 @@ extension CanvasViewModel {
         let velocity = speedUpVelocity(factor: speedUpFactor, vector: getBallVector())
         let motionObject = MotionObject(center: center, name: motionObjectName, velocity: velocity)
         self.motionObjects.append(motionObject)
-        */
         initGameEngineAndDelegate()
     }
 
     func initCaptureObject() {
-        let velocity = Vector(horizontal: 3, vertical: 0)
+        let velocity = Vector(horizontal: 5, vertical: 0)
         let captureObject = CaptureObject(center:
                                             Point(xCoord: Constants.screenWidth / 2,
                                                         yCoord: Constants.screenHeight - 100), name: "capture object", velocity: velocity)
         self.captureObjects.removeAll()
         self.captureObjects.append(captureObject)
-        //initGameEngineAndDelegate()
+        initGameEngineAndDelegate()
     }
 }

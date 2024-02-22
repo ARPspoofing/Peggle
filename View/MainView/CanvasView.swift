@@ -55,13 +55,18 @@ extension CanvasView {
     }
 }
 
+// TODO: Make this neater
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
             ForEach(canvasViewModel.gameObjects, id: \.self) { object in
                 if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
                     ZStack {
-                        customPegView(object: object, index: index)
+                        if ((object as? Peg) != nil) {
+                            customPegView(object: object, index: index)
+                        } else if ((object as? TriangularMovableObject) != nil) {
+                            customSharpView(object: object, index: index)
+                        }
                     }
                 }
             }
@@ -118,6 +123,39 @@ extension CanvasView {
                                 return
                             }
                             canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
+                        }
+                        .onEnded { _ in }
+                )
+        }
+    }
+}
+
+extension CanvasView {
+    private func customSharpView(object: GameObject, index: Int) -> some View {
+        ZStack {
+            SharpView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear)
+                .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+                .onTapGesture {
+                    guard !canvasViewModel.isStartState else {
+                        return
+                    }
+                    if canvasViewModel.isDeleteState {
+                        canvasViewModel.removeAndRender(removeObjectIndex: index)
+                    }
+                }
+                .onLongPressGesture(minimumDuration: Constants.longDuration) {
+                    guard !canvasViewModel.isStartState else {
+                        return
+                    }
+                    canvasViewModel.removeAndRender(removeObjectIndex: index)
+                }
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            guard !canvasViewModel.isStartState else {
+                                return
+                            }
+                            canvasViewModel.updateTrianglePosition(index: index, dragLocation: value.location)
                         }
                         .onEnded { _ in }
                 )

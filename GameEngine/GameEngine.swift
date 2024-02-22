@@ -52,7 +52,6 @@ class GameEngine: GameEngineBody, ObservableObject {
     }
 
     private func handleMotionObjectsUpdate() {
-        print("Motion objects count changed: \(motionObjects.count)")
         // Handle the update, such as triggering game logic, notifying delegates, etc.
         //triggerUpdates()
     }

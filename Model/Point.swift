@@ -95,6 +95,10 @@ struct Point: Codable {
         assert(checkRepresentation())
         return horizontalDistance * horizontalDistance + verticalDistance * verticalDistance
     }
+
+    func distance(to point: Point) -> Double {
+        sqrt(squareDistance(to: point))
+    }
 }
 
 extension Point: Equatable {
