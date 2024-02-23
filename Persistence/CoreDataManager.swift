@@ -70,17 +70,33 @@ class CoreDataManager: ObservableObject {
         return filteredLevels.first
     }
 
+    func getEntity(center: Point, type: String, halfWidth: Double) -> GameObject {
+        let entity: [String: GameObject] = [
+            Constants.sharpObject: createSharpObject(center: center, type: type, circumradius: halfWidth),
+            Constants.normalObject: createPegObject(center: center, type: type, radius: halfWidth),
+            Constants.actionObject: createPegObject(center: center, type: type, radius: halfWidth)
+        ]
+        return entity[type] ?? createPegObject(center: center, type: type, radius: halfWidth)
+    }
+
+    func createPegObject(center: Point, type: String, radius: Double) -> Peg {
+        Peg(center: center, name: type, radius: radius)
+    }
+
+    func createSharpObject(center: Point, type: String, circumradius: Double) -> Sharp {
+        Sharp(center: center, name: type, circumradius: circumradius)
+    }
+
     private func convertToGameObjects(gameEntities: NSSet) -> [GameObject]? {
         let gameObjects = gameEntities.compactMap { gameEntity -> GameObject? in
             guard let gameEntity = gameEntity as? GameObjectEntity,
                   let pointEntity = gameEntity.point,
-                  let gameEntityName = gameEntity.name else {
+                  let gameEntityType = gameEntity.name else {
                 return nil
             }
             let center = Point(xCoord: pointEntity.xCoord, yCoord: pointEntity.yCoord)
-            return Peg(center: center, name: gameEntityName)
+            return getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth)
         }
-
         return gameObjects.isEmpty ? nil : gameObjects
     }
 
@@ -127,6 +143,8 @@ class CoreDataManager: ObservableObject {
     private func createGameEntity(from game: GameObject, context: NSManagedObjectContext) -> GameObjectEntity {
         let gameEntity = GameObjectEntity(context: context)
         gameEntity.name = game.name
+        gameEntity.halfWidth = game.halfWidth
+        gameEntity.orientation = game.orientation
 
         let pointEntity = PointEntity(context: context)
         pointEntity.xCoord = game.center.xCoord

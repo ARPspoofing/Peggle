@@ -7,10 +7,18 @@
 
 import SwiftUI
 
+// TODO: Check if peg needs to conform to game object
 @objc(Peg)
 class Peg: GameObject {
-
-    private(set) var radius: Double = Constants.defaultCircleRadius
+    
+    var radius: Double {
+        get {
+            return super.halfWidth
+        }
+        set(newValue) {
+            super.halfWidth = newValue
+        }
+    }
 
     override init(name: String) {
         super.init(name: name)
@@ -27,45 +35,10 @@ class Peg: GameObject {
 
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
-        let container = try decoder.container(keyedBy: MyCodingKey.self)
-
-        guard let radiusKey = MyCodingKey(stringValue: "radius"),
-              let radius = try container.decodeIfPresent(Double.self, forKey: radiusKey) else {
-            return
-        }
-        self.radius = radius
-
-        guard let centerKey = MyCodingKey(stringValue: "center"),
-              let center = try container.decodeIfPresent(Point.self, forKey: centerKey) else {
-            return
-        }
-        self.center = center
-
-        guard let nameKey = MyCodingKey(stringValue: "name"),
-              let name = try container.decodeIfPresent(String.self, forKey: nameKey) else {
-            return
-        }
-        self.name = name
     }
 
     override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: MyCodingKey.self)
-
-        guard let radiusKey = MyCodingKey(stringValue: "radius") else {
-            return
-        }
-        try container.encode(radius, forKey: radiusKey)
-
-        guard let centerKey = MyCodingKey(stringValue: "center") else {
-            return
-        }
-        try container.encode(center, forKey: centerKey)
-
-        guard let nameKey = MyCodingKey(stringValue: "name") else {
-            return
-        }
-        try container.encode(name, forKey: nameKey)
     }
 
     override func makeDeepCopy() -> Peg {
@@ -78,10 +51,4 @@ extension Peg: CircularMovableObject {
     func getArea() -> Double {
         Double.pi * radius * radius
     }
-
-    func isOutOfBounds(point: Point) -> Bool {
-        let newArea = Double.pi * center.squareDistance(to: point)
-        return newArea > getArea()
-    }
-
 }

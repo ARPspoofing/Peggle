@@ -31,9 +31,4 @@ class PegViewModel: ObservableObject {
     func calculateHeight() -> Double {
         pegModel.radius + pegModel.radius
     }
-
-    func isOutOfBounds(point: Point) -> Bool {
-        pegModel.isOutOfBounds(point: point)
-    }
-
 }

@@ -52,10 +52,4 @@ extension CircularMovableObject {
     func getArea() -> Double {
         Double.pi * radius * radius
     }
-
-    func isOutOfBounds(point: Point) -> Bool {
-        let newArea = Double.pi * center.squareDistance(to: point)
-        return newArea > getArea()
-    }
-
 }

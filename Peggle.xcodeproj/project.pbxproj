@@ -39,6 +39,7 @@
 		916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */; };
 		916E679F2B86D94600960D5D /* SharpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679E2B86D94600960D5D /* SharpView.swift */; };
 		916E67A12B87829D00960D5D /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A02B87829D00960D5D /* Line.swift */; };
+		916E67A32B8848D000960D5D /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A22B8848D000960D5D /* Polygon.swift */; };
 		919753FD2B6DD05600DBF559 /* LevelManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 919753FB2B6DD05600DBF559 /* LevelManager.xcdatamodeld */; };
 		919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919753FE2B6DD83C00DBF559 /* CoreDataManager.swift */; };
 		91986E8F2B5E19B900D1C72C /* PeggleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986E8E2B5E19B900D1C72C /* PeggleApp.swift */; };
@@ -127,6 +128,7 @@
 		916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkParticlesGeometryEffect.swift; sourceTree = "<group>"; };
 		916E679E2B86D94600960D5D /* SharpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpView.swift; sourceTree = "<group>"; };
 		916E67A02B87829D00960D5D /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		916E67A22B8848D000960D5D /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
 		919753FC2B6DD05600DBF559 /* LevelManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LevelManager.xcdatamodel; sourceTree = "<group>"; };
 		919753FE2B6DD83C00DBF559 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		91986E8B2B5E19B900D1C72C /* Peggle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peggle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -342,6 +344,7 @@
 				916E677F2B8620E200960D5D /* TriangularMovableObject.swift */,
 				916E67812B86CEDA00960D5D /* Sharp.swift */,
 				916E67A02B87829D00960D5D /* Line.swift */,
+				916E67A22B8848D000960D5D /* Polygon.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				916E67972B86D50C00960D5D /* DeleteButtonConstants.swift in Sources */,
 				91986EEF2B61FEA500D1C72C /* ActionButtonsViewModel.swift in Sources */,
 				916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */,
+				916E67A32B8848D000960D5D /* Polygon.swift in Sources */,
 				916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */,
 				914BF73D2B80823D00032478 /* PhysicsElasticCollision.swift in Sources */,
 				91517C0D2B72495900F1E45D /* ShooterView.swift in Sources */,

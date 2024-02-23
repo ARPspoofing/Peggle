@@ -13,6 +13,10 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     var name: String
 
     var center = Point(xCoord: 0.0, yCoord: 0.0)
+    // TODO: Fix orientation and halfWidth, add init for width
+    var orientation: Double = 0.0
+    var halfWidth: Double = Constants.defaultHalfWidth
+
     var isActive = false
 
     var isHandleOverlap = false

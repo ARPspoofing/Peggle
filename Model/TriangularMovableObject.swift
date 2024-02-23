@@ -6,8 +6,7 @@
 //
 
 import Foundation
-protocol TriangularMovableObject: MovableObject {
-    var radius: Double { get }
+protocol TriangularMovableObject: MovableObject, Polygon {
     var top: Point { get set }
     var left: Point { get set }
     var right: Point { get set }
@@ -32,7 +31,6 @@ extension TriangularMovableObject {
 
 
             if distanceFromPointToLine(point: peg.center, line: edge) < 25 {
-                print("edge intersecting!!!")
                 return true
             }
 
@@ -203,23 +201,23 @@ extension TriangularMovableObject {
 extension TriangularMovableObject {
 
     func checkRightBorder() -> Bool {
-        self.center.xCoord + self.radius < Constants.screenWidth
+        self.center.xCoord + self.circumradius < Constants.screenWidth
     }
 
     func checkLeftBorder() -> Bool {
-        self.center.xCoord - self.radius > 0
+        self.center.xCoord - self.circumradius > 0
     }
 
     func checkBottomBorder() -> Bool {
-        self.center.yCoord + self.radius < Constants.screenHeight
+        self.center.yCoord + self.circumradius < Constants.screenHeight
     }
 
     func checkBottomBorderGame() -> Bool {
-        self.center.yCoord + self.radius < Constants.gameHeight
+        self.center.yCoord + self.circumradius < Constants.gameHeight
     }
 
     func checkTopBorder() -> Bool {
-        self.center.yCoord - self.radius > 0
+        self.center.yCoord - self.circumradius > 0
     }
 
     func checkBorders() -> Bool {
@@ -227,15 +225,10 @@ extension TriangularMovableObject {
     }
 
     func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        checkNoIntersection(with: gameObject) /*&& checkBorders()*/
+        checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     func getArea() -> Double {
-        Double.pi * radius * radius
-    }
-
-    func isOutOfBounds(point: Point) -> Bool {
-        let newArea = Double.pi * center.squareDistance(to: point)
-        return newArea > getArea()
+        0.5 * base * height
     }
 }

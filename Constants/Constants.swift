@@ -34,6 +34,7 @@ struct Constants {
     static var screenHeight = UIScreen.main.bounds.size.height * 0.8
     static var paletteHeight = UIScreen.main.bounds.size.height * 0.18
     static var activeHeight = UIScreen.main.bounds.size.height * 0.1
+    static let defaultHalfWidth: CGFloat = 25
 
     // MARK: Circle Constants
     static let defaultCircleRadius: CGFloat = 25
@@ -46,6 +47,7 @@ struct Constants {
     // MARK: Image Constants
     static let normalObject = "normalObject"
     static let actionObject = "actionObject"
+    static let sharpObject = "sharp"
     static let delete = "delete"
     static let background = "background"
     static let motionObject = "motionObject"
