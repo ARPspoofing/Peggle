@@ -14,5 +14,10 @@ struct PaletteButtonsConstants {
     let selectedAlpha: CGFloat = 1.0
     let unselectedAlpha: CGFloat = 0.3
     let deleteButtonScale: CGFloat = 0.4
+    let resizeButtonScale: CGFloat = 0.4
+    let rotateButtonScale: CGFloat = 0.4
     let deleteSize = UIScreen.main.bounds.size.height * 0.8 * 0.1
+    // TODO: Modify resize, rotate constants if necessary
+    let resizeSize = UIScreen.main.bounds.size.height * 0.8 * 0.1
+    let rotateSize = UIScreen.main.bounds.size.height * 0.8 * 0.1
 }

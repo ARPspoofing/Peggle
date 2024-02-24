@@ -29,6 +29,7 @@ class CoreDataManager: ObservableObject {
     let container: NSPersistentContainer
     let context: NSManagedObjectContext
     let request = NSFetchRequest<LevelEntity>(entityName: "LevelEntity")
+    let modelMap = ModelMap()
     @Published var levelEntities: [LevelEntity] = []
 
     init() {
@@ -70,23 +71,6 @@ class CoreDataManager: ObservableObject {
         return filteredLevels.first
     }
 
-    func getEntity(center: Point, type: String, halfWidth: Double) -> GameObject {
-        let entity: [String: GameObject] = [
-            Constants.sharpObject: createSharpObject(center: center, type: type, circumradius: halfWidth),
-            Constants.normalObject: createPegObject(center: center, type: type, radius: halfWidth),
-            Constants.actionObject: createPegObject(center: center, type: type, radius: halfWidth)
-        ]
-        return entity[type] ?? createPegObject(center: center, type: type, radius: halfWidth)
-    }
-
-    func createPegObject(center: Point, type: String, radius: Double) -> Peg {
-        Peg(center: center, name: type, radius: radius)
-    }
-
-    func createSharpObject(center: Point, type: String, circumradius: Double) -> Sharp {
-        Sharp(center: center, name: type, circumradius: circumradius)
-    }
-
     private func convertToGameObjects(gameEntities: NSSet) -> [GameObject]? {
         let gameObjects = gameEntities.compactMap { gameEntity -> GameObject? in
             guard let gameEntity = gameEntity as? GameObjectEntity,
@@ -95,7 +79,7 @@ class CoreDataManager: ObservableObject {
                 return nil
             }
             let center = Point(xCoord: pointEntity.xCoord, yCoord: pointEntity.yCoord)
-            return getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth)
+            return modelMap.getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth)
         }
         return gameObjects.isEmpty ? nil : gameObjects
     }

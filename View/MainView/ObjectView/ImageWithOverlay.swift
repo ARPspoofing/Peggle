@@ -13,7 +13,6 @@ struct ImageWithOverlay: View {
     var isDisappear: Bool
     var isShowingCircle: Bool
     var diameter: CGFloat
-    var initialDiameter: CGFloat = 50.0
     @Binding var isDoneShooting: Bool
     @Binding var isAnimating: Bool
 
@@ -27,7 +26,7 @@ struct ImageWithOverlay: View {
                 .resizable()
                 .scaledToFit()
                 .opacity(isDisappear || isDoneShooting ? 0 : 1)
-                .frame(maxWidth: initialDiameter, maxHeight: initialDiameter)
+                .frame(maxWidth: diameter, maxHeight: diameter)
                 .overlay(
                     CirclesOverlay(
                         isDisplay: isShowingCircle,

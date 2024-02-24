@@ -17,6 +17,10 @@ struct PaletteButtonsView: View {
             HStack {
                 pegOptionsDisplay
                 Spacer()
+                rotateOptionDisplay
+                Spacer()
+                resizeOptionDisplay
+                Spacer()
                 deleteOptionDisplay
             }
             .padding([.leading, .trailing], constants.leadingPadding)
@@ -27,17 +31,10 @@ extension PaletteButtonsView {
     private var pegOptionsDisplay: some View {
         HStack {
             ForEach(viewModel.paletteObjects, id: \.self) { selectedObject in
-                if !selectedObject.contains("sharp") {
-                    PegView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
-                        .onTapGesture {_ in
-                            viewModel.tapObject(selectedObject)
-                        }
-                } else {
-                    SharpView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
-                        .onTapGesture {_ in
-                            viewModel.tapObject(selectedObject)
-                        }
-                }
+                ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
+                    .onTapGesture {_ in
+                        viewModel.tapObject(selectedObject)
+                    }
             }
         }.scaleEffect(constants.paletteButtonsScale, anchor: .leading)
     }
@@ -53,6 +50,32 @@ extension PaletteButtonsView {
                 viewModel.toggleDeleteState()
             }
             .frame(height: constants.deleteSize)
+    }
+}
+
+extension PaletteButtonsView {
+    private var resizeOptionDisplay: some View {
+        HStack {
+            ResizeButtonView()
+                .opacity(viewModel.isResizeState ? constants.selectedAlpha : constants.unselectedAlpha)
+        }.scaleEffect(constants.resizeButtonScale, anchor: .trailing)
+            .onTapGesture {
+                viewModel.toggleResizeState()
+            }
+            .frame(height: constants.resizeSize)
+    }
+}
+
+extension PaletteButtonsView {
+    private var rotateOptionDisplay: some View {
+        HStack {
+            RotateButtonView()
+                .opacity(viewModel.isRotateState ? constants.selectedAlpha : constants.unselectedAlpha)
+        }.scaleEffect(constants.rotateButtonScale, anchor: .trailing)
+            .onTapGesture {
+                viewModel.toggleRotateState()
+            }
+            .frame(height: constants.rotateSize)
     }
 }
 

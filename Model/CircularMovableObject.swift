@@ -10,12 +10,15 @@ protocol CircularMovableObject: MovableObject {
 }
 
 extension CircularMovableObject {
-
+    // TODO: Clean up
+    // TODO: Abstract to intersection handler
     func checkNoIntersection(with gameObject: GameObject) -> Bool {
         if let peg = gameObject as? CircularMovableObject {
             let distanceBetweenMotionObjectSquared: Double = center.squareDistance(to: peg.center)
             let sumMotionObjectsRadiusSquared: Double = (radius + peg.radius) * (radius + peg.radius)
             return distanceBetweenMotionObjectSquared > sumMotionObjectsRadiusSquared
+        } else if let sharp = gameObject as? TriangularMovableObject {
+            return !(sharp.isIntersecting(with: self) || sharp.circleInsideTriangle(peg: self))
         } else {
             return false
         }
@@ -39,14 +42,6 @@ extension CircularMovableObject {
 
     func checkTopBorder() -> Bool {
         self.center.yCoord - self.radius > 0
-    }
-
-    func checkBorders() -> Bool {
-        checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
-    }
-
-    func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     func getArea() -> Double {

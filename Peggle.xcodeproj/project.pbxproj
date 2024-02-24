@@ -24,8 +24,8 @@
 		916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677D2B85EA3000960D5D /* CaptureObjectView.swift */; };
 		916E67802B8620E200960D5D /* TriangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677F2B8620E200960D5D /* TriangularMovableObject.swift */; };
 		916E67822B86CEDA00960D5D /* Sharp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67812B86CEDA00960D5D /* Sharp.swift */; };
-		916E67842B86D2CF00960D5D /* InactivePegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67832B86D2CF00960D5D /* InactivePegView.swift */; };
-		916E67862B86D32400960D5D /* ActivePegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67852B86D32400960D5D /* ActivePegView.swift */; };
+		916E67842B86D2CF00960D5D /* InactiveObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67832B86D2CF00960D5D /* InactiveObjectView.swift */; };
+		916E67862B86D32400960D5D /* ActiveObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67852B86D32400960D5D /* ActiveObjectView.swift */; };
 		916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67872B86D34500960D5D /* ImageWithOverlay.swift */; };
 		916E678A2B86D36E00960D5D /* CirclesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67892B86D36E00960D5D /* CirclesOverlay.swift */; };
 		916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E678B2B86D38D00960D5D /* ParticlesOverlay.swift */; };
@@ -40,6 +40,11 @@
 		916E679F2B86D94600960D5D /* SharpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679E2B86D94600960D5D /* SharpView.swift */; };
 		916E67A12B87829D00960D5D /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A02B87829D00960D5D /* Line.swift */; };
 		916E67A32B8848D000960D5D /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A22B8848D000960D5D /* Polygon.swift */; };
+		916E67A52B88798E00960D5D /* ModelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A42B88798E00960D5D /* ModelMap.swift */; };
+		916E67A72B888B9500960D5D /* ResizeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A62B888B9500960D5D /* ResizeButtonView.swift */; };
+		916E67A92B888BCB00960D5D /* ResizeButtonConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A82B888BCB00960D5D /* ResizeButtonConstants.swift */; };
+		916E67AB2B88E69C00960D5D /* RotateButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67AA2B88E69C00960D5D /* RotateButtonView.swift */; };
+		916E67AD2B88E70100960D5D /* RotateButtonConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67AC2B88E70100960D5D /* RotateButtonConstants.swift */; };
 		919753FD2B6DD05600DBF559 /* LevelManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 919753FB2B6DD05600DBF559 /* LevelManager.xcdatamodeld */; };
 		919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919753FE2B6DD83C00DBF559 /* CoreDataManager.swift */; };
 		91986E8F2B5E19B900D1C72C /* PeggleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986E8E2B5E19B900D1C72C /* PeggleApp.swift */; };
@@ -56,8 +61,8 @@
 		91986ED02B5E2D2500D1C72C /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ECF2B5E2D2500D1C72C /* Point.swift */; };
 		91986ED22B5E2D5600D1C72C /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ED12B5E2D5600D1C72C /* Vector.swift */; };
 		91986ED42B5E6C6900D1C72C /* PaletteButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ED32B5E6C6900D1C72C /* PaletteButtonsView.swift */; };
-		91986ED62B5E6DA200D1C72C /* PegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ED52B5E6DA200D1C72C /* PegView.swift */; };
-		91986ED82B5EC57900D1C72C /* PegViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ED72B5EC57900D1C72C /* PegViewModel.swift */; };
+		91986ED62B5E6DA200D1C72C /* ObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ED52B5E6DA200D1C72C /* ObjectView.swift */; };
+		91986ED82B5EC57900D1C72C /* ObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986ED72B5EC57900D1C72C /* ObjectViewModel.swift */; };
 		91986EDC2B5F4A1700D1C72C /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986EDB2B5F4A1700D1C72C /* CanvasViewModel.swift */; };
 		91986EE12B5FBE4E00D1C72C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986EE02B5FBE4E00D1C72C /* Constants.swift */; };
 		91986EE32B5FC56B00D1C72C /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91986EE22B5FC56B00D1C72C /* GameObject.swift */; };
@@ -113,8 +118,8 @@
 		916E677D2B85EA3000960D5D /* CaptureObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureObjectView.swift; sourceTree = "<group>"; };
 		916E677F2B8620E200960D5D /* TriangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangularMovableObject.swift; sourceTree = "<group>"; };
 		916E67812B86CEDA00960D5D /* Sharp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sharp.swift; sourceTree = "<group>"; };
-		916E67832B86D2CF00960D5D /* InactivePegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactivePegView.swift; sourceTree = "<group>"; };
-		916E67852B86D32400960D5D /* ActivePegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePegView.swift; sourceTree = "<group>"; };
+		916E67832B86D2CF00960D5D /* InactiveObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactiveObjectView.swift; sourceTree = "<group>"; };
+		916E67852B86D32400960D5D /* ActiveObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveObjectView.swift; sourceTree = "<group>"; };
 		916E67872B86D34500960D5D /* ImageWithOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithOverlay.swift; sourceTree = "<group>"; };
 		916E67892B86D36E00960D5D /* CirclesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesOverlay.swift; sourceTree = "<group>"; };
 		916E678B2B86D38D00960D5D /* ParticlesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticlesOverlay.swift; sourceTree = "<group>"; };
@@ -129,6 +134,11 @@
 		916E679E2B86D94600960D5D /* SharpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpView.swift; sourceTree = "<group>"; };
 		916E67A02B87829D00960D5D /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		916E67A22B8848D000960D5D /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
+		916E67A42B88798E00960D5D /* ModelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelMap.swift; sourceTree = "<group>"; };
+		916E67A62B888B9500960D5D /* ResizeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeButtonView.swift; sourceTree = "<group>"; };
+		916E67A82B888BCB00960D5D /* ResizeButtonConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeButtonConstants.swift; sourceTree = "<group>"; };
+		916E67AA2B88E69C00960D5D /* RotateButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateButtonView.swift; sourceTree = "<group>"; };
+		916E67AC2B88E70100960D5D /* RotateButtonConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateButtonConstants.swift; sourceTree = "<group>"; };
 		919753FC2B6DD05600DBF559 /* LevelManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LevelManager.xcdatamodel; sourceTree = "<group>"; };
 		919753FE2B6DD83C00DBF559 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		91986E8B2B5E19B900D1C72C /* Peggle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peggle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,8 +158,8 @@
 		91986ECF2B5E2D2500D1C72C /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		91986ED12B5E2D5600D1C72C /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		91986ED32B5E6C6900D1C72C /* PaletteButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteButtonsView.swift; sourceTree = "<group>"; };
-		91986ED52B5E6DA200D1C72C /* PegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegView.swift; sourceTree = "<group>"; };
-		91986ED72B5EC57900D1C72C /* PegViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegViewModel.swift; sourceTree = "<group>"; };
+		91986ED52B5E6DA200D1C72C /* ObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectView.swift; sourceTree = "<group>"; };
+		91986ED72B5EC57900D1C72C /* ObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewModel.swift; sourceTree = "<group>"; };
 		91986EDB2B5F4A1700D1C72C /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		91986EE02B5FBE4E00D1C72C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		91986EE22B5FC56B00D1C72C /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
@@ -225,18 +235,18 @@
 			path = GameEngine;
 			sourceTree = "<group>";
 		};
-		916E678F2B86D3D500960D5D /* PegView */ = {
+		916E678F2B86D3D500960D5D /* ObjectView */ = {
 			isa = PBXGroup;
 			children = (
-				91986ED52B5E6DA200D1C72C /* PegView.swift */,
-				916E67832B86D2CF00960D5D /* InactivePegView.swift */,
-				916E67852B86D32400960D5D /* ActivePegView.swift */,
+				91986ED52B5E6DA200D1C72C /* ObjectView.swift */,
+				916E67832B86D2CF00960D5D /* InactiveObjectView.swift */,
+				916E67852B86D32400960D5D /* ActiveObjectView.swift */,
 				916E67872B86D34500960D5D /* ImageWithOverlay.swift */,
 				916E67892B86D36E00960D5D /* CirclesOverlay.swift */,
 				916E678B2B86D38D00960D5D /* ParticlesOverlay.swift */,
 				916E678D2B86D3A400960D5D /* JaggedCircle.swift */,
 			);
-			path = PegView;
+			path = ObjectView;
 			sourceTree = "<group>";
 		};
 		91986E822B5E19B900D1C72C = {
@@ -307,7 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				91986EEE2B61FEA500D1C72C /* ActionButtonsViewModel.swift */,
-				91986ED72B5EC57900D1C72C /* PegViewModel.swift */,
+				91986ED72B5EC57900D1C72C /* ObjectViewModel.swift */,
 				91986EDB2B5F4A1700D1C72C /* CanvasViewModel.swift */,
 			);
 			path = "View Model";
@@ -345,6 +355,7 @@
 				916E67812B86CEDA00960D5D /* Sharp.swift */,
 				916E67A02B87829D00960D5D /* Line.swift */,
 				916E67A22B8848D000960D5D /* Polygon.swift */,
+				916E67A42B88798E00960D5D /* ModelMap.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -369,6 +380,8 @@
 				916E67962B86D50C00960D5D /* DeleteButtonConstants.swift */,
 				916E67982B86D51B00960D5D /* PointConstants.swift */,
 				916E679A2B86D52C00960D5D /* PaletteButtonsConstants.swift */,
+				916E67A82B888BCB00960D5D /* ResizeButtonConstants.swift */,
+				916E67AC2B88E70100960D5D /* RotateButtonConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -380,6 +393,8 @@
 				91986EF22B63871C00D1C72C /* DeleteButtonView.swift */,
 				91986EC12B5E1D6C00D1C72C /* ActionButtonsView.swift */,
 				914BF7462B81DFA500032478 /* ActionButtonsViewAlert.swift */,
+				916E67A62B888B9500960D5D /* ResizeButtonView.swift */,
+				916E67AA2B88E69C00960D5D /* RotateButtonView.swift */,
 			);
 			path = ButtonsView;
 			sourceTree = "<group>";
@@ -407,7 +422,7 @@
 		91F382732B7F1E8A0012C0D1 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				916E678F2B86D3D500960D5D /* PegView */,
+				916E678F2B86D3D500960D5D /* ObjectView */,
 				91986EBF2B5E1D6300D1C72C /* BackgroundView.swift */,
 				91986EF42B63B35700D1C72C /* ClearBackgroundView.swift */,
 				91986EC52B5E1DC500D1C72C /* CanvasView.swift */,
@@ -586,17 +601,18 @@
 				91986ECC2B5E291500D1C72C /* Peg.swift in Sources */,
 				914BF73F2B8082C400032478 /* PhysicsRigidBody.swift in Sources */,
 				91986EF52B63B35700D1C72C /* ClearBackgroundView.swift in Sources */,
-				91986ED62B5E6DA200D1C72C /* PegView.swift in Sources */,
+				91986ED62B5E6DA200D1C72C /* ObjectView.swift in Sources */,
 				91986ED22B5E2D5600D1C72C /* Vector.swift in Sources */,
+				916E67AB2B88E69C00960D5D /* RotateButtonView.swift in Sources */,
 				91517C112B7375B100F1E45D /* MotionObject.swift in Sources */,
 				91986EC62B5E1DC500D1C72C /* CanvasView.swift in Sources */,
 				919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */,
-				91986ED82B5EC57900D1C72C /* PegViewModel.swift in Sources */,
+				91986ED82B5EC57900D1C72C /* ObjectViewModel.swift in Sources */,
 				91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */,
 				91986ECE2B5E293A00D1C72C /* Level.swift in Sources */,
 				916E67802B8620E200960D5D /* TriangularMovableObject.swift in Sources */,
 				919753FD2B6DD05600DBF559 /* LevelManager.xcdatamodeld in Sources */,
-				916E67862B86D32400960D5D /* ActivePegView.swift in Sources */,
+				916E67862B86D32400960D5D /* ActiveObjectView.swift in Sources */,
 				914BF7472B81DFA500032478 /* ActionButtonsViewAlert.swift in Sources */,
 				91986EE52B5FC6F900D1C72C /* MovableObject.swift in Sources */,
 				91F382722B7F1E610012C0D1 /* ParticlesModifier.swift in Sources */,
@@ -604,6 +620,7 @@
 				916E678A2B86D36E00960D5D /* CirclesOverlay.swift in Sources */,
 				91517C0F2B7370E800F1E45D /* MotionObjectView.swift in Sources */,
 				914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */,
+				916E67A52B88798E00960D5D /* ModelMap.swift in Sources */,
 				916E679F2B86D94600960D5D /* SharpView.swift in Sources */,
 				91AD1B3B2B78D3FE009E6BC6 /* StateChangeObject.swift in Sources */,
 				91986EE32B5FC56B00D1C72C /* GameObject.swift in Sources */,
@@ -611,6 +628,7 @@
 				914BF73B2B8074AE00032478 /* GravityGameEngine.swift in Sources */,
 				91986EC22B5E1D6C00D1C72C /* ActionButtonsView.swift in Sources */,
 				916E67992B86D51B00960D5D /* PointConstants.swift in Sources */,
+				916E67A92B888BCB00960D5D /* ResizeButtonConstants.swift in Sources */,
 				91F382672B7E48EB0012C0D1 /* ActiveView.swift in Sources */,
 				915E033B2B82346D005A41D1 /* MyCodingKey.swift in Sources */,
 				91986EDC2B5F4A1700D1C72C /* CanvasViewModel.swift in Sources */,
@@ -629,15 +647,17 @@
 				916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */,
 				914BF73D2B80823D00032478 /* PhysicsElasticCollision.swift in Sources */,
 				91517C0D2B72495900F1E45D /* ShooterView.swift in Sources */,
-				916E67842B86D2CF00960D5D /* InactivePegView.swift in Sources */,
+				916E67842B86D2CF00960D5D /* InactiveObjectView.swift in Sources */,
 				91986ED42B5E6C6900D1C72C /* PaletteButtonsView.swift in Sources */,
 				916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */,
 				916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */,
 				91986EC02B5E1D6300D1C72C /* BackgroundView.swift in Sources */,
+				916E67A72B888B9500960D5D /* ResizeButtonView.swift in Sources */,
 				916E67912B86D4D200960D5D /* ActionConstants.swift in Sources */,
 				91986EE72B5FD61A00D1C72C /* CircularMovableObject.swift in Sources */,
 				916E679B2B86D52C00960D5D /* PaletteButtonsConstants.swift in Sources */,
 				916E67822B86CEDA00960D5D /* Sharp.swift in Sources */,
+				916E67AD2B88E70100960D5D /* RotateButtonConstants.swift in Sources */,
 				916211042B763C95002F51A9 /* GameEngineBody.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

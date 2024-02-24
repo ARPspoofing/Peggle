@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PegViewModel: ObservableObject {
+class ObjectViewModel: ObservableObject {
 
     let pegModel: Peg
     let selectedAlpha: Double = Constants.selectedAlpha

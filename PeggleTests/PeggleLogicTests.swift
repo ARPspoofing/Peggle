@@ -152,21 +152,21 @@ final class PeggleLogicTests: XCTestCase {
         XCTAssertEqual(level.id, expectedName)
     }
 
-    // MARK: PegViewModel
+    // MARK: ObjectViewModel
     func test_defaultRadius_isEqual() {
-        let pegViewModel = PegViewModel(name: "viewModel")
+        let pegViewModel = ObjectViewModel(name: "viewModel")
         let expectedRadius: CGFloat = 25
         XCTAssertEqual(pegViewModel.getPegRadius(), expectedRadius)
     }
 
     func test_defaultWidth_isEqual() {
-        let pegViewModel = PegViewModel(name: "viewModel")
+        let pegViewModel = ObjectViewModel(name: "viewModel")
         let expectedWidth: CGFloat = 50
         XCTAssertEqual(pegViewModel.calculateWidth(), expectedWidth)
     }
 
     func test_defaultHeight_isEqual() {
-        let pegViewModel = PegViewModel(name: "viewModel")
+        let pegViewModel = ObjectViewModel(name: "viewModel")
         let expectedHeight: CGFloat = 50
         XCTAssertEqual(pegViewModel.calculateHeight(), expectedHeight)
     }

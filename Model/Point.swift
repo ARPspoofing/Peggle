@@ -88,6 +88,10 @@ struct Point: Codable {
         return Point(xCoord: self.xCoord - vector.horizontal, yCoord: self.yCoord - vector.vertical)
     }
 
+    func subtract(point: Point) -> Vector {
+        return Vector(horizontal: self.xCoord - point.xCoord, vertical: self.yCoord - point.yCoord)
+    }
+
     func squareDistance(to point: Point) -> Double {
         assert(checkRepresentation())
         let horizontalDistance = self.xCoord - point.xCoord

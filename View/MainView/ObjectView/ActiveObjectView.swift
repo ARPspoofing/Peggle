@@ -1,5 +1,5 @@
 //
-//  ActivePegView.swift
+//  ActiveObjectView.swift
 //  Peggle
 //
 //  Created by Muhammad Reyaaz on 22/2/24.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ActivePegView: View {
+struct ActiveObjectView: View {
     var name: String
     var isDisappear: Bool
     var isShowingCircle: Bool

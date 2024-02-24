@@ -16,6 +16,8 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var captureObjects: [CaptureObject]
     @Published var selectedObject: String?
     @Published var isDeleteState = false
+    @Published var isResizeState = false
+    @Published var isRotateState = false
     @Published var isStartState = false
     @Published private(set) var shooterRotation: Double = .zero
     @Published var isShooting = false
@@ -32,7 +34,8 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var gameEngine: GameEngine?
     private(set) var displayLink: CADisplayLink?
 
-    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, "sharp"]
+    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, Constants.sharpObject]
+    let modelMap = ModelMap()
 
     init() {
         self.gameObjects = []
@@ -63,6 +66,30 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         isDeleteState.toggle()
     }
 
+    func untoggleResize() {
+        guard !isResizeState else {
+            isResizeState.toggle()
+            return
+        }
+    }
+
+    func toggleResizeState() {
+        selectedObject = nil
+        isResizeState.toggle()
+    }
+
+    func untoggleRotate() {
+        guard !isRotateState else {
+            isRotateState.toggle()
+            return
+        }
+    }
+
+    func toggleRotateState() {
+        selectedObject = nil
+        isRotateState.toggle()
+    }
+
     func render(_ location: CGPoint, _ selectedObject: String) {
         addObject(Point(xCoord: location.x, yCoord: location.y), selectedObject)
     }
@@ -75,6 +102,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects = gameObjects.filter { !$0.isActive }
     }
 
+    /*
     func checkIndexPeg(index: Int) -> Peg? {
         guard index >= 0, index < gameObjects.count else {
             return nil
@@ -94,11 +122,18 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         return sharp
     }
+    */
 
+    /*
     func checkCanInsert(_ newObject: GameObject) -> Bool {
         guard let newPeg = newObject as? Peg, newPeg.checkBorders() else {
             return false
         }
+        /*
+        guard newObject.checkBorders() else {
+            return false
+        }
+        */
         for object in gameObjects {
             guard let pegObject = object as? Peg else {
                 continue
@@ -109,7 +144,21 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         return true
     }
+    */
 
+    func checkCanInsert(_ newObject: GameObject) -> Bool {
+        guard newObject.checkBorders() else {
+            return false
+        }
+        for object in gameObjects {
+            guard newObject.checkSafeToInsert(with: object) else {
+                return false
+            }
+        }
+        return true
+    }
+
+    /*
     // TODO: Merge with previous checkCanInsert
     func checkCanInsertTriangle(_ newObject: GameObject) -> Bool {
         guard let newTriangle = newObject as? TriangularMovableObject else {
@@ -122,7 +171,9 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         return true
     }
+    */
 
+    /*
     func checkCanDrag(_ newObject: GameObject, _ index: Int) -> Bool {
         guard let newPeg = newObject as? Peg, newPeg.checkBorders() else {
             return false
@@ -137,7 +188,24 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         return true
     }
+    */
 
+    func checkCanDrag(_ newObject: GameObject, _ index: Int) -> Bool {
+        guard newObject.checkBorders() else {
+            return false
+        }
+        for (currentIndex, object) in gameObjects.enumerated() {
+            guard currentIndex != index else {
+                continue
+            }
+            guard newObject.checkSafeToInsert(with: object) else {
+                return false
+            }
+        }
+        return true
+    }
+
+    /*
     func checkCanDragTriangle(_ newObject: GameObject, _ index: Int) -> Bool {
         guard let newTriangle = newObject as? Sharp else {
             return false
@@ -153,6 +221,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         return true
     }
+    */
 
     func tapObject(_ tappedObject: String) {
         isDeleteState = false
@@ -163,6 +232,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
     }
 
+    /*
     // TODO: Make this neater
     func addObject(_ point: Point, _ selectedObject: String) {
         if selectedObject.contains("action") || selectedObject.contains("normal") {
@@ -181,7 +251,18 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
             gameObjects.append(objectToInsert)
         }
     }
+    */
 
+    // TODO: Allow dynamic half width
+    func addObject(_ point: Point, _ selectedObject: String) {
+        let objectToInsert: GameObject = modelMap.getEntity(center: point, type: selectedObject, halfWidth: Constants.defaultHalfWidth)
+            guard checkCanInsert(objectToInsert) else {
+                return
+            }
+            gameObjects.append(objectToInsert)
+    }
+
+    /*
     func updateObjectPosition(index: Int, dragLocation: CGPoint) {
         untoggleDelete()
         guard let peg = checkIndexPeg(index: index) else {
@@ -197,7 +278,62 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         peg.changeCenter(newCenter: newPoint)
         gameObjects[index] = peg
     }
+    */
 
+    func updateObjectPosition(index: Int, dragLocation: CGPoint) {
+        untoggleDelete()
+        /*
+        guard let peg = checkIndexPeg(index: index) else {
+            return
+        }
+        */
+        let object = gameObjects[index]
+        let objectDeepCopy = object.makeDeepCopy()
+        let newPoint = Point(xCoord: dragLocation.x, yCoord: dragLocation.y)
+        objectDeepCopy.changeCenter(newCenter: newPoint)
+
+        guard checkCanDrag(objectDeepCopy, index) else {
+            return
+        }
+        object.changeCenter(newCenter: newPoint)
+        gameObjects[index] = object
+    }
+
+    // TODO: Break up into smaller functions
+    func updateObjectWidth(index: Int, dragLocation: CGPoint) {
+        let object = gameObjects[index]
+        let objectDeepCopy = object.makeDeepCopy()
+        let newPoint = Point(xCoord: dragLocation.x, yCoord: dragLocation.y)
+
+        let deltaX = newPoint.xCoord - object.center.xCoord
+        let deltaY = newPoint.yCoord - object.center.yCoord
+        let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
+
+        let initialWidth: Double = 25.0
+        let maxWidth: Double = 50.0
+
+        let minDistance: Double = 0.0
+        let maxDistance: Double = 200.0
+
+        let scaledWidth = initialWidth + (maxWidth - initialWidth) * (distance - minDistance) / (maxDistance - minDistance)
+
+        let finalWidth = min(scaledWidth, maxWidth)
+
+        print("Scaled width:", finalWidth)
+
+        objectDeepCopy.changeHalfWidth(newHalfWidth: finalWidth)
+
+        //objectDeepCopy.changeCenter(newCenter: newPoint)
+
+        guard checkCanDrag(objectDeepCopy, index) else {
+            return
+        }
+        object.changeHalfWidth(newHalfWidth: finalWidth)
+        //object.changeCenter(newCenter: newPoint)
+        gameObjects[index] = object
+    }
+
+    /*
     func updateTrianglePosition(index: Int, dragLocation: CGPoint) {
         untoggleDelete()
         guard let sharp = checkIndexTriangle(index: index) else {
@@ -215,12 +351,38 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         sharp.changeCenter(newCenter: newPoint)
         gameObjects[index] = sharp
     }
+    */
 
     func backgroundOnDragGesture(point: Point) {
         let axisVector = Vector(horizontal: 0, vertical: 1)
         let touchVector = Vector(horizontal: point.xCoord - Constants.screenWidth / 2, vertical: point.yCoord)
         let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
         shooterRotation = angleInRadians
+    }
+
+    func updateObjectOrientation(index: Int, dragLocation: CGPoint) {
+        untoggleDelete()
+        let object = gameObjects[index]
+        let objectDeepCopy = object.makeDeepCopy()
+        let newPoint = Point(xCoord: dragLocation.x, yCoord: dragLocation.y)
+
+        let axisVector = Vector(horizontal: object.retrieveXCoord(), vertical: object.retrieveYCoord())
+        let touchVector = Vector(horizontal: newPoint.xCoord - object.retrieveXCoord(), vertical: newPoint.yCoord - object.retrieveYCoord())
+        let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
+        //objectDeepCopy.orientation = angleInRadians
+        /*
+        guard checkCanDrag(objectDeepCopy, index) else {
+            return
+        }
+        */
+        print("new angle", angleInRadians)
+        objectDeepCopy.changeOrientation(to: angleInRadians)
+        guard checkCanDrag(objectDeepCopy, index) else {
+            return
+        }
+        object.changeOrientation(to: angleInRadians)
+        //object.orientation = angleInRadians
+        gameObjects[index] = object
     }
 }
 

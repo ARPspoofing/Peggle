@@ -27,31 +27,31 @@ struct Line: Codable {
     }
 
     func minimumDistanceFromPointSquared(_ point: Point) -> Double {
-        let firstVector = start.subtract(vector: point.convertToVector()).convertToVector()
-        let secondVector = end.subtract(vector: point.convertToVector()).convertToVector()
+        let firstVector = start.subtract(point: point)
+        let secondVector = end.subtract(point: point)
         let crossProduct = firstVector.crossProduct(with: secondVector)
         let minimumDistanceFromCircleToLineSquared = (crossProduct * crossProduct) / squaredLength
         return minimumDistanceFromCircleToLineSquared
     }
 
     func projectionOfPointOntoLineIsOnLine(_ point: Point) -> Bool {
-        let startVector = start.subtract(vector: point.convertToVector()).convertToVector()
-        let endVector = end.subtract(vector: point.convertToVector()).convertToVector()
-        let startToEnd = end.subtract(vector: start.convertToVector()).convertToVector()
+        let startVector = start.subtract(point: point)
+        let endVector = end.subtract(point: point)
+        let startToEnd = end.subtract(point: start)
 
-        let dotProduct1 = startVector.dotProduct(with: startToEnd)
-        let dotProduct2 = endVector.dotProduct(with: startToEnd)
+        let startDotProduct = startVector.dotProduct(with: startToEnd)
+        let endDotProduct = endVector.dotProduct(with: startToEnd)
 
-        return dotProduct1 < 0 && dotProduct2 < 0
+        return startDotProduct < 0 && endDotProduct < 0
     }
 
 
     func pointsLieOnSameSide(_ start: Point, _ end: Point) -> Bool {
-        let firstCrossProduct = self.end.convertToVector().subtract(vector: self.start.convertToVector())
-            .crossProduct(with: start.convertToVector().subtract(vector: self.start.convertToVector()))
+        let firstCrossProduct = self.end.subtract(point: self.start)
+            .crossProduct(with: start.subtract(point: self.start))
 
-        let secondCrossProduct = self.end.convertToVector().subtract(vector: self.start.convertToVector())
-            .crossProduct(with: end.convertToVector().subtract(vector: self.start.convertToVector()))
+        let secondCrossProduct = self.end.subtract(point: self.start)
+            .crossProduct(with: end.subtract(point: self.start))
 
         return firstCrossProduct * secondCrossProduct >= 0
     }

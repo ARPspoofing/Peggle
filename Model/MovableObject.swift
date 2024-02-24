@@ -11,5 +11,4 @@ protocol MovableObject: GameObject {
     func checkLeftBorder() -> Bool
     func checkBottomBorder() -> Bool
     func checkTopBorder() -> Bool
-    func checkSafeToInsert(with gameObject: GameObject) -> Bool
 }

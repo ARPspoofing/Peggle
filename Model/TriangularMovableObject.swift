@@ -5,6 +5,8 @@
 //  Created by Muhammad Reyaaz on 21/2/24.
 //
 
+// TODO: Abstract out intersection to intersection handler
+
 import Foundation
 protocol TriangularMovableObject: MovableObject, Polygon {
     var top: Point { get set }
@@ -13,72 +15,20 @@ protocol TriangularMovableObject: MovableObject, Polygon {
     var edges: [Line] { get set }
 }
 
-// TODO: Reduce bloat, rename cross
 extension TriangularMovableObject {
 
-    private func isIntersecting(with peg: Peg) -> Bool {
+     func isIntersecting(with peg: CircularMovableObject) -> Bool {
         let squaredRadius = peg.radius * peg.radius
-
         for edge in edges {
-
-            if peg.center.squareDistance(to: edge.start) < squaredRadius {
+            guard peg.center.squareDistance(to: edge.start) >= squaredRadius else {
                 return true
             }
-
-            if distanceFromPointToLine(point: peg.center, line: edge) < 25 {
-                print(distanceFromPointToLine(point: peg.center, line: edge))
-            }
-
-
-            if distanceFromPointToLine(point: peg.center, line: edge) < 25 {
+            guard distanceFromPointToLine(point: peg.center, line: edge) >= peg.radius else {
                 return true
             }
-
-
-            /*
-            if edgeIsIntersectingWithPeg(edge: edge, peg: peg) {
-                return true
-            }
-            */
         }
         return false
     }
-
-    /*
-    func distanceFromPointToLine(point: Point, line: Line) -> Double {
-        let numerator = abs((line.end.xCoord - line.start.xCoord) * (line.start.yCoord - point.yCoord) - (line.start.xCoord - point.xCoord) * (line.end.yCoord - line.start.yCoord))
-        let denominator = sqrt(pow(line.end.xCoord - line.start.xCoord, 2) + pow(line.end.yCoord - line.start.yCoord, 2))
-        return numerator / denominator
-    }
-    */
-
-    /*
-    func distanceFromPointToLine(point: Point, line: Line) -> Double {
-        let lineVector = Vector(xCoord: line.end.xCoord - line.start.xCoord, yCoord: line.end.yCoord - line.start.yCoord)
-        let pointVector = Vector(xCoord: point.xCoord - line.start.xCoord, yCoord: point.yCoord - line.start.yCoord)
-
-        let lineLength = sqrt((lineVector.xCoord * lineVector.xCoord) + (lineVector.yCoord * lineVector.yCoord))
-
-        // Ensure the line length is not zero to avoid division by zero
-        guard lineLength != 0 else {
-            return -1 // Handle this case according to your requirements
-        }
-
-        // Compute the projection of the point onto the line
-        let projection = ((pointVector.xCoord * lineVector.xCoord) + (pointVector.yCoord * lineVector.yCoord)) / lineLength
-
-        // If the projection is outside the line segment, return the distance to the closest endpoint
-        if projection < 0 {
-            return sqrt((point.xCoord - line.start.xCoord) * (point.xCoord - line.start.xCoord) + (point.yCoord - line.start.yCoord) * (point.yCoord - line.start.yCoord))
-        } else if projection > lineLength {
-            return sqrt((point.xCoord - line.end.xCoord) * (point.xCoord - line.end.xCoord) + (point.yCoord - line.end.yCoord) * (point.yCoord - line.end.yCoord))
-        }
-
-        // Compute and return the perpendicular distance from the point to the line
-        let perpendicularDistance = abs((pointVector.xCoord * lineVector.yCoord - pointVector.yCoord * lineVector.xCoord) / lineLength)
-        return perpendicularDistance
-    }
-    */
 
     func distanceFromPointToLine(point: Point, line: Line) -> Double {
         let lineVector = Vector(horizontal: line.end.xCoord - line.start.xCoord, vertical: line.end.yCoord - line.start.yCoord)
@@ -87,7 +37,7 @@ extension TriangularMovableObject {
         let lineLength = calculateVectorLength(vector: lineVector)
 
         guard lineLength != 0 else {
-            return handleZeroLineLength() // Handle this case according to your requirements
+            return handleZeroLineLength()
         }
 
         let projection = calculateProjection(pointVector: pointVector, lineVector: lineVector, lineLength: lineLength)
@@ -106,7 +56,7 @@ extension TriangularMovableObject {
     }
 
     func handleZeroLineLength() -> Double {
-        return -1 // Handle this case according to your requirements
+        return -1
     }
 
     func calculateProjection(pointVector: Vector, lineVector: Vector, lineLength: Double) -> Double {
@@ -121,30 +71,23 @@ extension TriangularMovableObject {
         return abs((pointVector.horizontal * lineVector.vertical - pointVector.vertical * lineVector.horizontal) / lineLength)
     }
 
-
-
-
-    private func edgeIsIntersectingWithPeg(edge: Line, peg: Peg) -> Bool {
+     func edgeIsIntersectingWithPeg(edge: Line, peg: Peg) -> Bool {
         guard edge.projectionOfPointOntoLineIsOnLine(peg.center) else {
-            print("edge not intersecting")
             return false
         }
-        print("edge is intersecting!!!")
         let squaredRadius = peg.radius * peg.radius
         let minimumDistanceFromPegToLineSquared = edge.minimumDistanceFromPointSquared(peg.center)
         let edgeIsIntersectingPeg = minimumDistanceFromPegToLineSquared <= squaredRadius
         return edgeIsIntersectingPeg
     }
 
-    private func pegIsInsideTriangle(peg: Peg) -> Bool {
+     func circleInsideTriangle(peg: CircularMovableObject) -> Bool {
         pointIsInsideTriangle(point: peg.center)
             && min(edges[0].squaredLength, edges[1].squaredLength, edges[2].squaredLength)
             > peg.radius * peg.radius
     }
 
-    private func pointIsInsideTriangle(point: Point) -> Bool {
-        // Check if point in polygon formula adapted from:
-        // http://www.jeffreythompson.org/collision-detection/tri-point.php
+     func pointIsInsideTriangle(point: Point) -> Bool {
         let area0rig = abs((left.xCoord - top.xCoord) * (right.yCoord - top.yCoord)
                            - (right.xCoord - top.xCoord) * (left.yCoord - top.yCoord))
         let area1 = abs((top.xCoord - point.xCoord) * (left.yCoord - point.yCoord)
@@ -153,11 +96,10 @@ extension TriangularMovableObject {
                         - (right.xCoord - point.xCoord) * (left.yCoord - point.yCoord))
         let area3 = abs((right.xCoord - point.xCoord) * (top.yCoord - point.yCoord)
                         - (top.xCoord - point.xCoord) * (right.yCoord - point.yCoord))
-        print("point inside status: ", area1 + area2 + area3 == area0rig)
         return area1 + area2 + area3 == area0rig
     }
 
-    private func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
+     func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
         let selfPoints = [top, left, right]
         let trianglePoints = [triangle.top, triangle.left, triangle.right]
         for edge in self.edges {
@@ -184,20 +126,17 @@ extension TriangularMovableObject {
     }
 
     func checkNoIntersection(with gameObject: GameObject) -> Bool {
+        print("check no intersection within triangle")
         if let sharp = gameObject as? TriangularMovableObject {
             return isNotIntersecting(with: sharp)
         } else if let circle = gameObject as? Peg {
-            print("test peg intersection")
-            //return !checkIntersectTriangle(with: circle)
-            return !(isIntersecting(with: circle) || pegIsInsideTriangle(peg: circle))
+            return !(isIntersecting(with: circle) || circleInsideTriangle(peg: circle))
         } else {
-            print("elseeee")
             return true
         }
     }
 }
 
-// TODO: Change to be for triangles
 extension TriangularMovableObject {
 
     func checkRightBorder() -> Bool {
@@ -220,13 +159,16 @@ extension TriangularMovableObject {
         self.center.yCoord - self.circumradius > 0
     }
 
-    func checkBorders() -> Bool {
+    /*
+    override func checkBorders() -> Bool {
         checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
     }
 
-    func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        checkNoIntersection(with: gameObject) && checkBorders()
+    override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
+        print("triangle check being called")
+        return checkNoIntersection(with: gameObject) && checkBorders()
     }
+    */
 
     func getArea() -> Double {
         0.5 * base * height

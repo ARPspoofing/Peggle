@@ -16,6 +16,7 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     // TODO: Fix orientation and halfWidth, add init for width
     var orientation: Double = 0.0
     var halfWidth: Double = Constants.defaultHalfWidth
+    var initialTop: Point = Point(xCoord: 0.0, yCoord: 0.0)
 
     var isActive = false
 
@@ -43,6 +44,10 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
         center.setCartesian(xCoord: newCenter.xCoord, yCoord: newCenter.yCoord)
     }
 
+    func changeHalfWidth(newHalfWidth: Double) {
+        halfWidth = newHalfWidth
+    }
+
     func retrieveXCoord() -> Double {
         center.xCoord
     }
@@ -53,6 +58,18 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
 
     func centerVector() -> Vector {
         center.convertToVector()
+    }
+
+    func checkBorders() -> Bool {
+        true
+    }
+
+    func checkSafeToInsert(with gameObject: GameObject) -> Bool {
+        true
+    }
+
+    func changeOrientation(to end: Double) {
+        orientation = end
     }
 
     func makeDeepCopy() -> GameObject {

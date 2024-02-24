@@ -41,6 +41,14 @@ class Peg: GameObject {
         try super.encode(to: encoder)
     }
 
+    override func checkBorders() -> Bool {
+        checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
+    }
+
+    override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
+        return checkNoIntersection(with: gameObject) && checkBorders()
+    }
+
     override func makeDeepCopy() -> Peg {
         Peg(center: self.center, name: self.name, radius: self.radius)
     }
