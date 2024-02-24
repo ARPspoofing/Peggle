@@ -10,13 +10,15 @@ import SwiftUI
 // TODO: Make it not depend on radius, change image
 struct CaptureObjectView: View {
 
-    private let name: String = "motionObject"
-    private var isHighlighted = false
-    private let defaultDiameter = 50.0
+    let name: String = "scarabShooterGold"
+    let width: Double
+    let height: Double
+    var isHighlighted = false
+    let defaultDiameter = 50.0
 
     var body: some View {
         Image(name)
             .resizable()
-            .frame(width: defaultDiameter, height: defaultDiameter)
+            .frame(width: CGFloat(width), height: CGFloat(height))
     }
 }

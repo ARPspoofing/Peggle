@@ -29,7 +29,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         self.captureObjects = captureObjects
     }
 
-    private func handleVerticalBoundaries(_ object: inout MotionObject) {
+    private func handleSideBoundaries(_ object: inout MotionObject) {
         guard !object.checkLeftBorder() || !object.checkRightBorder() else {
             return
         }
@@ -50,14 +50,48 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         object.isOutOfBounds = true
     }
 
-    private func handleHorizontalBoundaries(_ object: inout MotionObject) {
+    private func handlePlaneBoundaries(_ object: inout MotionObject) {
         handleTopBoundary(&object)
         handleBottomBoundary(&object)
     }
 
     internal func handleObjectBoundaries(_ object: inout MotionObject) {
-        handleVerticalBoundaries(&object)
-        handleHorizontalBoundaries(&object)
+        handleSideBoundaries(&object)
+        handlePlaneBoundaries(&object)
+    }
+
+    // TODO: Combine Motion and Capture to abide by DRY
+
+
+    private func handleSideBoundaries(_ object: inout CaptureObject) {
+        guard !object.checkLeftBorder() || !object.checkRightBorder() else {
+            return
+        }
+        object.reverseHorizontalVelocity()
+    }
+
+    private func handleTopBoundary(_ object: inout CaptureObject) {
+        guard !object.checkTopBorder() else {
+            return
+        }
+        object.reverseVerticalVelocity()
+    }
+
+    private func handleBottomBoundary(_ object: inout CaptureObject) {
+        guard !object.checkBottomBorderGame() else {
+            return
+        }
+        object.isOutOfBounds = true
+    }
+
+    private func handlePlaneBoundaries(_ object: inout CaptureObject) {
+        handleTopBoundary(&object)
+        handleBottomBoundary(&object)
+    }
+
+    internal func handleObjectBoundaries(_ object: inout CaptureObject) {
+        handleSideBoundaries(&object)
+        handlePlaneBoundaries(&object)
     }
 
     /*
@@ -205,7 +239,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             addGravity(to: &object)
         }
         for index in captureObjects.indices {
-            var object: MotionObject = captureObjects[index]
+            var object: CaptureObject = captureObjects[index]
             object.center = object.center.add(vector: object.velocity)
             handleObjectBoundaries(&object)
         }
@@ -244,18 +278,18 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         self.captureObjects = captureObjects
     }
 
-    private func handleVerticalBoundaries(_ object: inout MotionObject) {
+    private func handleSideBoundaries(_ object: inout MotionObject) {
         guard !object.checkLeftBorder() || !object.checkRightBorder() else {
             return
         }
-        object.reverseHorizontalVelocity()
+        object.reversePlaneVelocity()
     }
 
     private func handleTopBoundary(_ object: inout MotionObject) {
         guard !object.checkTopBorder() else {
             return
         }
-        object.reverseVerticalVelocity()
+        object.reverseSideVelocity()
     }
 
     private func handleBottomBoundary(_ object: inout MotionObject) {
@@ -265,14 +299,14 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         object.isOutOfBounds = true
     }
 
-    private func handleHorizontalBoundaries(_ object: inout MotionObject) {
+    private func handlePlaneBoundaries(_ object: inout MotionObject) {
         handleTopBoundary(&object)
         handleBottomBoundary(&object)
     }
 
     internal func handleObjectBoundaries(_ object: inout MotionObject) {
-        handleVerticalBoundaries(&object)
-        handleHorizontalBoundaries(&object)
+        handleSideBoundaries(&object)
+        handlePlaneBoundaries(&object)
     }
 
     /*

@@ -299,10 +299,10 @@ extension CanvasViewModel {
     }
 
     func initCaptureObject() {
-        let velocity = Vector(horizontal: 5, vertical: 0)
+        let velocity = Vector(horizontal: 3, vertical: 0)
         let captureObject = CaptureObject(center:
                                             Point(xCoord: Constants.screenWidth / 2,
-                                                        yCoord: Constants.screenHeight - 100), name: "capture object", velocity: velocity)
+                                                  yCoord: Constants.gameHeight - 50), name: "capture object", velocity: velocity, width: Constants.defaultCircleDiameter * 4, height: Constants.defaultCircleDiameter * 2)
         self.captureObjects.removeAll()
         self.captureObjects.append(captureObject)
         initGameEngineAndDelegate()

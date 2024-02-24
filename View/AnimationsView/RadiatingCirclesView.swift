@@ -35,6 +35,7 @@ struct RadiatingCirclesView: View {
                          orange),
                         lineWidth: lineWidth
                     )
+                    // TODO: Fix invalid frame dimension negative or infinite
                     .frame(width: diameter - CGFloat(index * multiplier),
                            height: diameter - CGFloat(index * multiplier))
                     .opacity(isDisplay ? 1 : 0)

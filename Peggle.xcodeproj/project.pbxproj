@@ -37,7 +37,6 @@
 		916E67992B86D51B00960D5D /* PointConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67982B86D51B00960D5D /* PointConstants.swift */; };
 		916E679B2B86D52C00960D5D /* PaletteButtonsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679A2B86D52C00960D5D /* PaletteButtonsConstants.swift */; };
 		916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */; };
-		916E679F2B86D94600960D5D /* SharpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E679E2B86D94600960D5D /* SharpView.swift */; };
 		916E67A12B87829D00960D5D /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A02B87829D00960D5D /* Line.swift */; };
 		916E67A32B8848D000960D5D /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A22B8848D000960D5D /* Polygon.swift */; };
 		916E67A52B88798E00960D5D /* ModelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E67A42B88798E00960D5D /* ModelMap.swift */; };
@@ -131,7 +130,6 @@
 		916E67982B86D51B00960D5D /* PointConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointConstants.swift; sourceTree = "<group>"; };
 		916E679A2B86D52C00960D5D /* PaletteButtonsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteButtonsConstants.swift; sourceTree = "<group>"; };
 		916E679C2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkParticlesGeometryEffect.swift; sourceTree = "<group>"; };
-		916E679E2B86D94600960D5D /* SharpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpView.swift; sourceTree = "<group>"; };
 		916E67A02B87829D00960D5D /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		916E67A22B8848D000960D5D /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
 		916E67A42B88798E00960D5D /* ModelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelMap.swift; sourceTree = "<group>"; };
@@ -331,7 +329,6 @@
 				91F3826D2B7F1DE20012C0D1 /* ShootersView */,
 				91F3826C2B7F1DBD0012C0D1 /* ButtonsView */,
 				916E677D2B85EA3000960D5D /* CaptureObjectView.swift */,
-				916E679E2B86D94600960D5D /* SharpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -621,7 +618,6 @@
 				91517C0F2B7370E800F1E45D /* MotionObjectView.swift in Sources */,
 				914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */,
 				916E67A52B88798E00960D5D /* ModelMap.swift in Sources */,
-				916E679F2B86D94600960D5D /* SharpView.swift in Sources */,
 				91AD1B3B2B78D3FE009E6BC6 /* StateChangeObject.swift in Sources */,
 				91986EE32B5FC56B00D1C72C /* GameObject.swift in Sources */,
 				916E67A12B87829D00960D5D /* Line.swift in Sources */,
@@ -816,6 +812,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Peggle/Preview Content\"";
@@ -845,6 +842,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Peggle/Preview Content\"";

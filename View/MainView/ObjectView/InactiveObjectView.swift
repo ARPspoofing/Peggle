@@ -17,10 +17,12 @@ struct InactiveObjectView: View {
 
     var body: some View {
         ZStack {
+            // TODO: Remove magic string
             Image(name)
                 .resizable()
                 .scaledToFit()
                 .opacity(isHighlighted ? selectedAlpha : unselectedAlpha)
+                //.frame(width: name == "pyramidBlock" ? diameter * 2 : diameter, height: name == "pyramidBlock" ? diameter * 2 : diameter)
                 .frame(width: diameter, height: diameter)
                 .rotationEffect(.radians(orientation))
         }

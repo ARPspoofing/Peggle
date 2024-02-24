@@ -87,7 +87,7 @@ extension CanvasView {
     private var captureObjectDisplay: some View {
         ForEach(canvasViewModel.captureObjects.indices, id: \.self) { index in
             let object = canvasViewModel.captureObjects[index]
-            customMotionObjectView(object: object, index: index)
+            customCaptureObjectView(object: object, index: index, width: object.width, height: object.height)
         }
     }
 }
@@ -136,6 +136,13 @@ extension CanvasView {
 extension CanvasView {
     private func customMotionObjectView(object: GameObject, index: Int) -> some View {
         MotionObjectView()
+            .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+    }
+}
+
+extension CanvasView {
+    private func customCaptureObjectView(object: GameObject, index: Int, width: Double, height: Double) -> some View {
+        CaptureObjectView(width: width, height: height)
             .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
     }
 }

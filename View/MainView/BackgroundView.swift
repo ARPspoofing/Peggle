@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BackgroundView: View {
     @EnvironmentObject var viewModel: CanvasViewModel
-    private let background = "background"
+    private let background = "mainMap"
 
     var body: some View {
         GeometryReader { _ in
@@ -18,7 +18,7 @@ struct BackgroundView: View {
                 .scaledToFill()
                 .statusBar(hidden: true)
                 .frame(width: Constants.screenWidth,
-                       height: viewModel.isStartState ? Constants.gameHeight : Constants.canvasHeight)
+                       height: viewModel.isStartState ? Constants.gameHeight: Constants.canvasHeight)
         }
     }
 
