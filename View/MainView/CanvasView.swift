@@ -96,11 +96,10 @@ extension CanvasView {
 extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
-            if let triangle = object as? TriangularMovableObject {
-                let object = triangle
-
-
-                ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation, centerX: object.retrieveXCoord(), centerY: object.retrieveYCoord() /*top: object.top, left: object.left, right: object.right*/)
+        //if let triangle = object as? TriangularMovableObject {
+                //let object = triangle
+                
+                ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
                     .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
                     .onTapGesture {
                         guard !canvasViewModel.isStartState else {
@@ -130,63 +129,31 @@ extension CanvasView {
                                 } else {
                                     canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
                                 }
-
+                                
                             }
                             .onEnded { _ in }
                     )
+                /*
                 Circle()
                     .fill(Color.blue)
                     .frame(width: 10, height: 10)
                     .position(x: object.top.xCoord, y: object.top.yCoord)
-
+                
                 Circle()
                     .fill(Color.red)
                     .frame(width: 10, height: 10)
                     .position(x: object.left.xCoord, y: object.left.yCoord)
-
+                
                 Circle()
                     .fill(Color.green)
                     .frame(width: 10, height: 10)
                     .position(x: object.right.xCoord, y: object.right.yCoord)
-            }
-            
+                */
+                
+            //}
         }
     }
 }
-/*
-extension CanvasView {
-    private func customSharpView(object: GameObject, index: Int) -> some View {
-        ZStack {
-            SharpView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear)
-                .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
-                .onTapGesture {
-                    guard !canvasViewModel.isStartState else {
-                        return
-                    }
-                    if canvasViewModel.isDeleteState {
-                        canvasViewModel.removeAndRender(removeObjectIndex: index)
-                    }
-                }
-                .onLongPressGesture(minimumDuration: Constants.longDuration) {
-                    guard !canvasViewModel.isStartState else {
-                        return
-                    }
-                    canvasViewModel.removeAndRender(removeObjectIndex: index)
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            guard !canvasViewModel.isStartState else {
-                                return
-                            }
-                            canvasViewModel.updateTrianglePosition(index: index, dragLocation: value.location)
-                        }
-                        .onEnded { _ in }
-                )
-        }
-    }
-}
-*/
 
 extension CanvasView {
     private func customMotionObjectView(object: GameObject, index: Int) -> some View {

@@ -18,11 +18,6 @@ struct ObjectView: View {
     private var isActive = false
     private var diameter = 50.0
     private var orientation: CGFloat = 0.0
-    private var centerX: Double = 0.0
-    private var centerY: Double = 0.0
-    private var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    private var left: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    private var right: Point = Point(xCoord: 0.0, yCoord: 0.0)
 
     // TODO: Remove redundant init
     init(name: String, isHighlighted: Bool) {
@@ -40,7 +35,7 @@ struct ObjectView: View {
         self.diameter = width * 2
     }
 
-    init(name: String, isActive: Bool, isDisappear: Bool, width: CGFloat, orientation: CGFloat, centerX: Double, centerY: Double/*, top: Point, left: Point, right: Point*/) {
+    init(name: String, isActive: Bool, isDisappear: Bool, width: CGFloat, orientation: CGFloat) {
         self.name = name
         self.pegViewModel = ObjectViewModel(name: name)
         self.isHighlighted = true
@@ -48,13 +43,6 @@ struct ObjectView: View {
         self.isDisappear = isDisappear
         self.diameter = width * 2
         self.orientation = orientation
-        self.centerX = centerX
-        self.centerY = centerY
-        /*
-        self.top = top
-        self.left = left
-        self.right = right
-        */
     }
 
     var body: some View {
@@ -75,14 +63,7 @@ struct ObjectView: View {
                     selectedAlpha: pegViewModel.selectedAlpha,
                     unselectedAlpha: pegViewModel.unselectedAlpha,
                     diameter: diameter,
-                    orientation: orientation,
-                    centerX: centerX,
-                    centerY: centerY
-                    /*
-                    top: top,
-                    left: left,
-                    right: right
-                    */
+                    orientation: orientation
                 )
             }
         }
