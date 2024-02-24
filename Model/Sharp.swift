@@ -8,6 +8,7 @@
 // TODO: Encapsulate top, left, right into a class, make construction of top, left, and right neater
 // TODO: Make everything private
 // TODO: Fix two sharp rotated object gap by removing gap, and small overlap
+// TODO: Move everything to PhysicsEngine or Intersection Detector
 import SwiftUI
 import Foundation
 
@@ -48,32 +49,21 @@ class Sharp: GameObject, TriangularMovableObject {
         }
     }
 
-    init(center: Point, name: String, circumradius: Double) {
+    init(center: Point, name: String, circumradius: Double, orientation: Double) {
         super.init(center: center, name: name)
         self.circumradius = circumradius
-        initPoints()
-        initEdges()
-        initialTop = top
-        initialLeft = left
-        initialRight = right
+        self.orientation = orientation
+        initPointsAndEdges()
     }
 
     override init(name: String) {
         super.init(name: name)
-        initPoints()
-        initEdges()
-        initialTop = top
-        initialLeft = left
-        initialRight = right
+        initPointsAndEdges()
     }
 
     override init(center: Point, name: String) {
         super.init(center: center, name: name)
-        initPoints()
-        initEdges()
-        initialTop = top
-        initialLeft = left
-        initialRight = right
+        initPointsAndEdges()
     }
 
     required init(from decoder: Decoder) throws {
@@ -92,6 +82,14 @@ class Sharp: GameObject, TriangularMovableObject {
         let bottomEdge = Line(start: left, end: right)
         let topRightEdge = Line(start: right, end: top)
         edges = [topLeftEdge, bottomEdge, topRightEdge]
+    }
+
+    func initPointsAndEdges() {
+        initPoints()
+        initEdges()
+        initialTop = top
+        initialLeft = left
+        initialRight = right
     }
 
     override func encode(to encoder: Encoder) throws {
@@ -152,6 +150,6 @@ class Sharp: GameObject, TriangularMovableObject {
     }
 
     override func makeDeepCopy() -> Sharp {
-        Sharp(center: self.center, name: self.name, circumradius: self.circumradius)
+        Sharp(center: self.center, name: self.name, circumradius: self.circumradius, orientation: self.orientation)
     }
 }

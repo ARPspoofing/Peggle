@@ -18,7 +18,7 @@ struct ResizeButtonView: View {
             .contentShape(Circle())
             .clipped()
             .contentShape(Circle())
-            .frame(maxWidth: constants.defaultCircleRadius,
-                   maxHeight: constants.defaultCircleRadius, alignment: .trailing)
+            .frame(width: constants.defaultCircleRadius / 2,
+                   height: constants.defaultCircleRadius / 2, alignment: .trailing)
     }
 }

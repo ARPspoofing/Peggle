@@ -53,6 +53,7 @@ struct ObjectView: View {
                     isDisappear: isDisappear,
                     isShowingCircle: canvasViewModel.isShowingCircle,
                     diameter: diameter,
+                    orientation: orientation,
                     isDoneShooting: $canvasViewModel.isDoneShooting,
                     isAnimating: $canvasViewModel.isAnimating
                 )

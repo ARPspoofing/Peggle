@@ -12,32 +12,38 @@ import SwiftUI
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
+    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, Constants.sharpObject]
+    let modelMap = ModelMap()
 
     @Published var gameObjects: [GameObject]
     @Published var motionObjects: [MotionObject]
     @Published var captureObjects: [CaptureObject]
     @Published var selectedObject: String?
+
     @Published var isDeleteState = false
     @Published var isResizeState = false
     @Published var isRotateState = false
     @Published var isStartState = false
+
     @Published private(set) var shooterRotation: Double = .zero
     @Published var isShooting = false
     @Published var isDoneShooting = false
     @Published var isShowingCircle = true
     @Published var isAnimating = false
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
+
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
     let speedUpFactor = 10.0
     let motionObjectName = Constants.motionObject
 
-    var isDelegated = false
+    let initialWidth: Double = 25.0
+    let maxWidth: Double = 50.0
+    let minDistance: Double = 0.0
+    let maxDistance: Double = 200.0
 
+    var isDelegated = false
     @Published var gameEngine: GameEngine?
     private(set) var displayLink: CADisplayLink?
-
-    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, Constants.sharpObject]
-    let modelMap = ModelMap()
 
     init() {
         self.gameObjects = []
@@ -56,16 +62,21 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         initGameEngineAndDelegate()
     }
 
+    func unselectObjects() {
+        selectedObject = nil
+    }
+
+    func unselectStateButtons() {
+        isDeleteState = false
+        isRotateState = false
+        isResizeState = false
+    }
+
     func untoggleDelete() {
         guard !isDeleteState else {
             isDeleteState.toggle()
             return
         }
-    }
-
-    func toggleDeleteState() {
-        selectedObject = nil
-        isDeleteState.toggle()
     }
 
     func untoggleResize() {
@@ -75,11 +86,6 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
     }
 
-    func toggleResizeState() {
-        selectedObject = nil
-        isResizeState.toggle()
-    }
-
     func untoggleRotate() {
         guard !isRotateState else {
             isRotateState.toggle()
@@ -87,8 +93,24 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
     }
 
+    func toggleDeleteState() {
+        unselectObjects()
+        isResizeState = false
+        isRotateState = false
+        isDeleteState.toggle()
+    }
+
+    func toggleResizeState() {
+        unselectObjects()
+        isDeleteState = false
+        isRotateState = false
+        isResizeState.toggle()
+    }
+
     func toggleRotateState() {
-        selectedObject = nil
+        unselectObjects()
+        isDeleteState = false
+        isResizeState = false
         isRotateState.toggle()
     }
 
@@ -132,7 +154,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     }
 
     func tapObject(_ tappedObject: String) {
-        isDeleteState = false
+        unselectStateButtons()
         if tappedObject == selectedObject {
             selectedObject = nil
         } else {
@@ -142,7 +164,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     // TODO: Allow dynamic half width
     func addObject(_ point: Point, _ selectedObject: String) {
-        let objectToInsert: GameObject = modelMap.getEntity(center: point, type: selectedObject, halfWidth: Constants.defaultHalfWidth)
+        let objectToInsert: GameObject = modelMap.getEntity(center: point, type: selectedObject, halfWidth: Constants.defaultHalfWidth, orientation: 0.0)
             guard checkCanInsert(objectToInsert) else {
                 return
             }
@@ -163,28 +185,27 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects[index] = object
     }
 
-    // TODO: Break up into smaller functions
+    func calcDistance(center: Point, point: CGPoint) -> Double {
+        let newPoint = Point(xCoord: point.x, yCoord: point.y)
+        let deltaX = newPoint.xCoord - center.xCoord
+        let deltaY = newPoint.yCoord - center.yCoord
+        return sqrt(deltaX * deltaX + deltaY * deltaY)
+    }
+
+    func scaleWidth(center: Point, point: CGPoint) -> Double {
+        let distance = calcDistance(center: center, point: point)
+        let distanceRange = maxDistance - minDistance
+        let widthRange = maxWidth - initialWidth
+        let normalizedDistance = (distance - minDistance) / distanceRange
+        let scaledWidth = initialWidth + widthRange * normalizedDistance
+        return min(scaledWidth, maxWidth)
+    }
+
     func updateObjectWidth(index: Int, dragLocation: CGPoint) {
         let object = gameObjects[index]
         let objectDeepCopy = object.makeDeepCopy()
-        let newPoint = Point(xCoord: dragLocation.x, yCoord: dragLocation.y)
 
-        let deltaX = newPoint.xCoord - object.center.xCoord
-        let deltaY = newPoint.yCoord - object.center.yCoord
-        let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
-
-        let initialWidth: Double = 25.0
-        let maxWidth: Double = 50.0
-
-        let minDistance: Double = 0.0
-        let maxDistance: Double = 200.0
-
-        let scaledWidth = initialWidth + (maxWidth - initialWidth) * (distance - minDistance) / (maxDistance - minDistance)
-
-        let finalWidth = min(scaledWidth, maxWidth)
-
-        print("Scaled width:", finalWidth)
-
+        let finalWidth = scaleWidth(center: object.center, point: dragLocation)
         objectDeepCopy.changeHalfWidth(newHalfWidth: finalWidth)
 
         guard checkCanDrag(objectDeepCopy, index) else {
@@ -201,17 +222,21 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         shooterRotation = angleInRadians
     }
 
+    func calcAngle(from center: Point, to point: CGPoint) -> Double {
+        let newPoint = Point(xCoord: point.x, yCoord: point.y)
+        let axisVector = Vector(horizontal: center.xCoord, vertical: center.yCoord)
+        let touchVector = Vector(horizontal: newPoint.xCoord - center.xCoord,
+                                 vertical: newPoint.yCoord - center.yCoord)
+        return axisVector.getAngleInRadians(with: touchVector)
+    }
+
     func updateObjectOrientation(index: Int, dragLocation: CGPoint) {
         untoggleDelete()
         let object = gameObjects[index]
         let objectDeepCopy = object.makeDeepCopy()
-        let newPoint = Point(xCoord: dragLocation.x, yCoord: dragLocation.y)
-
-        let axisVector = Vector(horizontal: object.retrieveXCoord(), vertical: object.retrieveYCoord())
-        let touchVector = Vector(horizontal: newPoint.xCoord - object.retrieveXCoord(), vertical: newPoint.yCoord - object.retrieveYCoord())
-        let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
-
+        let angleInRadians = calcAngle(from: object.center, to: dragLocation)
         objectDeepCopy.changeOrientation(to: angleInRadians)
+
         guard checkCanDrag(objectDeepCopy, index) else {
             return
         }
@@ -220,6 +245,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     }
 }
 
+// TODO: Make this neater
 extension CanvasViewModel {
     func initGameEngineAndDelegate() {
         self.gameEngine?.stop()

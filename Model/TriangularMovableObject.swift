@@ -126,7 +126,6 @@ extension TriangularMovableObject {
     }
 
     func checkNoIntersection(with gameObject: GameObject) -> Bool {
-        print("check no intersection within triangle")
         if let sharp = gameObject as? TriangularMovableObject {
             return isNotIntersecting(with: sharp)
         } else if let circle = gameObject as? Peg {
@@ -158,17 +157,6 @@ extension TriangularMovableObject {
     func checkTopBorder() -> Bool {
         self.center.yCoord - self.circumradius > 0
     }
-
-    /*
-    override func checkBorders() -> Bool {
-        checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
-    }
-
-    override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        print("triangle check being called")
-        return checkNoIntersection(with: gameObject) && checkBorders()
-    }
-    */
 
     func getArea() -> Double {
         0.5 * base * height

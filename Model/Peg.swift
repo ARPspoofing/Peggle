@@ -28,9 +28,10 @@ class Peg: GameObject {
         super.init(center: center, name: name)
     }
 
-    init(center: Point, name: String, radius: Double) {
+    init(center: Point, name: String, radius: Double, orientation: Double) {
         super.init(center: center, name: name)
         self.radius = radius
+        self.orientation = orientation
     }
 
     required init(from decoder: Decoder) throws {
@@ -50,7 +51,7 @@ class Peg: GameObject {
     }
 
     override func makeDeepCopy() -> Peg {
-        Peg(center: self.center, name: self.name, radius: self.radius)
+        Peg(center: self.center, name: self.name, radius: self.radius, orientation: self.orientation)
     }
 }
 

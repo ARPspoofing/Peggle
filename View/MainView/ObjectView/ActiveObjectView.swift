@@ -13,6 +13,7 @@ struct ActiveObjectView: View {
     var isDisappear: Bool
     var isShowingCircle: Bool
     var diameter: CGFloat
+    var orientation: Double
     var activeName = "Active"
     @Binding var isDoneShooting: Bool
     @Binding var isAnimating: Bool
@@ -26,5 +27,6 @@ struct ActiveObjectView: View {
             isDoneShooting: $isDoneShooting,
             isAnimating: $isAnimating
         )
+        .rotationEffect(.radians(orientation))
     }
 }

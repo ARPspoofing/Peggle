@@ -79,7 +79,8 @@ class CoreDataManager: ObservableObject {
                 return nil
             }
             let center = Point(xCoord: pointEntity.xCoord, yCoord: pointEntity.yCoord)
-            return modelMap.getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth)
+            let orientation = gameEntity.orientation
+            return modelMap.getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth, orientation: orientation)
         }
         return gameObjects.isEmpty ? nil : gameObjects
     }
