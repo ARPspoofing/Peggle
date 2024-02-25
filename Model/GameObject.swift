@@ -15,8 +15,13 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     var center = Point(xCoord: 0.0, yCoord: 0.0)
     // TODO: Fix orientation and halfWidth, add init for width
     var orientation: Double = 0.0
-    var halfWidth: Double = Constants.defaultHalfWidth
+    @objc dynamic var halfWidth: Double = Constants.defaultHalfWidth
     var initialTop: Point = Point(xCoord: 0.0, yCoord: 0.0)
+
+    // TODO: Abstract this out
+    var isBlast = false
+    var isSpook = false
+
 
     var isActive = false
 

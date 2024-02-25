@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
+    @State private var isAnimating = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -55,6 +56,7 @@ extension CanvasView {
     }
 }
 
+/*
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
@@ -73,6 +75,23 @@ extension CanvasView {
         )
     }
 }
+*/
+
+extension CanvasView {
+    private var gameObjectsDisplay: some View {
+        ZStack {
+            ForEach(canvasViewModel.gameObjects, id: \.self) { object in
+                if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
+                    Group {
+                        customObjectView(object: object, index: index)
+                    }
+                    .transition(.opacity.animation(.easeInOut(duration: canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ? 1.5 : (canvasViewModel.isStartState && canvasViewModel.isDoneShooting ? 1.5 : 0.0))))
+                }
+            }
+        }
+    }
+}
+
 
 extension CanvasView {
     private var motionObjectDisplay: some View {
@@ -95,40 +114,40 @@ extension CanvasView {
 extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
-            ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
-                .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
-                .onTapGesture {
-                    guard !canvasViewModel.isStartState else {
-                        return
+                ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
+                    .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+                    .onTapGesture {
+                        guard !canvasViewModel.isStartState else {
+                            return
+                        }
+                        if canvasViewModel.isDeleteState {
+                            canvasViewModel.removeAndRender(removeObjectIndex: index)
+                        }
                     }
-                    if canvasViewModel.isDeleteState {
+                    .onLongPressGesture(minimumDuration: Constants.longDuration) {
+                        guard !canvasViewModel.isStartState else {
+                            return
+                        }
                         canvasViewModel.removeAndRender(removeObjectIndex: index)
                     }
-                }
-                .onLongPressGesture(minimumDuration: Constants.longDuration) {
-                    guard !canvasViewModel.isStartState else {
-                        return
-                    }
-                    canvasViewModel.removeAndRender(removeObjectIndex: index)
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            guard !canvasViewModel.isStartState else {
-                                return
-                            }
-                            if canvasViewModel.isResizeState {
-                                canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
-                            } else if canvasViewModel.isRotateState {
-                                canvasViewModel.updateObjectOrientation(index: index,
-                                                                        dragLocation: value.location)
-                            } else {
-                                canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
-                            }
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                guard !canvasViewModel.isStartState else {
+                                    return
+                                }
+                                if canvasViewModel.isResizeState {
+                                    canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
+                                } else if canvasViewModel.isRotateState {
+                                    canvasViewModel.updateObjectOrientation(index: index,
+                                                                            dragLocation: value.location)
+                                } else {
+                                    canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
+                                }
 
-                        }
-                        .onEnded { _ in }
-                )
+                            }
+                            .onEnded { _ in }
+                    )
         }
     }
 }

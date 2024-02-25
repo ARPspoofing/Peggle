@@ -168,7 +168,11 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
             guard checkCanInsert(objectToInsert) else {
                 return
             }
-            gameObjects.append(objectToInsert)
+            // TODO: Make mapping for selectedObject to powerup
+        if selectedObject == "actionObject" {
+            objectToInsert.isBlast = true
+        }
+        gameObjects.append(objectToInsert)
     }
 
     func updateObjectPosition(index: Int, dragLocation: CGPoint) {

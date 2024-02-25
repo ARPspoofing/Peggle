@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ParticlesOverlay: View {
+    var isBlast: Bool
+    @Binding var isDoneShooting: Bool
     @State private var shouldAnimate = false
     var initialDiameter: CGFloat = 60
     var additionalPadding: CGFloat = 20
@@ -20,7 +22,7 @@ struct ParticlesOverlay: View {
             Circle()
                 .fill(Color.red)
                 .frame(width: additionalPadding, height: additionalPadding)
-                .modifier(ParticlesModifier())
+                .modifier(ParticlesModifier(isBlast: isBlast, isDoneShooting: $isDoneShooting))
         }
     }
 }

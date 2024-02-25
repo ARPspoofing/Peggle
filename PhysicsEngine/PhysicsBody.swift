@@ -6,6 +6,7 @@
 //
 
 class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
+    // TODO: Remove dependency on game object. Just return new velocity and position
     private(set) var object: GameObject
     private(set) var position: Vector
     private(set) var mass = 8.0
@@ -69,7 +70,12 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
                                      collider: inout PhysicsBody, collidee: inout PhysicsBody) {
         let resultantNormVel = resultantNormVec(normVec: normVel, src: collider, dst: collidee)
         let resultantTanVel = resultantTanVector(tanVec: tanVel, src: collider)
-        collider.velocity = resultantNormVel.add(vector: resultantTanVel)
+        if collidee.object.isBlast {
+            collider.velocity = resultantNormVel.add(vector: resultantTanVel)
+            collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -10))
+        } else {
+            collider.velocity = resultantNormVel.add(vector: resultantTanVel)
+        }
     }
 
     func doElasticCollision(collider: inout PhysicsBody, collidee: inout PhysicsBody) {

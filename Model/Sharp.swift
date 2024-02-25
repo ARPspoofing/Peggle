@@ -70,6 +70,16 @@ class Sharp: GameObject, TriangularMovableObject {
         try super.init(from: decoder)
     }
 
+    deinit {
+        removeObserver(self, forKeyPath: #keyPath(halfWidth))
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(halfWidth) {
+            resizePoints()
+        }
+    }
+
     func initPoints() {
         top = center.add(vector: Vector(horizontal: 0.0, vertical: -circumradius))
         initialTop = top
@@ -90,6 +100,7 @@ class Sharp: GameObject, TriangularMovableObject {
         initialTop = top
         initialLeft = left
         initialRight = right
+        addObserver(self, forKeyPath: #keyPath(halfWidth), options: [.old, .new], context: nil)
     }
 
     override func encode(to encoder: Encoder) throws {
@@ -98,6 +109,12 @@ class Sharp: GameObject, TriangularMovableObject {
 
     override func changeCenter(newCenter: Point) {
         center.setCartesian(xCoord: newCenter.xCoord, yCoord: newCenter.yCoord)
+        initPoints()
+        changeOrientation(to: orientation)
+        initEdges()
+    }
+
+    func resizePoints() {
         initPoints()
         changeOrientation(to: orientation)
         initEdges()

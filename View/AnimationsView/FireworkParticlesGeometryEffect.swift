@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 
 struct FireworkParticlesGeometryEffect: GeometryEffect, ViewModifier {
+    var isBlast: Bool
     var time: Double
-    var speed = Double.random(in: 20 ... 100)
+    var speed = 20.0 /*Double.random(in: 20 ... 100)*/
     var direction = Double.random(in: -Double.pi ... Double.pi)
     var translationDivisor = 1.5
 
@@ -19,8 +20,12 @@ struct FireworkParticlesGeometryEffect: GeometryEffect, ViewModifier {
         set { time = newValue }
     }
     func effectValue(size: CGSize) -> ProjectionTransform {
-        let xTranslation = (speed * cos(direction) * time) / translationDivisor
-        let yTranslation = (speed * sin(direction) * time) / translationDivisor
+        var xTranslation = (speed * cos(direction) * time) * 2
+        var yTranslation = (speed * sin(direction) * time) * 2
+        if !isBlast {
+            xTranslation = xTranslation / translationDivisor
+            yTranslation = yTranslation / translationDivisor
+        }
         let affineTranslation = CGAffineTransform(translationX: xTranslation, y: yTranslation)
         return ProjectionTransform(affineTranslation)
     }

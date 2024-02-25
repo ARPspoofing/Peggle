@@ -21,10 +21,12 @@ struct InactiveObjectView: View {
             Image(name)
                 .resizable()
                 .scaledToFit()
-                .opacity(isHighlighted ? selectedAlpha : unselectedAlpha)
-                //.frame(width: name == "pyramidBlock" ? diameter * 2 : diameter, height: name == "pyramidBlock" ? diameter * 2 : diameter)
+                .opacity(isHighlighted ? selectedAlpha : unselectedAlpha)            
                 .frame(width: diameter, height: diameter)
                 .rotationEffect(.radians(orientation))
+                //TODO: Fix glow later
+                //.shadow(color: Color.yellow.opacity(1), radius: 20, x: 0, y: 0)
+                //.shadow(color: Color.white, radius: 20, x: 0, y: 0)
         }
     }
 }

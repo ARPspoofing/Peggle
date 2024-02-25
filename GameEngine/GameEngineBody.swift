@@ -16,6 +16,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     internal let gravityVelocity = Vector(horizontal: 0.0, vertical: 0.5)
     internal let gameObjectMass = 100.0
     internal let intersectThrsh = 10
+    internal let blastRadius = 300.0
 
     var motionObjects: [MotionObject]
     var gameObjects: [GameObject]
@@ -180,6 +181,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    // TODO: Remove all unncessary guard
     private func checkAndResetOverlap(isIntersect: inout Bool) {
         for innerObject in gameObjects {
             guard let peg = innerObject as? GameObject else {
@@ -195,6 +197,14 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     internal func handleCollision(motionObject: inout MotionObject, gameObject: GameObject) {
+
+        if gameObject.isBlast {
+            var blastObjects: [GameObject] = getBlastObjects(from: gameObject)
+            setObjectsActive(gameObjects: &blastObjects)
+        }
+
+
+        // TODO: Do not make physics body update the object position. Update at game engine
         var gameObjectPhysics = PhysicsBody(object: gameObject, position: gameObject.center, mass: gameObjectMass)
         var motionObjectPhysics = PhysicsBody(object: motionObject, position: motionObject.center)
 
@@ -225,6 +235,23 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    func getBlastObjects(from object: GameObject) -> [GameObject] {
+        var blastObjects: [GameObject] = []
+        for gameObject in gameObjects {
+            let distance = object.center.distance(to: gameObject.center)
+            if distance <= blastRadius {
+                blastObjects.append(gameObject)
+            }
+        }
+        return blastObjects
+    }
+
+    func setObjectsActive(gameObjects: inout [GameObject]) {
+        for object in gameObjects {
+            object.isActive = true
+        }
+    }
+
     // TODO: Rename to updateGamePosition and have updateBall and updateCapture inside
     @objc func updateBallPosition() {
         //print("motion object length: ", motionObjects.count, "capture object length: ", captureObjects.count)
@@ -238,6 +265,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             motionObjects[index] = object
             addGravity(to: &object)
         }
+        // TODO: Add multiple frozen capture objects (vel = 0) when all pegs are eliminated
         for index in captureObjects.indices {
             var object: CaptureObject = captureObjects[index]
             object.center = object.center.add(vector: object.velocity)

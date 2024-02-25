@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		911EB4B92B8B4449009B206E /* BlastObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4B82B8B4449009B206E /* BlastObject.swift */; };
 		914BF7372B7F7FF700032478 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF7362B7F7FF700032478 /* GameEngineTests.swift */; };
 		914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF7382B80744600032478 /* CollisionGameEngine.swift */; };
 		914BF73B2B8074AE00032478 /* GravityGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF73A2B8074AE00032478 /* GravityGameEngine.swift */; };
@@ -100,6 +101,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		911EB4B82B8B4449009B206E /* BlastObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlastObject.swift; sourceTree = "<group>"; };
 		914BF7362B7F7FF700032478 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		914BF7382B80744600032478 /* CollisionGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionGameEngine.swift; sourceTree = "<group>"; };
 		914BF73A2B8074AE00032478 /* GravityGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityGameEngine.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				916E67A02B87829D00960D5D /* Line.swift */,
 				916E67A22B8848D000960D5D /* Polygon.swift */,
 				916E67A42B88798E00960D5D /* ModelMap.swift */,
+				911EB4B82B8B4449009B206E /* BlastObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				916E67AB2B88E69C00960D5D /* RotateButtonView.swift in Sources */,
 				91517C112B7375B100F1E45D /* MotionObject.swift in Sources */,
 				91986EC62B5E1DC500D1C72C /* CanvasView.swift in Sources */,
+				911EB4B92B8B4449009B206E /* BlastObject.swift in Sources */,
 				919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */,
 				91986ED82B5EC57900D1C72C /* ObjectViewModel.swift in Sources */,
 				91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */,
