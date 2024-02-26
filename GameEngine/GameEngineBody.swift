@@ -16,13 +16,16 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     internal let gravityVelocity = Vector(horizontal: 0.0, vertical: 0.5)
     internal let gameObjectMass = 100.0
     internal let intersectThrsh = 10
-    internal let blastRadius = 300.0
+    internal let blastRadius = 100.0
 
     var motionObjects: [MotionObject]
     var gameObjects: [GameObject]
     var captureObjects: [CaptureObject]
 
     var isUpdating = false
+
+    // TODO: Abstract this
+    var activeIdx = 1
 
     init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject], captureObjects: inout [CaptureObject]) {
         self.motionObjects = motionObjects
@@ -113,7 +116,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     private func handleFirstIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        handleCollision(motionObject: &object, gameObject: peg)
+        handleCollision(motionObject: &object, gameObject: &peg)
         peg.isHandleOverlap = true
         object.isHandleOverlap = true
     }
@@ -196,10 +199,11 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         isHandleOverlapObjects(motionObject: &object, isIntersect: &isIntersect)
     }
 
-    internal func handleCollision(motionObject: inout MotionObject, gameObject: GameObject) {
-
-        if gameObject.isBlast {
-            var blastObjects: [GameObject] = getBlastObjects(from: gameObject)
+    internal func handleCollision(motionObject: inout MotionObject, gameObject: inout GameObject) {
+        //gameObject.hasBlasted = true
+        if gameObject.isBlast && !gameObject.hasBlasted {
+            print("has blasted: ", gameObject.hasBlasted)
+            var blastObjects: [GameObject] = getBlastObjects(from: &gameObject)
             setObjectsActive(gameObjects: &blastObjects)
         }
 
@@ -235,11 +239,19 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    func getBlastObjects(from object: GameObject) -> [GameObject] {
+    func getBlastObjects(from object: inout GameObject) -> [GameObject] {
+        guard !object.hasBlasted else {
+            return []
+        }
+        object.hasBlasted = true
+        print("set blasted: ", object.hasBlasted)
         var blastObjects: [GameObject] = []
         for gameObject in gameObjects {
             let distance = object.center.distance(to: gameObject.center)
             if distance <= blastRadius {
+                if gameObject.isBlast {
+                    gameObject.hasBlasted = true
+                }
                 blastObjects.append(gameObject)
             }
         }
@@ -247,8 +259,16 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     func setObjectsActive(gameObjects: inout [GameObject]) {
+        /*
+        for (index, object) in gameObjects.enumerated() {
+            object.isActive = true
+            object.activeIdx = index + 1
+        }
+        */
         for object in gameObjects {
             object.isActive = true
+            object.activeIdx = activeIdx
+            activeIdx += 1
         }
     }
 

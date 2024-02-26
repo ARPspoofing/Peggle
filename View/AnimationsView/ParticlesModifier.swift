@@ -17,12 +17,11 @@ struct ParticlesModifier: ViewModifier {
     let rotationSpeedUp = 80.0
 
     func body(content: Content) -> some View {
-        let particleCount = isBlast ? 50 : 30
         ZStack {
-            ForEach(0..<particleCount, id: \.self) { _ in
+            ForEach(0..<30, id: \.self) { _ in
                 content
                     .hueRotation(Angle(degrees: time * rotationSpeedUp))
-                    .scaleEffect(isBlast ? (isDoneShooting ? 0.3 : 0.7) : 0.3)
+                    .scaleEffect(0.1)
                     .modifier(FireworkParticlesGeometryEffect(isBlast: isBlast, time: time))
                     .opacity(((duration - time) / duration))
             }

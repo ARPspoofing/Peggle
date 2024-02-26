@@ -21,6 +21,8 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     // TODO: Abstract this out
     var isBlast = false
     var isSpook = false
+    var hasBlasted = false
+    var activeIdx = 0
 
 
     var isActive = false

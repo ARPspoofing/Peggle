@@ -20,8 +20,8 @@ struct FireworkParticlesGeometryEffect: GeometryEffect, ViewModifier {
         set { time = newValue }
     }
     func effectValue(size: CGSize) -> ProjectionTransform {
-        var xTranslation = (speed * cos(direction) * time) * 2
-        var yTranslation = (speed * sin(direction) * time) * 2
+        var xTranslation = (speed * cos(direction) * time) * 1.2
+        var yTranslation = (speed * sin(direction) * time) * 1.2
         if !isBlast {
             xTranslation = xTranslation / translationDivisor
             yTranslation = yTranslation / translationDivisor

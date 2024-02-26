@@ -34,6 +34,13 @@ class Peg: GameObject {
         self.orientation = orientation
     }
 
+    init(center: Point, name: String, radius: Double, orientation: Double, isBlast: Bool) {
+        super.init(center: center, name: name)
+        self.radius = radius
+        self.orientation = orientation
+        self.isBlast = isBlast
+    }
+
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }

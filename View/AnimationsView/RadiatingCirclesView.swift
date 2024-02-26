@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+// TODO: Fix radiating circles when shoot cannon while animating
 struct RadiatingCirclesView: View {
     let isDisplay: Bool
     let name: String
@@ -39,6 +41,7 @@ struct RadiatingCirclesView: View {
                     .frame(width: diameter - CGFloat(index * multiplier),
                            height: diameter - CGFloat(index * multiplier))
                     .opacity(isDisplay ? 1 : 0)
+                    //.opacity(1)
                     .animation(Animation.linear(duration: animationDuration), value: isDisplay)
             }
         }

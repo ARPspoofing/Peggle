@@ -9,6 +9,8 @@ import SwiftUI
 
 // TODO: Massive tidy up
 
+// TODO: Currently, isAnimating only toggles off when all is cleared. Need to keep track of the active count
+
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
@@ -30,6 +32,10 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isDoneShooting = false
     @Published var isShowingCircle = true
     @Published var isAnimating = false
+    @Published var activeCount = 0
+    @Published var a = 1.0
+    @Published var activeIndex: [Int] = []
+    @Published var isClear: Bool = false
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
 
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
@@ -169,9 +175,11 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
                 return
             }
             // TODO: Make mapping for selectedObject to powerup
+        /*
         if selectedObject == "actionObject" {
             objectToInsert.isBlast = true
         }
+        */
         gameObjects.append(objectToInsert)
     }
 
@@ -266,8 +274,19 @@ extension CanvasViewModel {
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
         isShooting = !motionObjects.isEmpty
         if !isShooting {
-            self.gameObjects = self.gameObjects.filter { !$0.isActive }
+            activeCount = gameObjects.filter { $0.isActive }.count
+            if activeCount > 0 {
+                activeIndex = gameObjects.enumerated().compactMap { $0.element.isActive ? $0.offset : nil }
+                for idx in activeIndex {
+                    print("idx", idx)
+                }
+            }
+            if activeCount > 0 {
+                //print("active count: ", activeCount)
+            }
+            //print("game object count", self.gameObjects.count)
             isDoneShooting = true
+            self.gameObjects = self.gameObjects.filter { !$0.isActive }
         }
         let captureObject = captureObjects.first
         captureObjects.removeAll()
@@ -277,6 +296,15 @@ extension CanvasViewModel {
         captureObjects.append(toAppend)
         objectWillChange.send()
     }
+
+    func findPosition(of number: Int) -> Int {
+        if let index = activeIndex.firstIndex(where: { $0 == number }) {
+            return index + 1
+        } else {
+            return 0
+        }
+    }
+
 
     func getBallVector() -> Vector {
         let xComponent = cos(shooterRotation)
@@ -290,11 +318,13 @@ extension CanvasViewModel {
 
     func shootBall() {
         guard !isShooting, !isAnimating else {
+            print("guarding!")
             return
         }
         isShooting = true
         isDoneShooting = false
         isShowingCircle = true
+        isClear = true
         let center = shooterPosition
         let velocity = speedUpVelocity(factor: speedUpFactor, vector: getBallVector())
         let motionObject = MotionObject(center: center, name: motionObjectName, velocity: velocity)

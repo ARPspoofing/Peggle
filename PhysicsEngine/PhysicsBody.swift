@@ -72,7 +72,10 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
         let resultantTanVel = resultantTanVector(tanVec: tanVel, src: collider)
         if collidee.object.isBlast {
             collider.velocity = resultantNormVel.add(vector: resultantTanVel)
-            collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -10))
+            if !collidee.object.hasBlasted {
+                collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -3))
+            }
+            collidee.object.hasBlasted = true
         } else {
             collider.velocity = resultantNormVel.add(vector: resultantTanVel)
         }

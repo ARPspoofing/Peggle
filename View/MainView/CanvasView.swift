@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
-    @State private var isAnimating = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -77,6 +76,7 @@ extension CanvasView {
 }
 */
 
+/*
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
@@ -91,7 +91,40 @@ extension CanvasView {
         }
     }
 }
+*/
 
+extension CanvasView {
+    private var gameObjectsDisplay: some View {
+        ZStack {
+            ForEach(canvasViewModel.gameObjects.indices, id: \.self) { index in
+                if let object = canvasViewModel.gameObjects[index] {
+                    Group {
+                        customObjectView(object: object, index: index)
+                            .transition(
+                                .opacity.animation(
+                                    Animation.easeInOut(duration: canvasViewModel.isStartState ? 0.5 : 0.0)
+                                        .delay({
+                                            let delayValue = Double(object.activeIdx)
+                                            return delayValue
+                                        }())
+                                )
+                            )
+
+                    }
+                }
+            }
+        }
+        .onAppear {
+            if canvasViewModel.isStartState {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(canvasViewModel.activeCount) * 0.4) {
+                    withAnimation {
+                        canvasViewModel.isAnimating = false
+                    }
+                }
+            }
+        }
+    }
+}
 
 extension CanvasView {
     private var motionObjectDisplay: some View {

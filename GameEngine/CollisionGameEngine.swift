@@ -11,6 +11,6 @@ protocol CollisionGameEngine {
     func handleObjectBoundaries(_ object: inout MotionObject)
     func handleIntersection(for peg: inout GameObject, and object: inout MotionObject)
     func handleObjectCollisions(_ object: inout MotionObject)
-    func handleCollision(motionObject: inout MotionObject, gameObject: GameObject)
+    func handleCollision(motionObject: inout MotionObject, gameObject: inout GameObject)
     func updateObjectPosition(_ object: inout MotionObject)
 }
