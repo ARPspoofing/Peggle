@@ -79,6 +79,10 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
         orientation = end
     }
 
+    func distance(to object: GameObject) -> Double {
+        self.center.distance(to: object.center)
+    }
+
     func makeDeepCopy() -> GameObject {
         GameObject(center: self.center, name: self.name)
     }

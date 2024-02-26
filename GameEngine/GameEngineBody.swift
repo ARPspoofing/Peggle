@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+// TODO: When blast, objects still not transparent. Need to set to disappear
 // TODO: Fix bug when animating, should not be able to shoot
 // TODO: When hit the last orange gameObject, should zoom in
 class GameEngineBody: CollisionGameEngine, GravityGameEngine {
@@ -74,41 +74,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         handlePlaneBoundaries(&object)
     }
 
-    // TODO: Combine Motion and Capture to abide by DRY
-
-    /*
-    private func handleSideBoundaries(_ object: inout CaptureObject) {
-        guard !object.checkLeftBorder() || !object.checkRightBorder() else {
-            return
-        }
-        object.reverseHorizontalVelocity()
-    }
-
-    private func handleTopBoundary(_ object: inout CaptureObject) {
-        guard !object.checkTopBorder() else {
-            return
-        }
-        object.reverseVerticalVelocity()
-    }
-
-    private func handleBottomBoundary(_ object: inout CaptureObject) {
-        guard !object.checkBottomBorderGame() else {
-            return
-        }
-        object.isOutOfBounds = true
-    }
-
-    private func handlePlaneBoundaries(_ object: inout CaptureObject) {
-        handleTopBoundary(&object)
-        handleBottomBoundary(&object)
-    }
-
-    internal func handleObjectBoundaries(_ object: inout CaptureObject) {
-        handleSideBoundaries(&object)
-        handlePlaneBoundaries(&object)
-    }
-    */
-
     func handleAmmoBottomBoundary(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
         for ammoObject in ammo {
             guard object.retrieveYCoord() >= ammoBoundary else {
@@ -147,7 +112,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         setAmmoOutOfBounds(&ammo)
     }
 
-    // TODO: Rename from gameObject to object once have working
     private func handleNoIntersection(for gameObject: inout GameObject, and object: inout MotionObject) {
         gameObject.isHandleOverlap = false
         gameObject.handleOverlapCount = 0
@@ -172,7 +136,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     func toggleActiveAndDisappear(for gameObject: inout GameObject) {
         gameObject.isActive = true
-
         if gameObject.hasBlasted {
             gameObject.isDisappear = true
             return
@@ -203,8 +166,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     private func checkAndResetOverlap(isIntersect: inout Bool) {
-        for innerObject in gameObjects {
-            var gameObject = innerObject
+        for gameObject in gameObjects {
             gameObject.isHandleOverlap = false
         }
     }
@@ -245,30 +207,40 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    // TODO: Set chain effect for other blasts, and make neater
-    func getBlastObjects(from object: inout GameObject) -> [GameObject] {
-        guard !object.hasBlasted else {
-            return []
-        }
+    func isInBlastRadius(blastObject: GameObject, gameObject: GameObject) -> Bool {
+        blastObject.distance(to: gameObject) <= blastRadius
+    }
 
-        object.hasBlasted = true
-
-        var blastObjects: [GameObject] = []
-
+    func doRecursiveBlast(from object: inout GameObject, blastObjects: inout [GameObject]) {
         for index in gameObjects.indices {
             let gameObject = gameObjects[index]
-            let distance = object.center.distance(to: gameObject.center)
-
-            if distance <= blastRadius {
+            if isInBlastRadius(blastObject: object, gameObject: gameObject) {
                 if gameObject.isBlast {
                     gameObjects[index].hasBlasted = true
-                    let recursiveBlastObjects = getBlastObjects(from: &gameObjects[index])
-                    blastObjects.append(contentsOf: recursiveBlastObjects)
+                    blastObjects.append(contentsOf: getBlastObjects(from: &gameObjects[index]))
                 }
                 blastObjects.append(gameObject)
             }
         }
+    }
 
+    // TODO: Set chain effect for other blasts, and make neater. Not workint
+    func getBlastObjects(from object: inout GameObject) -> [GameObject] {
+        guard !object.hasBlasted else {
+            return []
+        }
+        guard var motionObject = object as? MotionObject else {
+            return []
+        }
+        if !motionObject.hasBlasted {
+            print("not blasted")
+            motionObject.velocity = motionObject.velocity.add(vector: Vector(horizontal: 0.0, vertical: -5))
+        } else {
+            print("blasted")
+        }
+        object.hasBlasted = true
+        var blastObjects: [GameObject] = []
+        doRecursiveBlast(from: &object, blastObjects: &blastObjects)
         return blastObjects
     }
 
