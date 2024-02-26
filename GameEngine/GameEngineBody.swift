@@ -206,8 +206,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             var blastObjects: [GameObject] = getBlastObjects(from: &gameObject)
             setObjectsActive(gameObjects: &blastObjects)
         }
-
-
         // TODO: Do not make physics body update the object position. Update at game engine
         var gameObjectPhysics = PhysicsBody(object: gameObject, position: gameObject.center, mass: gameObjectMass)
         var motionObjectPhysics = PhysicsBody(object: motionObject, position: motionObject.center)
@@ -239,6 +237,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    // TODO: Set chain effect for other blasts, and make neater
     func getBlastObjects(from object: inout GameObject) -> [GameObject] {
         guard !object.hasBlasted else {
             return []

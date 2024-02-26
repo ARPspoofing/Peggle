@@ -14,22 +14,22 @@ struct ParticlesModifier: ViewModifier {
     @State var time = 0.0
     @State var scale = 0.1
     let duration = 1.5
-    let rotationSpeedUp = 80.0
+    let rotationSpeedUp = 10000.0
 
     func body(content: Content) -> some View {
         ZStack {
             ForEach(0..<30, id: \.self) { _ in
                 content
                     .hueRotation(Angle(degrees: time * rotationSpeedUp))
-                    .scaleEffect(0.1)
-                    .modifier(FireworkParticlesGeometryEffect(isBlast: isBlast, time: time))
+                    .scaleEffect(scale)
+                    .modifier(FireworkParticlesGeometryEffect(isBlast: isBlast, time: time, speed: isBlast ? Double.random(in: 20 ... 100) : 20.0))
                     .opacity(((duration - time) / duration))
             }
         }
         .onAppear {
             withAnimation(.easeOut(duration: duration)) {
                 self.time = duration
-                self.scale = 1.0
+                self.scale = 0.7
             }
         }
     }

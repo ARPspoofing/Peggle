@@ -17,4 +17,8 @@ extension StateChangeObject {
     mutating func reverseVerticalVelocity() {
         velocity.changeVerticalDir()
     }
+
+    func speedUpVelocity(factor: Double, vector: Vector) -> Vector {
+        vector.scale(factor)
+    }
 }

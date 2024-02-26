@@ -11,22 +11,21 @@ import SwiftUI
 @objc(CaptureObject)
 class CaptureObject: MotionObject {
 
-    var width: Double = Constants.defaultHalfWidth
-    var height: Double = Constants.defaultHalfWidth
+    var width: Double = Constants.defaultCircleDiameter * 4.0
+    var height: Double = Constants.defaultCircleDiameter * 2.0
 
     override init(name: String) {
         super.init(name: name)
+        self.velocity = Vector(horizontal: 3.0, vertical: 0)
     }
 
     override init(center: Point, name: String) {
         super.init(center: center, name: name)
+        self.velocity = Vector(horizontal: 3.0, vertical: 0)
     }
 
-    init(center: Point, name: String, velocity: Vector, width: Double, height: Double) {
-        super.init(center: center, name: name)
-        self.velocity = velocity
-        self.width = width
-        self.height = height
+    override init(center: Point, name: String, velocity: Vector) {
+        super.init(center: center, name: name, velocity: velocity)
     }
 
     required init(from decoder: Decoder) throws {
@@ -38,7 +37,7 @@ class CaptureObject: MotionObject {
     }
 
     override func makeDeepCopy() -> CaptureObject {
-        CaptureObject(center: self.center, name: self.name, velocity: self.velocity, width: self.width, height: self.height)
+        CaptureObject(center: self.center, name: self.name, velocity: self.velocity)
     }
 
     // TODO: Make it override or bring it to another protocol to make it seem less hackish

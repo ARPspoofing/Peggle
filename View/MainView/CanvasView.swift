@@ -93,6 +93,7 @@ extension CanvasView {
 }
 */
 
+/*
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
@@ -103,10 +104,12 @@ extension CanvasView {
                             .transition(
                                 .opacity.animation(
                                     Animation.easeInOut(duration: canvasViewModel.isStartState ? 0.5 : 0.0)
+                                        /*
                                         .delay({
                                             let delayValue = Double(object.activeIdx)
                                             return delayValue
                                         }())
+                                        */
                                 )
                             )
 
@@ -114,6 +117,12 @@ extension CanvasView {
                 }
             }
         }
+        .animation(
+                    canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
+                        Animation.easeInOut(duration: 0.3) :
+                        (canvasViewModel.isDoneShooting ? Animation.easeInOut(duration: 1.0) : .none)
+                )
+        /*
         .onAppear {
             if canvasViewModel.isStartState {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(canvasViewModel.activeCount) * 0.4) {
@@ -123,6 +132,43 @@ extension CanvasView {
                 }
             }
         }
+        */
+    }
+}
+*/
+
+extension CanvasView {
+    private var gameObjectsDisplay: some View {
+        ZStack {
+            ForEach(canvasViewModel.gameObjects, id: \.self) { object in
+                if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
+                    Group {
+                        customObjectView(object: object, index: index)
+                    }
+
+                    ///*
+                    .transition(
+                        .opacity.animation(
+                            Animation.easeInOut(duration: canvasViewModel.isStartState ? 1.0 : 0.0)
+                                ///*
+                                .delay({
+                                    let delayValue = Double(object.activeIdx) / 3
+                                    return delayValue
+                                }())
+                                //*/
+                        )
+                    )
+                    //*/
+                }
+            }
+        }
+        ///*
+        .animation(
+            canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
+                Animation.easeInOut(duration: 0.3) :
+                (canvasViewModel.isDoneShooting ? Animation.easeInOut(duration: 1.0) : .none)
+        )
+        //*/
     }
 }
 

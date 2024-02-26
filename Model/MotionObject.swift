@@ -30,7 +30,8 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
 
     init(center: Point, name: String, velocity: Vector) {
         super.init(center: center, name: name)
-        self.velocity = velocity
+        let speedUpFactor = 10.0
+        self.velocity = speedUpVelocity(factor: speedUpFactor, vector: velocity)
     }
 
     required init(from decoder: Decoder) throws {

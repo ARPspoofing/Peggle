@@ -9,8 +9,6 @@ import SwiftUI
 
 // TODO: Massive tidy up
 
-// TODO: Currently, isAnimating only toggles off when all is cleared. Need to keep track of the active count
-
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
@@ -32,15 +30,12 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isDoneShooting = false
     @Published var isShowingCircle = true
     @Published var isAnimating = false
-    @Published var activeCount = 0
-    @Published var a = 1.0
-    @Published var activeIndex: [Int] = []
-    @Published var isClear: Bool = false
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
 
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
-    let speedUpFactor = 10.0
-    let motionObjectName = Constants.motionObject
+    let capturePosition = Point(xCoord: Constants.screenWidth / 2, yCoord: Constants.gameHeight - 50)
+    let motionObject = Constants.motionObject
+    let captureObject = Constants.captureObject
 
     let initialWidth: Double = 25.0
     let maxWidth: Double = 50.0
@@ -257,54 +252,27 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     }
 }
 
-// TODO: Make this neater
+// TODO: Make this neater (isShooting, isDoneShooting, showingCircle)
 extension CanvasViewModel {
     func initGameEngineAndDelegate() {
         self.gameEngine?.stop()
         self.gameEngine = nil
         self.gameEngine = GameEngine(motionObjects: &self.motionObjects,
-                                         gameObjects: &self.gameObjects,
-                                         captureObjects: &self.captureObjects)
-
-            self.gameEngine?.gameEngineDelegate = self
-            isDelegated = true
+                                     gameObjects: &self.gameObjects,
+                                     captureObjects: &self.captureObjects)
+        self.gameEngine?.gameEngineDelegate = self
+        isDelegated = true
     }
 
     func gameEngineDidUpdate() {
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
         isShooting = !motionObjects.isEmpty
         if !isShooting {
-            activeCount = gameObjects.filter { $0.isActive }.count
-            if activeCount > 0 {
-                activeIndex = gameObjects.enumerated().compactMap { $0.element.isActive ? $0.offset : nil }
-                for idx in activeIndex {
-                    print("idx", idx)
-                }
-            }
-            if activeCount > 0 {
-                //print("active count: ", activeCount)
-            }
-            //print("game object count", self.gameObjects.count)
-            isDoneShooting = true
             self.gameObjects = self.gameObjects.filter { !$0.isActive }
+            isDoneShooting = true
         }
-        let captureObject = captureObjects.first
-        captureObjects.removeAll()
-        guard let toAppend = captureObject else {
-            return
-        }
-        captureObjects.append(toAppend)
         objectWillChange.send()
     }
-
-    func findPosition(of number: Int) -> Int {
-        if let index = activeIndex.firstIndex(where: { $0 == number }) {
-            return index + 1
-        } else {
-            return 0
-        }
-    }
-
 
     func getBallVector() -> Vector {
         let xComponent = cos(shooterRotation)
@@ -312,31 +280,20 @@ extension CanvasViewModel {
         return Vector(horizontal: -yComponent, vertical: xComponent)
     }
 
-    func speedUpVelocity(factor: Double, vector: Vector) -> Vector {
-        vector.scale(factor)
-    }
-
     func shootBall() {
         guard !isShooting, !isAnimating else {
-            print("guarding!")
             return
         }
         isShooting = true
         isDoneShooting = false
         isShowingCircle = true
-        isClear = true
-        let center = shooterPosition
-        let velocity = speedUpVelocity(factor: speedUpFactor, vector: getBallVector())
-        let motionObject = MotionObject(center: center, name: motionObjectName, velocity: velocity)
+        let motionObject = MotionObject(center: shooterPosition, name: motionObject, velocity: getBallVector())
         self.motionObjects.append(motionObject)
         initGameEngineAndDelegate()
     }
 
     func initCaptureObject() {
-        let velocity = Vector(horizontal: 3, vertical: 0)
-        let captureObject = CaptureObject(center:
-                                            Point(xCoord: Constants.screenWidth / 2,
-                                                  yCoord: Constants.gameHeight - 50), name: "capture object", velocity: velocity, width: Constants.defaultCircleDiameter * 4, height: Constants.defaultCircleDiameter * 2)
+        let captureObject = CaptureObject(center: capturePosition, name: captureObject)
         self.captureObjects.removeAll()
         self.captureObjects.append(captureObject)
         initGameEngineAndDelegate()

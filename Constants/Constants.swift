@@ -52,6 +52,7 @@ struct Constants {
     static let delete = "delete"
     static let background = "background"
     static let motionObject = "motionObject"
+    static let captureObject = "captureObject"
     static let shooterBase = "shooterBase"
     static let shooterHead = "shooterHead"
     static let none = "none"

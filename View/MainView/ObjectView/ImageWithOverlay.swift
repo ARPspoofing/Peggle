@@ -18,9 +18,7 @@ struct ImageWithOverlay: View {
 
     var body: some View {
         if isDoneShooting {
-            Image(imageName)
-                .opacity(0)
-            ParticlesOverlay(isBlast: false, isDoneShooting: $isDoneShooting)
+            ParticlesOverlay(isBlast: false, diameter: diameter, isDoneShooting: $isDoneShooting)
         } else {
             Image(imageName)
                 .resizable()
@@ -37,7 +35,7 @@ struct ImageWithOverlay: View {
                 )
             // TODO: Make this neater
             if imageName == "actionObjectActive" {
-                ParticlesOverlay(isBlast: true, isDoneShooting: $isDoneShooting)
+                ParticlesOverlay(isBlast: true, diameter: diameter, isDoneShooting: $isDoneShooting)
             }
         }
     }

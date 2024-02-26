@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ParticlesOverlay: View {
     var isBlast: Bool
+    var diameter: CGFloat
     @Binding var isDoneShooting: Bool
     @State private var shouldAnimate = false
     var initialDiameter: CGFloat = 60
@@ -18,7 +19,14 @@ struct ParticlesOverlay: View {
         ZStack {
             JaggedCircle()
                         .fill(Color.white)
+                        .opacity(isBlast ? 1 : 0.0)
                         .frame(width: initialDiameter, height: initialDiameter)
+
+            Circle()
+                        .fill(Color.white)
+                        .opacity(isBlast ? 0 : 0.7)
+                        .frame(width: diameter, height: diameter)
+
             Circle()
                 .fill(Color.red)
                 .frame(width: additionalPadding, height: additionalPadding)
