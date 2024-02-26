@@ -19,3 +19,9 @@ struct MotionObjectView: View {
             .frame(width: defaultDiameter, height: defaultDiameter)
     }
 }
+
+struct MotionObjectView_Previews: PreviewProvider {
+    static var previews: some View {
+        MotionObjectView()
+    }
+}

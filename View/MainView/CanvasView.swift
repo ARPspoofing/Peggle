@@ -8,6 +8,7 @@
 import SwiftUI
 
 // TODO: Remove top of background and replace with points bar
+// TODO: Remove width and height if necessary
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
 
@@ -20,6 +21,7 @@ struct CanvasView: View {
                 ShooterView(canvasViewModel)
             }
             gameObjectsDisplay
+            ammoDisplay
             if !canvasViewModel.isStartState {
                 PaletteView()
             }
@@ -184,6 +186,15 @@ extension CanvasView {
 }
 
 extension CanvasView {
+    private var ammoDisplay: some View {
+        ForEach(canvasViewModel.remainingAmmo.indices, id: \.self) { index in
+            let object = canvasViewModel.remainingAmmo[index]
+            customMotionObjectView(object: object, index: index)
+        }
+    }
+}
+
+extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
                 ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
@@ -216,7 +227,6 @@ extension CanvasView {
                                 } else {
                                     canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
                                 }
-
                             }
                             .onEnded { _ in }
                     )

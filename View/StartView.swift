@@ -9,6 +9,9 @@ import SwiftUI
 
 struct StartView: View {
     @State private var readyToNavigate : Bool = false
+    @State private var isButtonClicked = false
+    @State private var isSecondaryButtonClicked = false
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -20,16 +23,9 @@ struct StartView: View {
                     .navigationDestination(isPresented: $readyToNavigate) {
                         CanvasView()
                     }
-                /*
-                Button {
-                    readyToNavigate = true
-                } label: {
-                    Text("Navigate Button")
-                }
-                */
                     .overlay(
-                            Button(action: {
-                                readyToNavigate = true
+                        Button(action: {
+                                //readyToNavigate = true
                             }) {
                                 ZStack(alignment: .bottom) {
                                     Image("scroll")
@@ -37,13 +33,33 @@ struct StartView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 200, height: 200)
 
+                                    Button(action: {
+                                        readyToNavigate = true
+                                    }) {
+                                        Text("Start")
+                                            .foregroundColor(.black)
+                                            .font(.system(size: 30, weight: .bold))
+                                            .padding(.horizontal, 10)
+                                            .padding(.vertical, 10)
+
+                                            .background(
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .fill(Color(red: 241/255, green: 195/255, blue: 102/255))
+                                                            .overlay(
+                                                                RoundedRectangle(cornerRadius: 10)
+                                                                    .stroke(Color.black, lineWidth: 1)
+                                                            )
+                                                    )
+                                            .cornerRadius(10)
+                                    }
+                                    .padding(.bottom, 30)
+                                    .shadow(color: Color.black.opacity(0.6), radius: 5, x: 0, y: 3)
+                                    /*
                                     Text("Start")
                                         .foregroundColor(.black)
-                                        .font(.system(size: 40, weight: .bold))
+                                        .font(.system(size: 35, weight: .bold))
                                         .padding(.bottom, 50)
-                                        .cornerRadius(10)
-                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 0, y: 2)
-
+                                    */
                                 }
                             }
                             .padding(20)

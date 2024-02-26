@@ -21,11 +21,13 @@ class GameEngine: GameEngineBody, ObservableObject {
 
     override init(motionObjects: inout [MotionObject],
                   gameObjects: inout [GameObject],
-                  captureObjects: inout [CaptureObject]) {
+                  captureObjects: inout [CaptureObject],
+                  ammo: inout [MotionObject]) {
         super.init(motionObjects: &motionObjects,
                    gameObjects: &gameObjects,
-                   captureObjects: &captureObjects)
-        self.motionObjects = motionObjects
+                   captureObjects: &captureObjects,
+                   ammo: &ammo)
+        //self.motionObjects = motionObjects
 
         displayLink = CADisplayLink(target: self, selector: #selector(updateBallPosition))
         displayLink?.preferredFramesPerSecond = framesPerSecond

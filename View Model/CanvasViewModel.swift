@@ -17,8 +17,10 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     @Published var gameObjects: [GameObject]
     @Published var motionObjects: [MotionObject]
+    @Published var remainingAmmo: [MotionObject] = []
     @Published var captureObjects: [CaptureObject]
     @Published var selectedObject: String?
+    @Published var remainingAmmoCount: Int = 10
 
     @Published var isDeleteState = false
     @Published var isResizeState = false
@@ -50,12 +52,14 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         self.gameObjects = []
         self.motionObjects = []
         self.captureObjects = []
+        initRemainingAmmo()
     }
 
     init(gameObjects: [GameObject]) {
         self.gameObjects = gameObjects
         self.motionObjects = []
         self.captureObjects = []
+        initRemainingAmmo()
     }
 
     func start() {
@@ -113,6 +117,15 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         isDeleteState = false
         isResizeState = false
         isRotateState.toggle()
+    }
+
+    // TODO: Make it neater
+    func initRemainingAmmo() {
+        for idx in 1...10 {
+            // TODO: Place in mapping
+            var object = MotionObject(center: Point(xCoord: 50, yCoord: Constants.screenHeight - (Double(idx) * 50)), name: "motion", velocity: Vector(horizontal: 0.0, vertical: 8.0))
+            remainingAmmo.append(object)
+        }
     }
 
     func render(_ location: CGPoint, _ selectedObject: String) {
@@ -259,13 +272,15 @@ extension CanvasViewModel {
         self.gameEngine = nil
         self.gameEngine = GameEngine(motionObjects: &self.motionObjects,
                                      gameObjects: &self.gameObjects,
-                                     captureObjects: &self.captureObjects)
+                                     captureObjects: &self.captureObjects,
+                                     ammo: &self.remainingAmmo)
         self.gameEngine?.gameEngineDelegate = self
         isDelegated = true
     }
 
     func gameEngineDidUpdate() {
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
+        remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
         isShooting = !motionObjects.isEmpty
         if !isShooting {
             self.gameObjects = self.gameObjects.filter { !$0.isActive }
@@ -281,7 +296,7 @@ extension CanvasViewModel {
     }
 
     func shootBall() {
-        guard !isShooting, !isAnimating else {
+        guard !isShooting, !isAnimating, remainingAmmoCount > 0 else {
             return
         }
         isShooting = true

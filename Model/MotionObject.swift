@@ -14,6 +14,7 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
     private(set) var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
+    var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
 
     override init(name: String) {
         super.init(name: name)
@@ -21,16 +22,19 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
 
     override init(center: Point, name: String) {
         super.init(center: center, name: name)
+        self.startPoint = center.deepCopy()
     }
 
     init(center: Point, name: String, radius: Double) {
         super.init(center: center, name: name)
         self.radius = radius
+        self.startPoint = center.deepCopy()
     }
 
     init(center: Point, name: String, velocity: Vector) {
         super.init(center: center, name: name)
         let speedUpFactor = 10.0
+        self.startPoint = center.deepCopy()
         self.velocity = speedUpVelocity(factor: speedUpFactor, vector: velocity)
     }
 

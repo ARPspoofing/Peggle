@@ -103,6 +103,10 @@ struct Point: Codable {
     func distance(to point: Point) -> Double {
         sqrt(squareDistance(to: point))
     }
+
+    func deepCopy() -> Point {
+        Point(xCoord: self.xCoord, yCoord: self.yCoord)
+    }
 }
 
 extension Point: Equatable {

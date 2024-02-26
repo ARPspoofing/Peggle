@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+// TODO: Fix bug when animating, should not be able to shoot
+// TODO: When hit the last orange peg, should zoom in
 class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     private let screenWidth = Constants.screenWidth
@@ -21,16 +24,19 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     var motionObjects: [MotionObject]
     var gameObjects: [GameObject]
     var captureObjects: [CaptureObject]
+    var ammo: [MotionObject]
 
     var isUpdating = false
+    var isReload = false
 
     // TODO: Abstract this
     var activeIdx = 1
 
-    init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject], captureObjects: inout [CaptureObject]) {
+    init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject], captureObjects: inout [CaptureObject], ammo: inout [MotionObject]) {
         self.motionObjects = motionObjects
         self.gameObjects = gameObjects
         self.captureObjects = captureObjects
+        self.ammo = ammo
     }
 
     private func handleSideBoundaries(_ object: inout MotionObject) {
@@ -96,6 +102,49 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     internal func handleObjectBoundaries(_ object: inout CaptureObject) {
         handleSideBoundaries(&object)
         handlePlaneBoundaries(&object)
+    }
+
+    internal func handleAmmoBoundaries(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
+        for ammoObject in ammo {
+            guard object.center.yCoord >= Constants.gameHeight - 200 else {
+                continue
+            }
+            ammoObject.velocity = Vector(horizontal: 0.0, vertical: -10.0)
+            /*
+            //print("exceeded!")
+            for newAmmoObject in ammo {
+                newAmmoObject.velocity = Vector(horizontal: 0.0, vertical: -2.0)
+            }
+            */
+            //print("new velocity: ", ammoObject.velocity)
+        }
+        ///*
+        for index in ammo.indices {
+            var ammoObject: MotionObject = ammo[index]
+            /*
+            if (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) {
+                print(index, ammoObject.startPoint.yCoord, ammoObject.center.yCoord)
+                //ammoObject.velocity = Vector(horizontal: 0.0, vertical: 0.0)
+            }
+            */
+            if (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) {
+                if index == ammo.count - 1 {
+                    ammoObject.velocity = Vector(horizontal: 0.0, vertical: -20.0)
+                } else {
+                    print("set velocity to zero")
+                    ammoObject.velocity = Vector(horizontal: 0.0, vertical: 0.0)
+                }
+            }
+        }
+
+        for index in ammo.indices {
+            var ammoObject: MotionObject = ammo[index]
+            if ammoObject.center.yCoord == 0 {
+                ammoObject.isOutOfBounds = true
+            }
+        }
+
+        //*/
     }
 
     /*
@@ -292,8 +341,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         return blastObjects
     }
 
-
-
     func setObjectsActive(gameObjects: inout [GameObject]) {
         /*
         for (index, object) in gameObjects.enumerated() {
@@ -314,6 +361,12 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         incrementExitCount()
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
         for index in motionObjects.indices {
+            if index == 0 {
+                var object: MotionObject = ammo[index]
+                object.center = object.center.add(vector: object.velocity)
+                handleObjectBoundaries(&object)
+            }
+
             var object = motionObjects[index]
             updateObjectPosition(&object)
             handleObjectBoundaries(&object)
@@ -327,6 +380,23 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             object.center = object.center.add(vector: object.velocity)
             handleObjectBoundaries(&object)
         }
+
+        for index in ammo.indices {
+            var object: MotionObject = ammo[index]
+            object.center = object.center.add(vector: object.velocity)
+            handleAmmoBoundaries(&object, &ammo)
+            //print("inside velocity: ", object.velocity)
+        }
+
+        /*
+        for index in ammo.indices {
+            if index == 0 {
+                var object: MotionObject = ammo[index]
+                object.center = object.center.add(vector: object.velocity)
+                handleObjectBoundaries(&object)
+            }
+        }
+        */
     }
 }
 
