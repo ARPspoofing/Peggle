@@ -1,20 +1,23 @@
 //
-//  MotionObject.swift
+//  OscillateObject.swift
 //  Peggle
 //
-//  Created by Muhammad Reyaaz on 7/2/24.
+//  Created by Muhammad Reyaaz on 26/2/24.
 //
 
-// TODO: Remove redundant import
 import Foundation
 
-@objc(MotionObject)
-class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
+// TODO: Inherit from peg perhaps
+@objc(OscillateObject)
+class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
     var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
     var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var oscillateCount: Int = 0
+    var oscillateThrsh: Int = 10
+    var oscillateDistance: Double = 30.0
 
     override init(name: String) {
         super.init(name: name)
@@ -38,6 +41,12 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
         self.velocity = speedUpVelocity(factor: speedUpFactor, vector: velocity)
     }
 
+    init(center: Point, name: String, radius: Double, orientation: Double) {
+        super.init(center: center, name: name)
+        self.radius = radius
+        self.orientation = orientation
+    }
+
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
@@ -46,7 +55,15 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
         try super.encode(to: encoder)
     }
 
-    override func makeDeepCopy() -> MotionObject {
-        MotionObject(center: self.center, name: self.name, radius: self.radius)
+    override func checkBorders() -> Bool {
+        checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
+    }
+
+    override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
+        return checkNoIntersection(with: gameObject) && checkBorders()
+    }
+
+    override func makeDeepCopy() -> OscillateObject {
+        OscillateObject(center: self.center, name: self.name, radius: self.radius)
     }
 }

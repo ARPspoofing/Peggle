@@ -49,6 +49,10 @@ struct Vector: Codable, Equatable {
         self.horizontal * vector.vertical + vector.horizontal * self.vertical
     }
 
+    func getComplement() -> Vector {
+        Vector(horizontal: -self.horizontal, vertical: -self.vertical)
+    }
+
     mutating func changeHorizontalDir() {
         self.horizontal = -self.horizontal
     }

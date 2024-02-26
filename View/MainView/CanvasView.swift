@@ -14,14 +14,13 @@ struct CanvasView: View {
     let centerY = 250.0 / 2.0
 
     var body: some View {
+        // TODO: Add limitation to prevent adding ball on testtube
         ZStack(alignment: .top) {
             ZStack {
                 backgroundDisplay
                 Image("glass")
                 .opacity(0.55)
-                //.frame(width: 20, alignment: .trailing)
-                    .background(Color.red)
-                    .position(x: 50, y: 650)
+                .position(x: 50, y: 650)
             }
             motionObjectDisplay
             captureObjectDisplay

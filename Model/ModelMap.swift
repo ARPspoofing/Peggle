@@ -10,7 +10,8 @@ struct ModelMap {
         let entity: [String: GameObject] = [
             Constants.sharpObject: createSharpObject(center: center, type: type, circumradius: halfWidth, orientation: orientation),
             Constants.normalObject: createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
-            Constants.actionObject: createActionPeg(center: center, type: type, radius: halfWidth, orientation: orientation)
+            Constants.actionObject: createActionPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
+            Constants.oscillateObject: createOscillate(center: center, type: type, radius: halfWidth, orientation: orientation),
         ]
         return entity[type] ?? createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation)
     }
@@ -25,5 +26,9 @@ struct ModelMap {
 
     func createSharpObject(center: Point, type: String, circumradius: Double, orientation: Double) -> Sharp {
         Sharp(center: center, name: type, circumradius: circumradius, orientation: orientation)
+    }
+
+    func createOscillate(center: Point, type: String, radius: Double, orientation: Double) -> OscillateObject {
+        OscillateObject(center: center, name: type, radius: radius)
     }
 }

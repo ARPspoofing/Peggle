@@ -189,6 +189,12 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         motionObjectPhysics.velocity = motionObject.velocity
         gameObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &gameObjectPhysics)
         motionObject.velocity = motionObjectPhysics.velocity
+
+        guard let oscillateObject = gameObject as? OscillateObject else {
+            return
+        }
+        oscillateObject.velocity = gameObjectPhysics.velocity
+        //oscillateObject.velocity = motionObject.velocity.getComplement()
     }
 
 
@@ -273,11 +279,30 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    @objc func updateOscillateObject() {
+        for gameObject in gameObjects {
+            guard var object = gameObject as? OscillateObject else {
+                continue
+            }
+            object.center = object.center.add(vector: object.velocity)
+            if object.center.distance(to: object.startPoint) > object.oscillateDistance {
+                object.velocity = object.velocity.getComplement()
+                object.oscillateCount += 1
+                if object.oscillateCount == object.oscillateThrsh {
+                    object.velocity = Vector(horizontal: 0.0, vertical: 0.0)
+                    object.center = object.startPoint
+                }
+
+            }
+        }
+    }
+
     // TODO: Rename to updateGamePosition and have updateBall and updateCapture inside
     @objc func updateBallPosition() {
         incrementExitCount()
         updateMotionObjects()
         updateCaptureObjects()
+        updateOscillateObject()
         updateAmmo()
     }
 }

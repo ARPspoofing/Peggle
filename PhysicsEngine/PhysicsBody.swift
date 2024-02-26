@@ -70,14 +70,12 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
                                      collider: inout PhysicsBody, collidee: inout PhysicsBody) {
         let resultantNormVel = resultantNormVec(normVec: normVel, src: collider, dst: collidee)
         let resultantTanVel = resultantTanVector(tanVec: tanVel, src: collider)
+        collider.velocity = resultantNormVel.add(vector: resultantTanVel)
+        collidee.velocity = collider.velocity.getComplement()
         if collidee.object.isBlast {
-            print("is blast")
-            collider.velocity = resultantNormVel.add(vector: resultantTanVel)
             collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -5))
             // TODO: setting hasBlasted to true is possibly redundant
             collidee.object.hasBlasted = true
-        } else {
-            collider.velocity = resultantNormVel.add(vector: resultantTanVel)
         }
     }
 

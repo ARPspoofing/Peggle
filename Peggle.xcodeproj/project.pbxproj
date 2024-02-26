@@ -10,6 +10,7 @@
 		911EB4B92B8B4449009B206E /* BlastObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4B82B8B4449009B206E /* BlastObject.swift */; };
 		911EB4BB2B8C4998009B206E /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4BA2B8C4998009B206E /* StartView.swift */; };
 		911EB4BD2B8C66DA009B206E /* AmmoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4BC2B8C66DA009B206E /* AmmoView.swift */; };
+		911EB4BF2B8CE249009B206E /* OscillateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4BE2B8CE249009B206E /* OscillateObject.swift */; };
 		914BF7372B7F7FF700032478 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF7362B7F7FF700032478 /* GameEngineTests.swift */; };
 		914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF7382B80744600032478 /* CollisionGameEngine.swift */; };
 		914BF73B2B8074AE00032478 /* GravityGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF73A2B8074AE00032478 /* GravityGameEngine.swift */; };
@@ -106,6 +107,7 @@
 		911EB4B82B8B4449009B206E /* BlastObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlastObject.swift; sourceTree = "<group>"; };
 		911EB4BA2B8C4998009B206E /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		911EB4BC2B8C66DA009B206E /* AmmoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmmoView.swift; sourceTree = "<group>"; };
+		911EB4BE2B8CE249009B206E /* OscillateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OscillateObject.swift; sourceTree = "<group>"; };
 		914BF7362B7F7FF700032478 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		914BF7382B80744600032478 /* CollisionGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionGameEngine.swift; sourceTree = "<group>"; };
 		914BF73A2B8074AE00032478 /* GravityGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityGameEngine.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				916E67A22B8848D000960D5D /* Polygon.swift */,
 				916E67A42B88798E00960D5D /* ModelMap.swift */,
 				911EB4B82B8B4449009B206E /* BlastObject.swift */,
+				911EB4BE2B8CE249009B206E /* OscillateObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				91517C0F2B7370E800F1E45D /* MotionObjectView.swift in Sources */,
 				914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */,
 				916E67A52B88798E00960D5D /* ModelMap.swift in Sources */,
+				911EB4BF2B8CE249009B206E /* OscillateObject.swift in Sources */,
 				91AD1B3B2B78D3FE009E6BC6 /* StateChangeObject.swift in Sources */,
 				91986EE32B5FC56B00D1C72C /* GameObject.swift in Sources */,
 				916E67A12B87829D00960D5D /* Line.swift in Sources */,
