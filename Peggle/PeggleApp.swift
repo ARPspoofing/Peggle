@@ -12,7 +12,8 @@ struct PeggleApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
-            CanvasView()
+            StartView()
+            //CanvasView()
         }
     }
 }

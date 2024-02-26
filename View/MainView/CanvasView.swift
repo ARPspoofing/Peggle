@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Remove top of background and replace with points bar
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
 
@@ -145,30 +146,22 @@ extension CanvasView {
                     Group {
                         customObjectView(object: object, index: index)
                     }
-
-                    ///*
-                    .transition(
-                        .opacity.animation(
-                            Animation.easeInOut(duration: canvasViewModel.isStartState ? 1.0 : 0.0)
-                                ///*
-                                .delay({
-                                    let delayValue = Double(object.activeIdx) / 3
-                                    return delayValue
-                                }())
-                                //*/
-                        )
+                    .transition(.opacity.animation(
+                        Animation.easeInOut(duration: canvasViewModel.isStartState ? 1.0 : 0.0)
+                            .delay({
+                                let delayValue = Double(object.activeIdx) / 5
+                                return delayValue
+                            }())
                     )
-                    //*/
+                    )
                 }
             }
         }
-        ///*
         .animation(
             canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
-                Animation.easeInOut(duration: 0.3) :
+            Animation.easeInOut(duration: 0.3) :
                 (canvasViewModel.isDoneShooting ? Animation.easeInOut(duration: 1.0) : .none)
         )
-        //*/
     }
 }
 

@@ -146,6 +146,12 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     internal func handleIntersection(for peg: inout GameObject, and object: inout MotionObject) {
         peg.isActive = true
+
+        if peg.hasBlasted {
+            peg.isDisappear = true
+            return
+        }
+
         if peg.handleOverlapCount < intersectThrsh {
             if !peg.isHandleOverlap {
                 handleFirstIntersection(for: &peg, and: &object)
@@ -237,6 +243,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    /*
     // TODO: Set chain effect for other blasts, and make neater
     func getBlastObjects(from object: inout GameObject) -> [GameObject] {
         guard !object.hasBlasted else {
@@ -256,6 +263,36 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
         return blastObjects
     }
+    */
+
+    func getBlastObjects(from object: inout GameObject) -> [GameObject] {
+        guard !object.hasBlasted else {
+            return []
+        }
+
+        object.hasBlasted = true
+        print("set blasted: ", object.hasBlasted)
+
+        var blastObjects: [GameObject] = []
+
+        for index in gameObjects.indices {
+            let gameObject = gameObjects[index]
+            let distance = object.center.distance(to: gameObject.center)
+
+            if distance <= blastRadius {
+                if gameObject.isBlast {
+                    gameObjects[index].hasBlasted = true
+                    let recursiveBlastObjects = getBlastObjects(from: &gameObjects[index])
+                    blastObjects.append(contentsOf: recursiveBlastObjects)
+                }
+                blastObjects.append(gameObject)
+            }
+        }
+
+        return blastObjects
+    }
+
+
 
     func setObjectsActive(gameObjects: inout [GameObject]) {
         /*

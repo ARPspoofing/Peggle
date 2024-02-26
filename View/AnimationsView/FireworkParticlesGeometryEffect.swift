@@ -13,7 +13,7 @@ struct FireworkParticlesGeometryEffect: GeometryEffect, ViewModifier {
     var time: Double
     var speed: Double
     var direction = Double.random(in: -Double.pi ... Double.pi)
-    var translationDivisor = 1.5
+    var translationScale = 0.8
 
     var animatableData: Double {
         get { time }
@@ -24,8 +24,8 @@ struct FireworkParticlesGeometryEffect: GeometryEffect, ViewModifier {
         var xTranslation = (speed * cos(direction) * time) * 1.5
         var yTranslation = (speed * sin(direction) * time) * 1.5
         if !isBlast {
-            xTranslation = xTranslation / translationDivisor
-            yTranslation = yTranslation / translationDivisor
+            xTranslation = xTranslation * translationScale
+            yTranslation = yTranslation * translationScale
         }
         let affineTranslation = CGAffineTransform(translationX: xTranslation, y: yTranslation)
         return ProjectionTransform(affineTranslation)

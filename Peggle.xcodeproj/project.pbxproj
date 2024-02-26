@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		911EB4B92B8B4449009B206E /* BlastObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4B82B8B4449009B206E /* BlastObject.swift */; };
+		911EB4BB2B8C4998009B206E /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EB4BA2B8C4998009B206E /* StartView.swift */; };
 		914BF7372B7F7FF700032478 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF7362B7F7FF700032478 /* GameEngineTests.swift */; };
 		914BF7392B80744600032478 /* CollisionGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF7382B80744600032478 /* CollisionGameEngine.swift */; };
 		914BF73B2B8074AE00032478 /* GravityGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF73A2B8074AE00032478 /* GravityGameEngine.swift */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		911EB4B82B8B4449009B206E /* BlastObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlastObject.swift; sourceTree = "<group>"; };
+		911EB4BA2B8C4998009B206E /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		914BF7362B7F7FF700032478 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		914BF7382B80744600032478 /* CollisionGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionGameEngine.swift; sourceTree = "<group>"; };
 		914BF73A2B8074AE00032478 /* GravityGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityGameEngine.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				91F3826D2B7F1DE20012C0D1 /* ShootersView */,
 				91F3826C2B7F1DBD0012C0D1 /* ButtonsView */,
 				916E677D2B85EA3000960D5D /* CaptureObjectView.swift */,
+				911EB4BA2B8C4998009B206E /* StartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				916E67972B86D50C00960D5D /* DeleteButtonConstants.swift in Sources */,
 				91986EEF2B61FEA500D1C72C /* ActionButtonsViewModel.swift in Sources */,
 				916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */,
+				911EB4BB2B8C4998009B206E /* StartView.swift in Sources */,
 				916E67A32B8848D000960D5D /* Polygon.swift in Sources */,
 				916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */,
 				914BF73D2B80823D00032478 /* PhysicsElasticCollision.swift in Sources */,

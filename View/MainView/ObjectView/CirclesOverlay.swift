@@ -13,7 +13,7 @@ struct CirclesOverlay: View {
     var name: String
     var diameter: CGFloat
     @Binding var isAnimating: Bool
-    var largeScale = 1.8
+    var largeScale = 2.0
     var normalScale = 1.0
     var delay = 0.3
 
