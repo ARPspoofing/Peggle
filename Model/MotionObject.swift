@@ -12,7 +12,7 @@ import SwiftUI
 class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
-    private(set) var radius: Double = Constants.defaultCircleRadius
+    var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
     var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 
 // TODO: Fix bug when animating, should not be able to shoot
-// TODO: When hit the last orange peg, should zoom in
+// TODO: When hit the last orange gameObject, should zoom in
 class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     private let screenWidth = Constants.screenWidth
@@ -20,6 +20,10 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     internal let gameObjectMass = 100.0
     internal let intersectThrsh = 10
     internal let blastRadius = 100.0
+    internal let ammoBoundary = Constants.gameHeight - 200
+    internal let ammoResetVel = Vector(horizontal: 0.0, vertical: -10.0)
+    internal let ammoShootVel = Vector(horizontal: 0.0, vertical: -20.0)
+    internal let ammoStopVel = Vector(horizontal: 0.0, vertical: 0.0)
 
     var motionObjects: [MotionObject]
     var gameObjects: [GameObject]
@@ -72,7 +76,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     // TODO: Combine Motion and Capture to abide by DRY
 
-
+    /*
     private func handleSideBoundaries(_ object: inout CaptureObject) {
         guard !object.checkLeftBorder() || !object.checkRightBorder() else {
             return
@@ -103,149 +107,105 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         handleSideBoundaries(&object)
         handlePlaneBoundaries(&object)
     }
+    */
 
-    internal func handleAmmoBoundaries(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
+    func handleAmmoBottomBoundary(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
         for ammoObject in ammo {
-            guard object.center.yCoord >= Constants.gameHeight - 200 else {
+            guard object.retrieveYCoord() >= ammoBoundary else {
                 continue
             }
-            ammoObject.velocity = Vector(horizontal: 0.0, vertical: -10.0)
-            /*
-            //print("exceeded!")
-            for newAmmoObject in ammo {
-                newAmmoObject.velocity = Vector(horizontal: 0.0, vertical: -2.0)
-            }
-            */
-            //print("new velocity: ", ammoObject.velocity)
+            ammoObject.velocity = ammoResetVel
         }
-        ///*
+    }
+
+    func stopAndShootAmmo(_ ammo: inout [MotionObject]) {
         for index in ammo.indices {
-            var ammoObject: MotionObject = ammo[index]
-            /*
-            if (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) {
-                print(index, ammoObject.startPoint.yCoord, ammoObject.center.yCoord)
-                //ammoObject.velocity = Vector(horizontal: 0.0, vertical: 0.0)
-            }
-            */
+            let ammoObject: MotionObject = ammo[index]
             if (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) {
                 if index == ammo.count - 1 {
-                    ammoObject.velocity = Vector(horizontal: 0.0, vertical: -20.0)
+                    ammoObject.velocity = ammoShootVel
                 } else {
-                    print("set velocity to zero")
-                    ammoObject.velocity = Vector(horizontal: 0.0, vertical: 0.0)
+                    ammoObject.velocity = ammoStopVel
                 }
             }
         }
+    }
 
+    func setAmmoOutOfBounds(_ ammo: inout [MotionObject]) {
         for index in ammo.indices {
-            var ammoObject: MotionObject = ammo[index]
+            let ammoObject: MotionObject = ammo[index]
             if ammoObject.center.yCoord == 0 {
                 ammoObject.isOutOfBounds = true
             }
         }
-
-        //*/
     }
 
-    /*
-    private func handleNoIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        peg.isHandleOverlap = false
-        peg.handleOverlapCount = 0
-        peg.isDisappear = false
-        object.isHandleOverlap = false
+    // TODO: Move everything to physics engine
+    internal func handleAmmoBoundaries(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
+        handleAmmoBottomBoundary(&object, &ammo)
+        stopAndShootAmmo(&ammo)
+        setAmmoOutOfBounds(&ammo)
     }
-    */
 
-    // TODO: Rename from peg to object once have working
-    private func handleNoIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        peg.isHandleOverlap = false
-        peg.handleOverlapCount = 0
-        peg.isDisappear = false
+    // TODO: Rename from gameObject to object once have working
+    private func handleNoIntersection(for gameObject: inout GameObject, and object: inout MotionObject) {
+        gameObject.isHandleOverlap = false
+        gameObject.handleOverlapCount = 0
+        gameObject.isDisappear = false
         object.isHandleOverlap = false
     }
 
-    private func handleFirstIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        handleCollision(motionObject: &object, gameObject: &peg)
-        peg.isHandleOverlap = true
+    private func handleFirstIntersection(for gameObject: inout GameObject, and object: inout MotionObject) {
+        handleCollision(motionObject: &object, gameObject: &gameObject)
+        gameObject.isHandleOverlap = true
         object.isHandleOverlap = true
     }
 
-    private func subsequentIntersection(for peg: inout GameObject) {
-        peg.handleOverlapCount += 1
-        peg.isDisappear = false
+    private func subsequentIntersection(for gameObject: inout GameObject) {
+        gameObject.handleOverlapCount += 1
+        gameObject.isDisappear = false
     }
 
-    private func thresholdIntersection(for peg: inout GameObject) {
-        peg.isDisappear = true
+    private func thresholdIntersection(for gameObject: inout GameObject) {
+        gameObject.isDisappear = true
     }
 
-    /*
-    internal func handleIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        peg.isActive = true
-        if peg.handleOverlapCount < intersectThrsh {
-            if !peg.isHandleOverlap {
-                handleFirstIntersection(for: &peg, and: &object)
-            }
-            subsequentIntersection(for: &peg)
-        } else if peg.handleOverlapCount == intersectThrsh {
-            thresholdIntersection(for: &peg)
-        }
-    }
-    */
+    func toggleActiveAndDisappear(for gameObject: inout GameObject) {
+        gameObject.isActive = true
 
-    internal func handleIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        peg.isActive = true
-
-        if peg.hasBlasted {
-            peg.isDisappear = true
+        if gameObject.hasBlasted {
+            gameObject.isDisappear = true
             return
         }
-
-        if peg.handleOverlapCount < intersectThrsh {
-            if !peg.isHandleOverlap {
-                handleFirstIntersection(for: &peg, and: &object)
-            }
-            subsequentIntersection(for: &peg)
-        } else if peg.handleOverlapCount == intersectThrsh {
-            thresholdIntersection(for: &peg)
-        }
     }
 
-    /*
-    private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
-        for gameObject in gameObjects {
-            guard var peg = gameObject as? GameObject else {
-                continue
+    internal func handleIntersection(for gameObject: inout GameObject, and object: inout MotionObject) {
+        toggleActiveAndDisappear(for: &gameObject)
+        if gameObject.handleOverlapCount < intersectThrsh {
+            if !gameObject.isHandleOverlap {
+                handleFirstIntersection(for: &gameObject, and: &object)
             }
-            guard !object.checkNoIntersection(with: peg) else {
-                handleNoIntersection(for: &peg, and: &object)
-                continue
-            }
-            handleIntersection(for: &peg, and: &object)
+            subsequentIntersection(for: &gameObject)
+        } else if gameObject.handleOverlapCount == intersectThrsh {
+            thresholdIntersection(for: &gameObject)
         }
     }
-    */
 
     private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
         for gameObject in gameObjects {
-            guard var newGameObject = gameObject as? GameObject else {
+            var mutatableGameObject = gameObject
+            guard !object.checkNoIntersection(with: mutatableGameObject) else {
+                handleNoIntersection(for: &mutatableGameObject, and: &object)
                 continue
             }
-            guard !object.checkNoIntersection(with: newGameObject) else {
-                handleNoIntersection(for: &newGameObject, and: &object)
-                continue
-            }
-            handleIntersection(for: &newGameObject, and: &object)
+            handleIntersection(for: &mutatableGameObject, and: &object)
         }
     }
 
-    // TODO: Remove all unncessary guard
     private func checkAndResetOverlap(isIntersect: inout Bool) {
         for innerObject in gameObjects {
-            guard let peg = innerObject as? GameObject else {
-                continue
-            }
-            peg.isHandleOverlap = false
+            var gameObject = innerObject
+            gameObject.isHandleOverlap = false
         }
     }
 
@@ -255,9 +215,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     internal func handleCollision(motionObject: inout MotionObject, gameObject: inout GameObject) {
-        //gameObject.hasBlasted = true
         if gameObject.isBlast && !gameObject.hasBlasted {
-            print("has blasted: ", gameObject.hasBlasted)
             var blastObjects: [GameObject] = getBlastObjects(from: &gameObject)
             setObjectsActive(gameObjects: &blastObjects)
         }
@@ -270,11 +228,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         motionObject.velocity = motionObjectPhysics.velocity
     }
 
-    /*
-    internal func updateObjectPosition(_ object: inout MotionObject) {
-        object.center = object.center.add(vector: object.velocity)
-    }
-    */
 
     internal func updateObjectPosition(_ object: inout MotionObject) {
         object.center = object.center.add(vector: object.velocity)
@@ -292,35 +245,13 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    /*
     // TODO: Set chain effect for other blasts, and make neater
     func getBlastObjects(from object: inout GameObject) -> [GameObject] {
         guard !object.hasBlasted else {
             return []
         }
-        object.hasBlasted = true
-        print("set blasted: ", object.hasBlasted)
-        var blastObjects: [GameObject] = []
-        for gameObject in gameObjects {
-            let distance = object.center.distance(to: gameObject.center)
-            if distance <= blastRadius {
-                if gameObject.isBlast {
-                    gameObject.hasBlasted = true
-                }
-                blastObjects.append(gameObject)
-            }
-        }
-        return blastObjects
-    }
-    */
-
-    func getBlastObjects(from object: inout GameObject) -> [GameObject] {
-        guard !object.hasBlasted else {
-            return []
-        }
 
         object.hasBlasted = true
-        print("set blasted: ", object.hasBlasted)
 
         var blastObjects: [GameObject] = []
 
@@ -342,12 +273,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     func setObjectsActive(gameObjects: inout [GameObject]) {
-        /*
-        for (index, object) in gameObjects.enumerated() {
-            object.isActive = true
-            object.activeIdx = index + 1
-        }
-        */
         for object in gameObjects {
             object.isActive = true
             object.activeIdx = activeIdx
@@ -355,249 +280,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    // TODO: Rename to updateGamePosition and have updateBall and updateCapture inside
-    @objc func updateBallPosition() {
-        //print("motion object length: ", motionObjects.count, "capture object length: ", captureObjects.count)
-        incrementExitCount()
-        motionObjects = motionObjects.filter { !$0.isOutOfBounds }
-        for index in motionObjects.indices {
-            if index == 0 {
-                var object: MotionObject = ammo[index]
-                object.center = object.center.add(vector: object.velocity)
-                handleObjectBoundaries(&object)
-            }
-
-            var object = motionObjects[index]
-            updateObjectPosition(&object)
-            handleObjectBoundaries(&object)
-            handleObjectCollisions(&object)
-            motionObjects[index] = object
-            addGravity(to: &object)
-        }
-        // TODO: Add multiple frozen capture objects (vel = 0) when all pegs are eliminated
-        for index in captureObjects.indices {
-            var object: CaptureObject = captureObjects[index]
-            object.center = object.center.add(vector: object.velocity)
-            handleObjectBoundaries(&object)
-        }
-
-        for index in ammo.indices {
-            var object: MotionObject = ammo[index]
-            object.center = object.center.add(vector: object.velocity)
-            handleAmmoBoundaries(&object, &ammo)
-            //print("inside velocity: ", object.velocity)
-        }
-
-        /*
-        for index in ammo.indices {
-            if index == 0 {
-                var object: MotionObject = ammo[index]
-                object.center = object.center.add(vector: object.velocity)
-                handleObjectBoundaries(&object)
-            }
-        }
-        */
-    }
-}
-
-/*
-//
-//  GameEngineBody.swift
-//  Peggle
-//
-//  Created by Muhammad Reyaaz on 9/2/24.
-//
-
-import SwiftUI
-
-class GameEngineBody: CollisionGameEngine, GravityGameEngine {
-
-    private let screenWidth = Constants.screenWidth
-    private let screenHeight = Constants.screenHeight
-    private let exitThrsh = 10
-    private var exitCount = 0
-    internal let gravityVelocity = Vector(horizontal: 0.0, vertical: 0.5)
-    internal let gameObjectMass = 100.0
-    internal let intersectThrsh = 10
-
-    var motionObjects: [MotionObject]
-    var gameObjects: [GameObject]
-    var captureObjects: [CaptureObject]
-
-    var isUpdating = false
-
-    init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject], captureObjects: inout [CaptureObject]) {
-        self.motionObjects = motionObjects
-        self.gameObjects = gameObjects
-        self.captureObjects = captureObjects
-    }
-
-    private func handleSideBoundaries(_ object: inout MotionObject) {
-        guard !object.checkLeftBorder() || !object.checkRightBorder() else {
-            return
-        }
-        object.reversePlaneVelocity()
-    }
-
-    private func handleTopBoundary(_ object: inout MotionObject) {
-        guard !object.checkTopBorder() else {
-            return
-        }
-        object.reverseSideVelocity()
-    }
-
-    private func handleBottomBoundary(_ object: inout MotionObject) {
-        guard !object.checkBottomBorderGame() else {
-            return
-        }
-        object.isOutOfBounds = true
-    }
-
-    private func handlePlaneBoundaries(_ object: inout MotionObject) {
-        handleTopBoundary(&object)
-        handleBottomBoundary(&object)
-    }
-
-    internal func handleObjectBoundaries(_ object: inout MotionObject) {
-        handleSideBoundaries(&object)
-        handlePlaneBoundaries(&object)
-    }
-
-    /*
-    private func handleNoIntersection(for peg: inout Peg, and object: inout MotionObject) {
-        peg.isHandleOverlap = false
-        peg.handleOverlapCount = 0
-        peg.isDisappear = false
-        object.isHandleOverlap = false
-    }
-    */
-
-    // TODO: Rename from peg to object once have working
-    private func handleNoIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        peg.isHandleOverlap = false
-        peg.handleOverlapCount = 0
-        peg.isDisappear = false
-        object.isHandleOverlap = false
-    }
-
-    private func handleFirstIntersection(for peg: inout Peg, and object: inout MotionObject) {
-        handleCollision(motionObject: &object, gameObject: peg)
-        peg.isHandleOverlap = true
-        object.isHandleOverlap = true
-    }
-
-    private func subsequentIntersection(for peg: inout Peg) {
-        peg.handleOverlapCount += 1
-        peg.isDisappear = false
-    }
-
-    private func thresholdIntersection(for peg: inout Peg) {
-        peg.isDisappear = true
-    }
-
-    /*
-    internal func handleIntersection(for peg: inout Peg, and object: inout MotionObject) {
-        peg.isActive = true
-        if peg.handleOverlapCount < intersectThrsh {
-            if !peg.isHandleOverlap {
-                handleFirstIntersection(for: &peg, and: &object)
-            }
-            subsequentIntersection(for: &peg)
-        } else if peg.handleOverlapCount == intersectThrsh {
-            thresholdIntersection(for: &peg)
-        }
-    }
-    */
-
-    internal func handleIntersection(for peg: inout GameObject, and object: inout MotionObject) {
-        peg.isActive = true
-        if peg.handleOverlapCount < intersectThrsh {
-            if !peg.isHandleOverlap {
-                handleFirstIntersection(for: &peg, and: &object)
-            }
-            subsequentIntersection(for: &peg)
-        } else if peg.handleOverlapCount == intersectThrsh {
-            thresholdIntersection(for: &peg)
-        }
-    }
-
-    /*
-    private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
-        for gameObject in gameObjects {
-            guard var peg = gameObject as? Peg else {
-                continue
-            }
-            guard !object.checkNoIntersection(with: peg) else {
-                handleNoIntersection(for: &peg, and: &object)
-                continue
-            }
-            handleIntersection(for: &peg, and: &object)
-        }
-    }
-    */
-
-    private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
-        for gameObject in gameObjects {
-            guard var newGameObject = gameObject as? GameObject else {
-                continue
-            }
-            guard !object.checkNoIntersection(with: newGameObject) else {
-                handleNoIntersection(for: &newGameObject, and: &object)
-                continue
-            }
-            handleIntersection(for: &newGameObject, and: &object)
-        }
-    }
-
-    private func checkAndResetOverlap(isIntersect: inout Bool) {
-        for innerObject in gameObjects {
-            guard let peg = innerObject as? Peg else {
-                continue
-            }
-            peg.isHandleOverlap = false
-        }
-    }
-
-    internal func handleObjectCollisions(_ object: inout MotionObject) {
-        var isIntersect = false
-        isHandleOverlapObjects(motionObject: &object, isIntersect: &isIntersect)
-    }
-
-    internal func handleCollision(motionObject: inout MotionObject, gameObject: Peg) {
-        var gameObjectPhysics = PhysicsBody(object: gameObject, position: gameObject.center, mass: gameObjectMass)
-        var motionObjectPhysics = PhysicsBody(object: motionObject, position: motionObject.center)
-
-        motionObjectPhysics.velocity = motionObject.velocity
-        gameObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &gameObjectPhysics)
-        motionObject.velocity = motionObjectPhysics.velocity
-    }
-
-    /*
-    internal func updateObjectPosition(_ object: inout MotionObject) {
-        object.center = object.center.add(vector: object.velocity)
-    }
-    */
-
-    internal func updateObjectPosition(_ object: inout MotionObject) {
-        object.center = object.center.add(vector: object.velocity)
-    }
-
-    private func incrementExitCount() {
-        if exitCount < exitThrsh {
-            exitCount += 1
-        }
-    }
-
-    internal func addGravity(to object: inout MotionObject) {
-        if exitCount == exitThrsh && !object.isHandleOverlap {
-            object.velocity = object.velocity.add(vector: gravityVelocity)
-        }
-    }
-
-    // TODO: Rename to updateGamePosition and have updateBall and updateCapture inside
-    @objc func updateBallPosition() {
-        //print("motion object length: ", motionObjects.count, "capture object length: ", captureObjects.count)
-        incrementExitCount()
+    @objc func updateMotionObjects() {
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
         for index in motionObjects.indices {
             var object = motionObjects[index]
@@ -607,12 +290,30 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             motionObjects[index] = object
             addGravity(to: &object)
         }
+    }
+
+    @objc func updateCaptureObjects() {
+        // TODO: Add multiple frozen capture objects (vel = 0) when all gameObjects are eliminated
         for index in captureObjects.indices {
             var object: MotionObject = captureObjects[index]
-            object.center = object.center.add(vector: object.velocity)
+            updateObjectPosition(&object)
             handleObjectBoundaries(&object)
         }
     }
-}
-*/
 
+    @objc func updateAmmo() {
+        for index in ammo.indices {
+            var object: MotionObject = ammo[index]
+            updateObjectPosition(&object)
+            handleAmmoBoundaries(&object, &ammo)
+        }
+    }
+
+    // TODO: Rename to updateGamePosition and have updateBall and updateCapture inside
+    @objc func updateBallPosition() {
+        incrementExitCount()
+        updateMotionObjects()
+        updateCaptureObjects()
+        updateAmmo()
+    }
+}
