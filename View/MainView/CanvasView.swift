@@ -11,17 +11,41 @@ import SwiftUI
 // TODO: Remove width and height if necessary
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
+    let centerY = 250.0 / 2.0
 
     var body: some View {
         ZStack(alignment: .top) {
-            backgroundDisplay
+            ZStack {
+                backgroundDisplay
+                Image("glass")
+                .opacity(0.55)
+                //.frame(width: 20, alignment: .trailing)
+                    .background(Color.red)
+                    .position(x: 50, y: 650)
+            }
             motionObjectDisplay
             captureObjectDisplay
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
             }
-            gameObjectsDisplay
+            /*
+            ZStack {
+                ammoDisplay
+                Image("glass").position(x: 42, y: 650)
+                    .opacity(0.55)
+
+            }
+            */
+            /*
+            GeometryReader { geometry in
+                Image("glass")
+                    .frame(width: 20, height: geometry.size.height / 30)
+                    .position(x: 42, y: 650)
+                    .opacity(0.55)
+            }
+            */
             ammoDisplay
+            gameObjectsDisplay
             if !canvasViewModel.isStartState {
                 PaletteView()
             }
@@ -169,9 +193,16 @@ extension CanvasView {
 
 extension CanvasView {
     private var motionObjectDisplay: some View {
-        ForEach(canvasViewModel.motionObjects.indices, id: \.self) { index in
-            let object = canvasViewModel.motionObjects[index]
-            customMotionObjectView(object: object, index: index)
+        ZStack {
+            //Image("glass")
+                //.resizable()
+                //.frame(width:80)
+                //.background(Color.red)
+                //.padding(-500)
+            ForEach(canvasViewModel.motionObjects.indices, id: \.self) { index in
+                let object = canvasViewModel.motionObjects[index]
+                customMotionObjectView(object: object, index: index)
+            }
         }
     }
 }

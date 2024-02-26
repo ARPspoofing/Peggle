@@ -20,7 +20,6 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var remainingAmmo: [MotionObject] = []
     @Published var captureObjects: [CaptureObject]
     @Published var selectedObject: String?
-    @Published var remainingAmmoCount: Int = 10
 
     @Published var isDeleteState = false
     @Published var isResizeState = false
@@ -296,7 +295,7 @@ extension CanvasViewModel {
     }
 
     func shootBall() {
-        guard !isShooting, !isAnimating, remainingAmmoCount > 0 else {
+        guard !isShooting, !isAnimating, remainingAmmo.count > 0 else {
             return
         }
         isShooting = true

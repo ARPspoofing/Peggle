@@ -138,6 +138,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         gameObject.isActive = true
         if gameObject.hasBlasted {
             gameObject.isDisappear = true
+            gameObject.handleOverlapCount = 10
             return
         }
     }
@@ -216,7 +217,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             let gameObject = gameObjects[index]
             if isInBlastRadius(blastObject: object, gameObject: gameObject) {
                 if gameObject.isBlast {
-                    gameObjects[index].hasBlasted = true
+                    gameObject.hasBlasted = true
                     blastObjects.append(contentsOf: getBlastObjects(from: &gameObjects[index]))
                 }
                 blastObjects.append(gameObject)
@@ -228,15 +229,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     func getBlastObjects(from object: inout GameObject) -> [GameObject] {
         guard !object.hasBlasted else {
             return []
-        }
-        guard var motionObject = object as? MotionObject else {
-            return []
-        }
-        if !motionObject.hasBlasted {
-            print("not blasted")
-            motionObject.velocity = motionObject.velocity.add(vector: Vector(horizontal: 0.0, vertical: -5))
-        } else {
-            print("blasted")
         }
         object.hasBlasted = true
         var blastObjects: [GameObject] = []
