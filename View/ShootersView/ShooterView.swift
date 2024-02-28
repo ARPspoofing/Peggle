@@ -66,7 +66,7 @@ struct ShooterView: View {
                         .frame(width: 8, height: 8)
                         .position(x: x, y: y)
                 }
-
+                /*
                 Image(shooterBaseImage)
                     .resizable()
                     .frame(width: shooterBaseWidth, height: shooterBaseHeight)
@@ -80,7 +80,13 @@ struct ShooterView: View {
                     .position(x: shooterBaseX, y: shooterHeadY + shooterHeadOffset)
                     .rotationEffect(.radians(viewModel.shooterRotation),
                                     anchor: UnitPoint(x: unitX, y: shooterBaseY / geometry.size.height))
-
+                */
+                Image("scarab-beetle")
+                    .resizable()
+                    .frame(width: shooterBaseWidth, height: shooterBaseHeight)
+                    .position(x: shooterBaseX, y: shooterBaseY)
+                    .rotationEffect(.radians(viewModel.shooterRotation),
+                                    anchor: UnitPoint(x: unitX, y: shooterBaseY / geometry.size.height))
                 .onReceive(viewModel.$isShooting) { shooting in
                     if shooting {
                         isShootingImageVisible = true
