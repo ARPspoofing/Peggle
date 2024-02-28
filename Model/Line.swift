@@ -27,6 +27,12 @@ struct Line: Codable {
         self.end = calculateEndPoint()
     }
 
+    init(start: Point, vector: Vector, maxDistance: Double) {
+        self.start = start
+        self.vector = vector
+        self.end = calculateEndPoint(maxDistance: maxDistance)
+    }
+
     var squaredLength: Double {
         start.squareDistance(to: end)
     }
@@ -39,9 +45,9 @@ struct Line: Codable {
         distance * distance
     }
 
-    func calculateEndPoint() -> Point {
+    func calculateEndPoint(maxDistance: Double = Constants.screenHeight) -> Point {
         let normalizedVector = vector.normalize()
-        let maxDistance = Constants.screenHeight
+        //let maxDistance = Constants.screenHeight
         var endPointX = start.xCoord + normalizedVector.horizontal * maxDistance
         var endPointY = start.yCoord + normalizedVector.vertical * maxDistance
         if endPointX < 0 {
@@ -50,6 +56,16 @@ struct Line: Codable {
         }
         return Point(xCoord: endPointX, yCoord: endPointY)
     }
+
+    /*
+    func calculateEndPointWithDistance(_ distance: Double) -> Point {
+        let normalizedVector = vector.normalize()
+        var endPointX = start.xCoord + normalizedVector.horizontal * distance
+        var endPointY = start.yCoord + normalizedVector.vertical * distance
+        return Point(xCoord: endPointX, yCoord: endPointY)
+    }
+    */
+
 
     func recalculateEndPoint(_ vector: Vector) -> Double {
         return start.yCoord - (start.xCoord / vector.horizontal) * vector.vertical
@@ -112,7 +128,6 @@ struct Line: Codable {
 
     func isPointNearLine(point: Point, range: Double) -> Bool {
         let squaredDistanceToLine = squaredDistanceFromPointToLine(point: point)
-        print(squaredDistanceToLine, range)
         return squaredDistanceToLine <= range
     }
 

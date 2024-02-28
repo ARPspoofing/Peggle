@@ -14,13 +14,12 @@ import Foundation
 
 @objc(Sharp)
 class Sharp: GameObject, TriangularMovableObject {
-
     var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var left: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var right: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var edges: [Line] = []
     var initialLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var initialRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var edges: [Line] = []
 
     var circumradius: Double {
         get {
@@ -82,9 +81,9 @@ class Sharp: GameObject, TriangularMovableObject {
 
     func initPoints() {
         top = center.add(vector: Vector(horizontal: 0.0, vertical: -circumradius))
-        initialTop = top
         left = center.add(vector: Vector(horizontal: -circumradius, vertical: circumradius))
         right = center.add(vector: Vector(horizontal: circumradius, vertical: circumradius))
+        initialTop = top
     }
 
     func initEdges() {
@@ -129,26 +128,24 @@ class Sharp: GameObject, TriangularMovableObject {
     }
 
     // TODO: Move to physics engine
+    /*
     func rotateTopPoint(initialTop: Point, rotationAngle: Double, circumradius: Double) -> Point {
         let newX = initialTop.xCoord + circumradius * sin(rotationAngle)
         let newY = initialTop.yCoord + circumradius * (1 - cos(rotationAngle))
         return Point(xCoord: newX, yCoord: newY)
     }
+    */
 
-    func rotateBottomPoint(initialTop: Point, rotationAngle: Double, circumradius: Double) -> Point {
-        var adjustedAngle = rotationAngle - (2 * Double.pi / 3)
-        if adjustedAngle > Double.pi {
-            adjustedAngle -= 2 * Double.pi
-        }
-        let newX = initialTop.xCoord + circumradius * sin(adjustedAngle)
-        let newY = initialTop.yCoord + circumradius * (1 - cos(adjustedAngle))
+    func rotateTopPoint(rotationAngle: Double) -> Point {
+        let newX = initialTop.xCoord + circumradius * sin(rotationAngle)
+        let newY = initialTop.yCoord + circumradius * (1 - cos(rotationAngle))
         return Point(xCoord: newX, yCoord: newY)
     }
 
     override func changeOrientation(to end: Double) {
         orientation = end
 
-        let newTop = rotateTopPoint(initialTop: initialTop, rotationAngle: end, circumradius: circumradius)
+        let newTop = rotateTopPoint(rotationAngle: end)
 
         let rightX = newTop.xCoord + top.distance(to: right) * cos(end + Double.pi / 3)
         let rightY = newTop.yCoord + top.distance(to: right) * sin(end + Double.pi / 3)

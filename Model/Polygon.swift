@@ -9,4 +9,5 @@ protocol Polygon {
     var circumradius: Double { get set }
     var base: Double { get set }
     var height: Double { get set }
+    var edges: [Line] { get set }
 }

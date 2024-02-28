@@ -21,8 +21,9 @@ struct InactiveObjectView: View {
             Image(name)
                 .resizable()
                 .scaledToFit()
-                .opacity(isHighlighted ? selectedAlpha : unselectedAlpha)            
-                .frame(width: diameter, height: diameter)
+                .opacity(isHighlighted ? selectedAlpha : unselectedAlpha)
+                //.frame(width: diameter, height: diameter)
+                .frame(width: diameter, height: name == "obstacleObject" ? diameter * 2 : diameter)
                 .rotationEffect(.radians(orientation))
                 //TODO: Fix glow later
                 //.shadow(color: Color.yellow.opacity(1), radius: 20, x: 0, y: 0)

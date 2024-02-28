@@ -59,6 +59,10 @@ struct Vector: Codable, Equatable {
         Vector(horizontal: -self.horizontal, vertical: -self.vertical)
     }
 
+    func getPerpendicularVector() -> Vector {
+        Vector(horizontal: -self.vertical, vertical: self.horizontal)
+    }
+
     func normalize() -> Vector {
         return Vector(horizontal: horizontal / getLength(), vertical: vertical / getLength())
     }

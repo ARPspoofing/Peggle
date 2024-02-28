@@ -8,6 +8,7 @@
 import Foundation
 
 protocol RectangularMovableObject: MovableObject, Polygon {
+    var top: Point { get set }
     var topLeft: Point { get set }
     var topRight: Point { get set }
     var bottomLeft: Point { get set }
@@ -30,72 +31,71 @@ extension RectangularMovableObject {
        return false
    }
 
-   func distanceFromPointToLine(point: Point, line: Line) -> Double {
-       let lineVector = Vector(horizontal: line.end.xCoord - line.start.xCoord, vertical: line.end.yCoord - line.start.yCoord)
-       let pointVector = Vector(horizontal: point.xCoord - line.start.xCoord, vertical: point.yCoord - line.start.yCoord)
+    func distanceFromPointToLine(point: Point, line: Line) -> Double {
+        return line.distanceFromPointToLine(point: point)
+    }
 
-       let lineLength = calculateVectorLength(vector: lineVector)
+    func linesIntersect(line1: Line, line2: Line) -> Bool {
+        let p = line1.start
+        let q = line2.start
+        let r = Point(xCoord: line1.end.xCoord - p.xCoord, yCoord: line1.end.yCoord - p.yCoord)
+        let s = Point(xCoord: line2.end.xCoord - q.xCoord, yCoord: line2.end.yCoord - q.yCoord)
 
-       guard lineLength != 0 else {
-           return handleZeroLineLength()
-       }
+        let denominator = calculateDenominator(r: r, s: s)
+        let numerator1 = calculateNumerator1(q: q, p: p, s: s)
+        let numerator2 = calculateNumerator2(q: q, p: p, r: r)
 
-       let projection = calculateProjection(pointVector: pointVector, lineVector: lineVector, lineLength: lineLength)
+        if denominator == 0 {
+            return areLinesParallel(line1: line1, line2: line2)
+        }
 
-       if projection < 0 {
-           return distanceToPoint(point: point, from: line.start)
-       } else if projection > lineLength {
-           return distanceToPoint(point: point, from: line.end)
-       }
+        let t = numerator1 / denominator
+        let u = numerator2 / denominator
 
-       return calculatePerpendicularDistance(pointVector: pointVector, lineVector: lineVector, lineLength: lineLength)
-   }
+        return t >= 0 && t <= 1 && u >= 0 && u <= 1
+    }
 
-   func calculateVectorLength(vector: Vector) -> Double {
-       return sqrt((vector.horizontal * vector.horizontal) + (vector.vertical * vector.vertical))
-   }
+    func calculateDenominator(r: Point, s: Point) -> Double {
+        return r.xCoord * s.yCoord - r.yCoord * s.xCoord
+    }
 
-   func handleZeroLineLength() -> Double {
-       return -1
-   }
+    func calculateNumerator1(q: Point, p: Point, s: Point) -> Double {
+        return (q.yCoord - p.yCoord) * s.xCoord - (q.xCoord - p.xCoord) * s.yCoord
+    }
 
-   func calculateProjection(pointVector: Vector, lineVector: Vector, lineLength: Double) -> Double {
-       return ((pointVector.horizontal * lineVector.horizontal) + (pointVector.vertical * lineVector.vertical)) / lineLength
-   }
+    func calculateNumerator2(q: Point, p: Point, r: Point) -> Double {
+        return (q.xCoord - p.xCoord) * r.yCoord - (q.yCoord - p.yCoord) * r.xCoord
+    }
 
-   func distanceToPoint(point: Point, from start: Point) -> Double {
-       return sqrt((point.xCoord - start.xCoord) * (point.xCoord - start.xCoord) + (point.yCoord - start.yCoord) * (point.yCoord - start.yCoord))
-   }
+    func areLinesParallel(line1: Line, line2: Line) -> Bool {
+        return (line1.end.yCoord - line1.start.yCoord) / (line1.end.xCoord - line1.start.xCoord) == (line2.end.yCoord - line2.start.yCoord) / (line2.end.xCoord - line2.start.xCoord)
+    }
 
-   func calculatePerpendicularDistance(pointVector: Vector, lineVector: Vector, lineLength: Double) -> Double {
-       return abs((pointVector.horizontal * lineVector.vertical - pointVector.vertical * lineVector.horizontal) / lineLength)
-   }
+    func pointOnLine(point: Point, line: Line) -> Bool {
+        return (point.xCoord >= min(line.start.xCoord, line.end.xCoord) && point.xCoord <= max(line.start.xCoord, line.end.xCoord)) &&
+               (point.yCoord >= min(line.start.yCoord, line.end.yCoord) && point.yCoord <= max(line.start.yCoord, line.end.yCoord))
+    }
 
-    func edgeIsIntersectingWithPeg(edge: Line, peg: Peg) -> Bool {
-       guard edge.projectionOfPointOntoLineIsOnLine(peg.center) else {
-           return false
-       }
-       let squaredRadius = peg.radius * peg.radius
-       let minimumDistanceFromPegToLineSquared = edge.minimumDistanceFromPointSquared(peg.center)
-       let edgeIsIntersectingPeg = minimumDistanceFromPegToLineSquared <= squaredRadius
-       return edgeIsIntersectingPeg
-   }
+    func isNotIntersecting(with object: Polygon) -> Bool {
+        for edge in object.edges {
+            for side in edges {
+                if linesIntersect(line1: edge, line2: side) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
-    func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
-       return false
-   }
-
-    /*
    func checkNoIntersection(with gameObject: GameObject) -> Bool {
-       if let sharp = gameObject as? TriangularMovableObject {
-           return isNotIntersecting(with: sharp)
-       } else if let circle = gameObject as? Peg {
-           return !(isIntersecting(with: circle) || circleInsideTriangle(peg: circle))
+       if let object = gameObject as? CircularMovableObject {
+           return !(isIntersecting(with: object))
+       } else if let object = gameObject as? Polygon {
+           return isNotIntersecting(with: object)
        } else {
            return true
        }
    }
-*/
 }
 
 extension RectangularMovableObject {

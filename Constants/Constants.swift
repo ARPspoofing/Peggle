@@ -56,6 +56,7 @@ struct Constants {
     static let captureObject = "captureObject"
     static let oscillateObject = "oscillateObject"
     static let reappearObject = "reappearObject"
+    static let obstacleObject = "obstacleObject"
     static let shooterBase = "shooterBase"
     static let shooterHead = "shooterHead"
     static let none = "none"

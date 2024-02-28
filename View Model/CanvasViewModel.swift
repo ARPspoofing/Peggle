@@ -12,7 +12,7 @@ import SwiftUI
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
-    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject]
+    let paletteObjects: [String] = [/*Constants.normalObject Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject,*/ Constants.obstacleObject]
     let modelMap = ModelMap()
 
     @Published var gameObjects: [GameObject]
@@ -236,6 +236,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         guard checkCanDrag(objectDeepCopy, index) else {
             return
         }
+        print("initial width", object.halfWidth)
         object.changeHalfWidth(newHalfWidth: finalWidth)
         gameObjects[index] = object
     }

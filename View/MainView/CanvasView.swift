@@ -230,6 +230,8 @@ extension CanvasView {
 extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
+            if let rectangle = object as? RectangularMovableObject {
+                let object = rectangle
                 ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
                     .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
                     .onTapGesture {
@@ -263,6 +265,37 @@ extension CanvasView {
                             }
                             .onEnded { _ in }
                     )
+
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.center.xCoord, y: object.center.yCoord)
+
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.top.xCoord, y: object.top.yCoord)
+
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.topLeft.xCoord, y: object.topLeft.yCoord)
+
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.topRight.xCoord, y: object.topRight.yCoord)
+
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.bottomLeft.xCoord, y: object.bottomLeft.yCoord)
+
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.bottomRight.xCoord, y: object.bottomRight.yCoord)
+            }
         }
     }
 }

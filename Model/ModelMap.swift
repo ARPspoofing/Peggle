@@ -12,7 +12,8 @@ struct ModelMap {
             Constants.normalObject: createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
             Constants.actionObject: createActionPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
             Constants.oscillateObject: createOscillate(center: center, type: type, radius: halfWidth, orientation: orientation),
-            Constants.reappearObject: createReappear(center: center, type: type, radius: halfWidth, orientation: orientation)
+            Constants.reappearObject: createReappear(center: center, type: type, radius: halfWidth, orientation: orientation),
+            Constants.obstacleObject: createRectangle(center: center, type: type, circumradius: halfWidth, orientation: orientation)
         ]
         return entity[type] ?? createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation)
     }
@@ -35,5 +36,9 @@ struct ModelMap {
 
     func createReappear(center: Point, type: String, radius: Double, orientation: Double) -> ReappearObject {
         ReappearObject(center: center, name: type, radius: radius, orientation: orientation)
+    }
+
+    func createRectangle(center: Point, type: String, circumradius: Double, orientation: Double) -> Rectangle {
+        Rectangle(center: center, name: type, circumradius: circumradius, orientation: orientation)
     }
 }
