@@ -12,6 +12,7 @@ struct ModelMap {
             Constants.normalObject: createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
             Constants.actionObject: createActionPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
             Constants.oscillateObject: createOscillate(center: center, type: type, radius: halfWidth, orientation: orientation),
+            Constants.reappearObject: createReappear(center: center, type: type, radius: halfWidth, orientation: orientation)
         ]
         return entity[type] ?? createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation)
     }
@@ -29,6 +30,10 @@ struct ModelMap {
     }
 
     func createOscillate(center: Point, type: String, radius: Double, orientation: Double) -> OscillateObject {
-        OscillateObject(center: center, name: type, radius: radius)
+        OscillateObject(center: center, name: type, radius: radius,orientation: orientation)
+    }
+
+    func createReappear(center: Point, type: String, radius: Double, orientation: Double) -> ReappearObject {
+        ReappearObject(center: center, name: type, radius: radius, orientation: orientation)
     }
 }

@@ -80,6 +80,7 @@
 		91AD1B3B2B78D3FE009E6BC6 /* StateChangeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B3A2B78D3FE009E6BC6 /* StateChangeObject.swift */; };
 		91AD1B3F2B78E544009E6BC6 /* GameEngineDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B3E2B78E544009E6BC6 /* GameEngineDelegate.swift */; };
 		91AD1B472B7909F4009E6BC6 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B462B7909F4009E6BC6 /* GameEngine.swift */; };
+		91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D997782B8EDD6300DB5364 /* ReappearObject.swift */; };
 		91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382642B7E41760012C0D1 /* DisappearObject.swift */; };
 		91F382672B7E48EB0012C0D1 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382662B7E48EB0012C0D1 /* ActiveView.swift */; };
 		91F382692B7E49AC0012C0D1 /* RadiatingCirclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */; };
@@ -180,6 +181,7 @@
 		91AD1B3A2B78D3FE009E6BC6 /* StateChangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateChangeObject.swift; sourceTree = "<group>"; };
 		91AD1B3E2B78E544009E6BC6 /* GameEngineDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineDelegate.swift; sourceTree = "<group>"; };
 		91AD1B462B7909F4009E6BC6 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		91D997782B8EDD6300DB5364 /* ReappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReappearObject.swift; sourceTree = "<group>"; };
 		91F382642B7E41760012C0D1 /* DisappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisappearObject.swift; sourceTree = "<group>"; };
 		91F382662B7E48EB0012C0D1 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiatingCirclesView.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				916E67A42B88798E00960D5D /* ModelMap.swift */,
 				911EB4B82B8B4449009B206E /* BlastObject.swift */,
 				911EB4BE2B8CE249009B206E /* OscillateObject.swift */,
+				91D997782B8EDD6300DB5364 /* ReappearObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				91F382672B7E48EB0012C0D1 /* ActiveView.swift in Sources */,
 				915E033B2B82346D005A41D1 /* MyCodingKey.swift in Sources */,
 				91986EDC2B5F4A1700D1C72C /* CanvasViewModel.swift in Sources */,
+				91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */,
 				916E677C2B85E98200960D5D /* CaptureObject.swift in Sources */,
 				91986EC42B5E1D7600D1C72C /* PaletteView.swift in Sources */,
 				91986EF12B63745300D1C72C /* LevelSelectionView.swift in Sources */,

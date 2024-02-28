@@ -12,7 +12,7 @@ import SwiftUI
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
-    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, Constants.sharpObject, Constants.oscillateObject]
+    let paletteObjects: [String] = [Constants.normalObject, Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject]
     let modelMap = ModelMap()
 
     @Published var gameObjects: [GameObject]
@@ -31,6 +31,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isDoneShooting = false
     @Published var isShowingCircle = true
     @Published var isAnimating = false
+    @Published var lineDistance: Double = 0.0
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
 
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
@@ -46,6 +47,10 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     var isDelegated = false
     @Published var gameEngine: GameEngine?
     private(set) var displayLink: CADisplayLink?
+
+    @Published var elapsedTime: TimeInterval = 0
+    let timerDuration: TimeInterval = 60
+    var timer: Timer?
 
     init() {
         self.gameObjects = []
@@ -64,6 +69,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     func start() {
         isStartState.toggle()
         initGameEngineAndDelegate()
+        startTimer()
     }
 
     func unselectObjects() {
@@ -239,6 +245,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         let touchVector = Vector(horizontal: point.xCoord - Constants.screenWidth / 2, vertical: point.yCoord)
         let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
         shooterRotation = angleInRadians
+        firstObjectInSightDistance()
     }
 
     func calcAngle(from center: Point, to point: CGPoint) -> Double {
@@ -261,6 +268,95 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
         object.changeOrientation(to: angleInRadians)
         gameObjects[index] = object
+    }
+
+    /*
+    func isGameObjectInLineOfSight(_ gameObject: GameObject) -> Bool {
+        let vector: Vector = getBallVector()
+        let origin: Point = shooterPosition
+        let slope = vector.vertical / vector.horizontal
+        let yIntercept = origin.yCoord - (slope * origin.xCoord)
+        let vectorY = (slope * gameObject.center.xCoord) + yIntercept
+        let range: Double = 50.0
+        return (vectorY >= gameObject.center.yCoord - range) && (vectorY <= gameObject.center.yCoord + range)
+    }
+    */
+
+    /*
+    func isGameObjectInLineOfSight(_ gameObject: GameObject) -> Bool {
+
+        var origin: Point = shooterPosition.deepCopy()
+        let range = gameObject.halfWidth * 2
+        let vector: Vector = getBallVector()
+
+        while origin.xCoord <= Constants.screenWidth && origin.xCoord >= 0.0 && origin.yCoord >= 0.0
+                && origin.yCoord <= Constants.gameHeight {
+            if origin.xCoord >= gameObject.center.xCoord - range && origin.xCoord <= gameObject.center.xCoord + range && origin.yCoord >= gameObject.center.yCoord - range && origin.yCoord <= gameObject.center.yCoord + range {
+                return true
+            }
+            origin = origin.add(vector: vector)
+        }
+        return false
+    }
+    */
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            if self.elapsedTime < self.timerDuration {
+                self.elapsedTime += 1
+            } else {
+                self.stopTimer()
+            }
+        }
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    func isGameObjectInLineOfSight(_ gameObject: GameObject) -> Bool {
+        let range = gameObject.halfWidth
+        let vector: Vector = getBallVector()
+        let line = Line(start: shooterPosition, vector: vector)
+        return line.isPointNearLine(point: gameObject.center, range: range * range)
+    }
+
+    /*
+    let vector: Vector = getBallVector()
+    let origin: Point = shooterPosition
+    let range = gameObject.halfWidth * 2
+
+    if vector.horizontal == 0 {
+        return abs(gameObject.center.xCoord - origin.xCoord) <= range
+    }
+
+    let slope = vector.vertical / vector.horizontal
+    let yIntercept = origin.yCoord - (slope * origin.xCoord)
+
+    let vectorY = (slope * gameObject.center.xCoord) + yIntercept
+    print(vectorY, gameObject.center.yCoord, (vectorY >= gameObject.center.yCoord - range) && (vectorY <= gameObject.center.yCoord + range), Constants.gameHeight - vectorY)
+
+    return ((vectorY >= gameObject.center.yCoord - range) && (vectorY <= gameObject.center.yCoord + range))
+    */
+
+    func firstObjectInSightDistance() {
+        //var closestGameObject: GameObject?
+        var minDistance = Constants.screenHeight
+        let origin: Point = shooterPosition
+        for gameObject in gameObjects {
+            if isGameObjectInLineOfSight(gameObject) {
+                let distance = sqrt(pow(gameObject.center.xCoord - origin.xCoord, 2) + pow(gameObject.center.yCoord - origin.yCoord, 2))
+                if distance < minDistance {
+                    minDistance = distance
+                    //closestGameObject = gameObject
+                }
+            }
+        }
+        lineDistance = minDistance
+        //return closestGameObject
+        //return minDistance
     }
 }
 

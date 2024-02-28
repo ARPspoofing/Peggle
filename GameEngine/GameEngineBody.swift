@@ -57,11 +57,17 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         object.reverseVerticalVelocity()
     }
 
+    // TODO: Abstract out reset and change center
     private func handleBottomBoundary(_ object: inout MotionObject) {
         guard !object.checkBottomBorderGame() else {
             return
         }
-        object.isOutOfBounds = true
+        guard object.isReappear else {
+            object.isOutOfBounds = true
+            return
+        }
+        object.changeCenter(newCenter: Point(xCoord: object.retrieveXCoord(), yCoord: 50.0))
+        object.resetVelocity(magnitude: 10.0)
     }
 
     private func handlePlaneBoundaries(_ object: inout MotionObject) {
@@ -72,6 +78,10 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     internal func handleObjectBoundaries(_ object: inout MotionObject) {
         handleSideBoundaries(&object)
         handlePlaneBoundaries(&object)
+    }
+
+    internal func handleCaptureObjectBoundaries(_ object: inout MotionObject) {
+        handleSideBoundaries(&object)
     }
 
     func handleAmmoBottomBoundary(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
@@ -123,6 +133,9 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         handleCollision(motionObject: &object, gameObject: &gameObject)
         gameObject.isHandleOverlap = true
         object.isHandleOverlap = true
+        if gameObject is ReappearObject {
+            object.isReappear = true
+        }
     }
 
     private func subsequentIntersection(for gameObject: inout GameObject) {
@@ -267,7 +280,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         for index in captureObjects.indices {
             var object: MotionObject = captureObjects[index]
             updateObjectPosition(&object)
-            handleObjectBoundaries(&object)
+            handleCaptureObjectBoundaries(&object)
         }
     }
 

@@ -22,6 +22,9 @@ struct CanvasView: View {
                 .opacity(0.55)
                 .position(x: 50, y: 650)
             }
+
+            Text("Elapsed Time: \(canvasViewModel.elapsedTime, specifier: "%.0f") seconds")
+
             motionObjectDisplay
             captureObjectDisplay
             if canvasViewModel.isStartState {

@@ -37,6 +37,12 @@ struct Vector: Codable, Equatable {
         Vector(horizontal: self.horizontal * magnitude, vertical: self.vertical * magnitude)
     }
 
+    mutating func scaleToSize(_ size: Double) {
+        let normVector: Vector = normalize()
+        self.horizontal = normVector.horizontal * size
+        self.vertical = normVector.vertical * size
+    }
+
     func dotProduct(with vector: Vector) -> Double {
         self.horizontal * vector.horizontal + self.vertical * vector.vertical
     }
@@ -51,6 +57,10 @@ struct Vector: Codable, Equatable {
 
     func getComplement() -> Vector {
         Vector(horizontal: -self.horizontal, vertical: -self.vertical)
+    }
+
+    func normalize() -> Vector {
+        return Vector(horizontal: horizontal / getLength(), vertical: vertical / getLength())
     }
 
     mutating func changeHorizontalDir() {

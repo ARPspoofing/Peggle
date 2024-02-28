@@ -8,6 +8,8 @@
 import Foundation
 
 // TODO: Inherit from peg perhaps
+// TODO: Make it affect other pegs
+// TODO: Remove unncessary override
 @objc(OscillateObject)
 class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
 

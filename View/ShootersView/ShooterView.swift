@@ -33,6 +33,40 @@ struct ShooterView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
+                let endPointX = viewModel.shooterPosition.xCoord + viewModel.getBallVector().horizontal * viewModel.lineDistance
+                let endPointY = viewModel.shooterPosition.yCoord + viewModel.getBallVector().vertical * viewModel.lineDistance
+
+                let gravityEffect = 100.0
+
+                // Calculate the distance between two points using the Pythagorean theorem
+                let deltaX = endPointX - viewModel.shooterPosition.xCoord
+                let deltaY = endPointY - viewModel.shooterPosition.yCoord
+                let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
+                let distanceBetweenDots = 15.0
+                // Calculate the number of dots based on the calculated distance
+                let numberOfDots = Int(distance / distanceBetweenDots)
+
+                ForEach(0..<numberOfDots, id: \.self) { index in
+                    let progress = CGFloat(index) / CGFloat(numberOfDots - 1)
+                    let x = viewModel.shooterPosition.xCoord + (endPointX - viewModel.shooterPosition.xCoord) * Double(progress)
+
+                    // Calculate the initial Y-coordinate
+                    var y: CGFloat = viewModel.shooterPosition.yCoord + (endPointY - viewModel.shooterPosition.yCoord) * Double(progress)
+
+                    /*
+                     // Adjust the Y-coordinate gradually to create a downward bend
+                     if index > 5 {
+                     let gravityOffset = gravityEffect * Double(progress) * 4
+                     y += CGFloat(gravityOffset)
+                     }
+                     */
+
+                    Circle()
+                        .fill(Color.red.opacity(0.8))
+                        .frame(width: 8, height: 8)
+                        .position(x: x, y: y)
+                }
+
                 Image(shooterBaseImage)
                     .resizable()
                     .frame(width: shooterBaseWidth, height: shooterBaseHeight)
@@ -46,12 +80,13 @@ struct ShooterView: View {
                     .position(x: shooterBaseX, y: shooterHeadY + shooterHeadOffset)
                     .rotationEffect(.radians(viewModel.shooterRotation),
                                     anchor: UnitPoint(x: unitX, y: shooterBaseY / geometry.size.height))
-            }
-            .onReceive(viewModel.$isShooting) { shooting in
-                if shooting {
-                    isShootingImageVisible = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                        isShootingImageVisible = false
+
+                .onReceive(viewModel.$isShooting) { shooting in
+                    if shooting {
+                        isShootingImageVisible = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                            isShootingImageVisible = false
+                        }
                     }
                 }
             }

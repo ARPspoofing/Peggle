@@ -47,6 +47,7 @@ struct Constants {
     // MARK: Image Constants
     static let normalObject = "normalObject"
     static let actionObject = "actionObject"
+
     // TODO: Rename to not be pyramid
     static let sharpObject = "pyramidBlock"
     static let delete = "delete"
@@ -54,6 +55,7 @@ struct Constants {
     static let motionObject = "motionObject"
     static let captureObject = "captureObject"
     static let oscillateObject = "oscillateObject"
+    static let reappearObject = "reappearObject"
     static let shooterBase = "shooterBase"
     static let shooterHead = "shooterHead"
     static let none = "none"
