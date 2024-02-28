@@ -31,6 +31,10 @@ struct Line: Codable {
         start.squareDistance(to: end)
     }
 
+    var length: Double {
+        sqrt(squaredLength)
+    }
+
     func squaredDistance(_ distance: Double) -> Double {
         distance * distance
     }
@@ -60,6 +64,50 @@ struct Line: Codable {
         let squaredNumerator = squaredDistance(numerator)
         let squaredLength = squaredDistance(xDistance) + squaredDistance(yDistance)
         return squaredNumerator / squaredLength
+    }
+
+    func getLineVector() -> Vector {
+        end.subtract(point: start)
+    }
+
+    func getLinePointVector(point: Point) -> Vector {
+        point.subtract(point: start)
+    }
+
+    func distanceFromPointToLine(point: Point) -> Double {
+        let lineVector = getLineVector()
+        let pointVector = getLinePointVector(point: point)
+
+        guard length != 0 else {
+            return handleZeroLineLength()
+        }
+        let projection = calculateProjection(pointVector: pointVector, lineVector: lineVector)
+        if projection < 0 {
+            return distanceToPoint(point: point, from: start)
+        } else if projection > length {
+            return distanceToPoint(point: point, from: end)
+        }
+        return calculatePerpendicularDistance(pointVector: pointVector, lineVector: lineVector)
+    }
+
+    func calculateVectorLength(vector: Vector) -> Double {
+        return sqrt((vector.horizontal * vector.horizontal) + (vector.vertical * vector.vertical))
+    }
+
+    func handleZeroLineLength() -> Double {
+        return -1
+    }
+
+    func calculateProjection(pointVector: Vector, lineVector: Vector) -> Double {
+        return ((pointVector.horizontal * lineVector.horizontal) + (pointVector.vertical * lineVector.vertical)) / length
+    }
+
+    func distanceToPoint(point: Point, from start: Point) -> Double {
+        return sqrt((point.xCoord - start.xCoord) * (point.xCoord - start.xCoord) + (point.yCoord - start.yCoord) * (point.yCoord - start.yCoord))
+    }
+
+    func calculatePerpendicularDistance(pointVector: Vector, lineVector: Vector) -> Double {
+        return abs((pointVector.horizontal * lineVector.vertical - pointVector.vertical * lineVector.horizontal) / length)
     }
 
     func isPointNearLine(point: Point, range: Double) -> Bool {

@@ -14,12 +14,21 @@ import Foundation
 class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
-    var radius: Double = Constants.defaultCircleRadius
+    //var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
     var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var oscillateCount: Int = 0
     var oscillateThrsh: Int = 10
     var oscillateDistance: Double = 30.0
+
+    var radius: Double {
+        get {
+            return super.halfWidth
+        }
+        set(newValue) {
+            super.halfWidth = newValue
+        }
+    }
 
     override init(name: String) {
         super.init(name: name)

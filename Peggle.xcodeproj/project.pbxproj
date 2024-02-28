@@ -81,6 +81,7 @@
 		91AD1B3F2B78E544009E6BC6 /* GameEngineDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B3E2B78E544009E6BC6 /* GameEngineDelegate.swift */; };
 		91AD1B472B7909F4009E6BC6 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B462B7909F4009E6BC6 /* GameEngine.swift */; };
 		91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D997782B8EDD6300DB5364 /* ReappearObject.swift */; };
+		91D9977B2B8EF99C00DB5364 /* RectangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */; };
 		91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382642B7E41760012C0D1 /* DisappearObject.swift */; };
 		91F382672B7E48EB0012C0D1 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382662B7E48EB0012C0D1 /* ActiveView.swift */; };
 		91F382692B7E49AC0012C0D1 /* RadiatingCirclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */; };
@@ -182,6 +183,7 @@
 		91AD1B3E2B78E544009E6BC6 /* GameEngineDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineDelegate.swift; sourceTree = "<group>"; };
 		91AD1B462B7909F4009E6BC6 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		91D997782B8EDD6300DB5364 /* ReappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReappearObject.swift; sourceTree = "<group>"; };
+		91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularMovableObject.swift; sourceTree = "<group>"; };
 		91F382642B7E41760012C0D1 /* DisappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisappearObject.swift; sourceTree = "<group>"; };
 		91F382662B7E48EB0012C0D1 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiatingCirclesView.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				911EB4B82B8B4449009B206E /* BlastObject.swift */,
 				911EB4BE2B8CE249009B206E /* OscillateObject.swift */,
 				91D997782B8EDD6300DB5364 /* ReappearObject.swift */,
+				91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				916E677C2B85E98200960D5D /* CaptureObject.swift in Sources */,
 				91986EC42B5E1D7600D1C72C /* PaletteView.swift in Sources */,
 				91986EF12B63745300D1C72C /* LevelSelectionView.swift in Sources */,
+				91D9977B2B8EF99C00DB5364 /* RectangularMovableObject.swift in Sources */,
 				91986ED02B5E2D2500D1C72C /* Point.swift in Sources */,
 				91986EED2B61F6F800D1C72C /* LocalFileManager.swift in Sources */,
 				91F382692B7E49AC0012C0D1 /* RadiatingCirclesView.swift in Sources */,

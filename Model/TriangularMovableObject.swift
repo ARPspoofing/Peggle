@@ -16,7 +16,7 @@ protocol TriangularMovableObject: MovableObject, Polygon {
 }
 
 extension TriangularMovableObject {
-
+    
      func isIntersecting(with peg: CircularMovableObject) -> Bool {
         let squaredRadius = peg.radius * peg.radius
         for edge in edges {
@@ -31,47 +31,10 @@ extension TriangularMovableObject {
     }
 
     func distanceFromPointToLine(point: Point, line: Line) -> Double {
-        let lineVector = Vector(horizontal: line.end.xCoord - line.start.xCoord, vertical: line.end.yCoord - line.start.yCoord)
-        let pointVector = Vector(horizontal: point.xCoord - line.start.xCoord, vertical: point.yCoord - line.start.yCoord)
-
-        let lineLength = calculateVectorLength(vector: lineVector)
-
-        guard lineLength != 0 else {
-            return handleZeroLineLength()
-        }
-
-        let projection = calculateProjection(pointVector: pointVector, lineVector: lineVector, lineLength: lineLength)
-
-        if projection < 0 {
-            return distanceToPoint(point: point, from: line.start)
-        } else if projection > lineLength {
-            return distanceToPoint(point: point, from: line.end)
-        }
-
-        return calculatePerpendicularDistance(pointVector: pointVector, lineVector: lineVector, lineLength: lineLength)
+        return line.distanceFromPointToLine(point: point)
     }
 
-    func calculateVectorLength(vector: Vector) -> Double {
-        return sqrt((vector.horizontal * vector.horizontal) + (vector.vertical * vector.vertical))
-    }
-
-    func handleZeroLineLength() -> Double {
-        return -1
-    }
-
-    func calculateProjection(pointVector: Vector, lineVector: Vector, lineLength: Double) -> Double {
-        return ((pointVector.horizontal * lineVector.horizontal) + (pointVector.vertical * lineVector.vertical)) / lineLength
-    }
-
-    func distanceToPoint(point: Point, from start: Point) -> Double {
-        return sqrt((point.xCoord - start.xCoord) * (point.xCoord - start.xCoord) + (point.yCoord - start.yCoord) * (point.yCoord - start.yCoord))
-    }
-
-    func calculatePerpendicularDistance(pointVector: Vector, lineVector: Vector, lineLength: Double) -> Double {
-        return abs((pointVector.horizontal * lineVector.vertical - pointVector.vertical * lineVector.horizontal) / lineLength)
-    }
-
-     func edgeIsIntersectingWithPeg(edge: Line, peg: Peg) -> Bool {
+     func edgeIsIntersectingWithPeg(edge: Line, peg: CircularMovableObject) -> Bool {
         guard edge.projectionOfPointOntoLineIsOnLine(peg.center) else {
             return false
         }
@@ -88,6 +51,7 @@ extension TriangularMovableObject {
     }
 
      func pointIsInsideTriangle(point: Point) -> Bool {
+        /*
         let area0rig = abs((left.xCoord - top.xCoord) * (right.yCoord - top.yCoord)
                            - (right.xCoord - top.xCoord) * (left.yCoord - top.yCoord))
         let area1 = abs((top.xCoord - point.xCoord) * (left.yCoord - point.yCoord)
@@ -97,27 +61,60 @@ extension TriangularMovableObject {
         let area3 = abs((right.xCoord - point.xCoord) * (top.yCoord - point.yCoord)
                         - (top.xCoord - point.xCoord) * (right.yCoord - point.yCoord))
         return area1 + area2 + area3 == area0rig
+        */
+
+        let totalArea = triangleArea(left: left, top: top, right: right)
+        let area1 = triangleArea(left: top, top: left, right: point)
+        let area2 = triangleArea(left: left, top: right, right: point)
+        let area3 = triangleArea(left: right, top: top, right: point)
+        return area1 + area2 + area3 == totalArea
     }
 
-     func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
-        let selfPoints = [top, left, right]
-        let trianglePoints = [triangle.top, triangle.left, triangle.right]
+    func triangleArea(left: Point, top: Point, right: Point) -> Double {
+        return abs((left.xCoord - top.xCoord) * (right.yCoord - top.yCoord)
+                   - (right.xCoord - top.xCoord) * (left.yCoord - top.yCoord))
+    }
+
+    /*
+    func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
+           let selfPoints = [top, left, right]
+           let trianglePoints = [triangle.top, triangle.left, triangle.right]
+           for edge in self.edges {
+               if let nonParticipatingPoint = selfPoints
+                   .first(where: { $0 != edge.start && $0 != edge.end }) {
+                   if (edge.pointsLieOnSameSide(triangle.top, triangle.left)
+                        && edge.pointsLieOnSameSide(triangle.left, triangle.right))
+                       && !(edge.pointsLieOnSameSide(triangle.top, nonParticipatingPoint)) {
+                       return true
+                   }
+               }
+           }
+           for edge in triangle.edges {
+               if let nonParticipatingPoint = trianglePoints
+                   .first(where: { $0 != edge.start && $0 != edge.end }) {
+                   if (edge.pointsLieOnSameSide(self.top, self.left)
+                         && edge.pointsLieOnSameSide(self.left, self.right))
+                       && !(edge.pointsLieOnSameSide(self.top, nonParticipatingPoint)) {
+                       return true
+                   }
+               }
+           }
+           return false
+       }
+     */
+
+    func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
+        checkEdgeIntersection(with: triangle) || triangle.checkEdgeIntersection(with: self)
+    }
+
+    func checkEdgeIntersection(with triangle: TriangularMovableObject) -> Bool {
+        let points: [Point] = [top, left, right]
         for edge in self.edges {
-            if let nonParticipatingPoint = selfPoints
+            if let nonParticipatingPoint = points
                 .first(where: { $0 != edge.start && $0 != edge.end }) {
                 if (edge.pointsLieOnSameSide(triangle.top, triangle.left)
-                     && edge.pointsLieOnSameSide(triangle.left, triangle.right))
+                    && edge.pointsLieOnSameSide(triangle.left, triangle.right))
                     && !(edge.pointsLieOnSameSide(triangle.top, nonParticipatingPoint)) {
-                    return true
-                }
-            }
-        }
-        for edge in triangle.edges {
-            if let nonParticipatingPoint = trianglePoints
-                .first(where: { $0 != edge.start && $0 != edge.end }) {
-                if (edge.pointsLieOnSameSide(self.top, self.left)
-                      && edge.pointsLieOnSameSide(self.left, self.right))
-                    && !(edge.pointsLieOnSameSide(self.top, nonParticipatingPoint)) {
                     return true
                 }
             }
@@ -125,10 +122,50 @@ extension TriangularMovableObject {
         return false
     }
 
+    func checkEdgeIntersection(with triangle: TriangularMovableObject, points: [Point]) -> Bool {
+        for edge in self.edges {
+            if let nonParticipatingPoint = points
+                .first(where: { $0 != edge.start && $0 != edge.end }) {
+                if (edge.pointsLieOnSameSide(triangle.top, triangle.left)
+                    && edge.pointsLieOnSameSide(triangle.left, triangle.right))
+                    && !(edge.pointsLieOnSameSide(triangle.top, nonParticipatingPoint)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+
+    /*
+    func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {
+        return !intersectsEdges(with: triangle) && !triangle.intersectsEdges(with: self)
+    }
+
+    private func intersectsEdges(with triangle: TriangularMovableObject) -> Bool {
+        return intersectsEdges(selfEdges: edges, selfPoints: [top, left, right], otherPoints: [triangle.top, triangle.left, triangle.right])
+    }
+
+    private func intersectsEdges(selfEdges: [Line], selfPoints: [Point], otherPoints: [Point]) -> Bool {
+        for edge in selfEdges {
+            if let nonParticipatingPoint = selfPoints.first(where: { $0 != edge.start && $0 != edge.end }) {
+                if isOnSameSide(edge: edge, points: otherPoints) && !isOnSameSide(edge: edge, points: [nonParticipatingPoint]) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private func isOnSameSide(edge: Line, points: [Point]) -> Bool {
+        return edge.pointsLieOnSameSide(points[0], points[1]) && edge.pointsLieOnSameSide(points[1], points[2])
+    }
+    */
+
     func checkNoIntersection(with gameObject: GameObject) -> Bool {
         if let sharp = gameObject as? TriangularMovableObject {
             return isNotIntersecting(with: sharp)
-        } else if let circle = gameObject as? Peg {
+        } else if let circle = gameObject as? CircularMovableObject {
             return !(isIntersecting(with: circle) || circleInsideTriangle(peg: circle))
         } else {
             return true
