@@ -14,9 +14,24 @@ struct InstructionView: View {
     @State var degreesRotating = 0.0
     @State private var xOffset: CGFloat = -70.0
     @State private var currentImageIndex = 0
+
     let reappearImages: [String] = ["reappearObject", "reappearObjectActive"]
     let actionImages: [String] = ["actionObject", "actionObjectActive"]
     let oscillateImages: [String] = ["oscillateObject", "oscillateObjectActive"]
+    let shooter = "scarab-beetle-rotate"
+    let capture = "scarabShooterGold"
+    let sharp = "pyramidBlock"
+    let obstacle = "obstacleObject"
+    let hieroglyph = "hieroglyph"
+    let base = "base"
+    let ankh = "ankh"
+    let horus = "horus"
+    let anubis = "anubis"
+    let shooterText = "Rotate the scarab shooter and tap on the background to shoot."
+    let captureText = "When a ball falls into the scarab, you get a free ball, but the limit is 10."
+    let powerText = "Special objects are spook, kaboom and oscillate."
+    let obstacleText = "Ancient Egypt themed objects!"
+
     private let maxOffset: CGFloat = 70.0
     private let maxRotationAngle: CGFloat = 180.0
     private let infoWidth: CGFloat = Constants.screenWidth / 3
@@ -33,6 +48,12 @@ struct InstructionView: View {
             ZStack {
                 screenDisplay
                 VStack {
+                    ZStack {
+                        Image(base)
+                        Text("How To Play")
+                        .font(.system(size: 20, weight: .bold))
+                    }
+
                     Spacer()
                     HStack {
                         Spacer()
@@ -40,11 +61,22 @@ struct InstructionView: View {
                         Spacer()
                     }
                     Spacer()
-                    Image("anubis")
+                    Image(anubis)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100, height: 100)
                     Spacer()
+                    Button(action: {
+                        readyToNavigate = true
+                        }) {
+                            Text("Done")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 100)
+                                .padding(.vertical, 20)
+                                .background(desertDarkBrown)
+                                .cornerRadius(8)
+                        }
                 }
             }
         }
@@ -113,7 +145,7 @@ extension InstructionView {
 extension InstructionView {
     private var shooterDisplay: some View {
         VStack {
-            Image("scarab-beetle-rotate")
+            Image(shooter)
                 .resizable()
                 .rotationEffect(.degrees(degreesRotating))
                 .frame(width: infoWidth / 2, height: infoWidth / 2)
@@ -123,7 +155,7 @@ extension InstructionView {
                             degreesRotating = maxRotationAngle
                         }
                 }
-            Text("Rotate the scarab shooter and tap on the background to shoot.")
+            Text(shooterText)
                 .font(.system(size: 20, weight: .bold))
                 .lineLimit(nil)
                 .frame(width: infoWidth)
@@ -136,7 +168,7 @@ extension InstructionView {
 extension InstructionView {
     private var captureDisplay: some View {
         VStack {
-            Image("scarabShooterGold")
+            Image(capture)
                 .resizable()
                 .frame(width: infoWidth / 2, height: infoWidth / 3)
                 .offset(x: xOffset)
@@ -147,7 +179,7 @@ extension InstructionView {
                             xOffset = maxOffset
                         }
                 }
-            Text("When a ball falls into the scarab, you get a free ball, but the limit is 10.")
+            Text(captureText)
                 .font(.system(size: 20, weight: .bold))
                 .lineLimit(nil)
                 .frame(width: infoWidth)
@@ -177,7 +209,7 @@ extension InstructionView {
                 objectDisplay(with: actionImages)
                 objectDisplay(with: oscillateImages)
             }
-            Text("Special objects are spook, kaboom and oscillate.")
+            Text(powerText)
                 .font(.system(size: 20, weight: .bold))
                 .lineLimit(nil)
                 .frame(width: infoWidth)
@@ -187,7 +219,7 @@ extension InstructionView {
 
 extension InstructionView {
     private var sharpDisplay: some View {
-        Image("pyramidBlock")
+        Image(sharp)
             .resizable()
             .frame(width: infoWidth / 3, height: infoWidth / 3)
     }
@@ -195,7 +227,7 @@ extension InstructionView {
 
 extension InstructionView {
     private var obstacleDisplay: some View {
-        Image("obstacleObject")
+        Image(obstacle)
             .resizable()
             .frame(width: infoWidth / 4, height: infoWidth / 3)
     }
@@ -208,7 +240,7 @@ extension InstructionView {
                 sharpDisplay
                 obstacleDisplay
             }
-            Text("Ancient Egypt themed objects!")
+            Text(obstacleText)
                 .font(.system(size: 20, weight: .bold))
                 .lineLimit(nil)
                 .frame(width: infoWidth)
@@ -235,13 +267,13 @@ extension InstructionView {
                 captureInfoDisplay
             }
             HStack {
-                Image("hieroglyph")
+                Image(hieroglyph)
                     .resizable()
                     .frame(width: infoWidth / 2, height: infoWidth / 3)
-                Image("ankh")
+                Image(ankh)
                     .resizable()
                     .frame(width: infoWidth / 2, height: infoWidth / 3)
-                Image("horus")
+                Image(horus)
                     .resizable()
                     .frame(width: infoWidth / 2, height: infoWidth / 3)
             }
