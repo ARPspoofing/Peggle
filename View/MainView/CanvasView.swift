@@ -1,5 +1,5 @@
 //
-//  Canvas.swift
+//  CanvasView.swift
 //  Peggle
 //
 //  Created by Muhammad Reyaaz on 22/1/24.
@@ -14,52 +14,19 @@ struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
     let centerY = 250.0 / 2.0
 
-    let dismissButton   = CustomAlertButton(title: "Retry Level")
-    let primaryButton   = CustomAlertButton(title: "Retry Level")
-    let secondaryButton = CustomAlertButton(title: "Cancel")
-
     var body: some View {
-        let roundedScore = String(format: "%.0f", canvasViewModel.score)
-        let title = "Try Again!"
-        let message = """
-Score: \(roundedScore)
-Tip: Clear blue pegs out of the way to get to orange pegs.
-"""
-
         // TODO: Add limitation to prevent adding ball on testtube
         ZStack(alignment: .top) {
             ZStack {
                 backgroundDisplay
-                Image("glass")
-                .opacity(0.55)
-                .position(x: 50, y: 650)
-                //.frame(height: 1000)
+                glassDisplay
             }
             motionObjectDisplay
             captureObjectDisplay
-            if canvasViewModel.isGameOver {
-                CustomAlert(title: title, message: message, dismissButton: nil,
-                            primaryButton: primaryButton, secondaryButton: secondaryButton)
-            }
+            gameOverAlert
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
             }
-            /*
-            ZStack {
-                ammoDisplay
-                Image("glass").position(x: 42, y: 650)
-                    .opacity(0.55)
-
-            }
-            */
-            /*
-            GeometryReader { geometry in
-                Image("glass")
-                    .frame(width: 20, height: geometry.size.height / 30)
-                    .position(x: 42, y: 650)
-                    .opacity(0.55)
-            }
-            */
             ammoDisplay
             gameObjectsDisplay
             if !canvasViewModel.isStartState {
@@ -67,6 +34,34 @@ Tip: Clear blue pegs out of the way to get to orange pegs.
             }
         }
         .environmentObject(canvasViewModel)
+    }
+}
+
+extension CanvasView {
+    private var gameOverAlert: some View {
+        ZStack {
+            let dismissButton   = CustomAlertButton(title: "Retry Level")
+            let primaryButton   = CustomAlertButton(title: "Retry Level")
+            let secondaryButton = CustomAlertButton(title: "Cancel")
+            let roundedScore = String(format: "%.0f", canvasViewModel.score)
+            let title = "Try Again!"
+            let message = """
+    Score: \(roundedScore)
+    Tip: Clear blue pegs out of the way to get to orange pegs.
+    """
+            if canvasViewModel.isGameOver {
+                CustomAlertView(title: title, message: message, dismissButton: nil,
+                            primaryButton: primaryButton, secondaryButton: secondaryButton)
+            }
+        }
+    }
+}
+
+extension CanvasView {
+    private var glassDisplay: some View {
+        Image("glass")
+        .opacity(0.55)
+        .position(x: 50, y: 650)
     }
 }
 
@@ -101,92 +96,10 @@ extension CanvasView {
     }
 }
 
-/*
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
-            ForEach(canvasViewModel.gameObjects, id: \.self) { object in
-                if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
-                    ZStack {
-                        customObjectView(object: object, index: index)
-                    }
-                }
-            }
-        }
-        .animation(
-            canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
-            Animation.easeInOut(duration: 0.3) :
-                (canvasViewModel.isDoneShooting ? Animation.easeInOut(duration: 1.0) : .none)
-        )
-    }
-}
-*/
-
-/*
-extension CanvasView {
-    private var gameObjectsDisplay: some View {
-        ZStack {
-            ForEach(canvasViewModel.gameObjects, id: \.self) { object in
-                if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
-                    Group {
-                        customObjectView(object: object, index: index)
-                    }
-                    .transition(.opacity.animation(.easeInOut(duration: canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ? 1.5 : (canvasViewModel.isStartState && canvasViewModel.isDoneShooting ? 1.5 : 0.0))))
-                }
-            }
-        }
-    }
-}
-*/
-
-/*
-extension CanvasView {
-    private var gameObjectsDisplay: some View {
-        ZStack {
-            ForEach(canvasViewModel.gameObjects.indices, id: \.self) { index in
-                if let object = canvasViewModel.gameObjects[index] {
-                    Group {
-                        customObjectView(object: object, index: index)
-                            .transition(
-                                .opacity.animation(
-                                    Animation.easeInOut(duration: canvasViewModel.isStartState ? 0.5 : 0.0)
-                                        /*
-                                        .delay({
-                                            let delayValue = Double(object.activeIdx)
-                                            return delayValue
-                                        }())
-                                        */
-                                )
-                            )
-
-                    }
-                }
-            }
-        }
-        .animation(
-                    canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
-                        Animation.easeInOut(duration: 0.3) :
-                        (canvasViewModel.isDoneShooting ? Animation.easeInOut(duration: 1.0) : .none)
-                )
-        /*
-        .onAppear {
-            if canvasViewModel.isStartState {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(canvasViewModel.activeCount) * 0.4) {
-                    withAnimation {
-                        canvasViewModel.isAnimating = false
-                    }
-                }
-            }
-        }
-        */
-    }
-}
-*/
-
-extension CanvasView {
-    private var gameObjectsDisplay: some View {
-        ZStack {
-            GeometryReader { geometry in
+            //GeometryReader { geometry in
             ForEach(canvasViewModel.gameObjects, id: \.self) { object in
                 if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
                     Group {
@@ -202,7 +115,7 @@ extension CanvasView {
                     )
                 }
             }
-            }.scaleEffect(2.0)
+            //}.scaleEffect(2.0)
         }
         .animation(
             canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
@@ -215,11 +128,6 @@ extension CanvasView {
 extension CanvasView {
     private var motionObjectDisplay: some View {
         ZStack {
-            //Image("glass")
-                //.resizable()
-                //.frame(width:80)
-                //.background(Color.red)
-                //.padding(-500)
             ForEach(canvasViewModel.motionObjects.indices, id: \.self) { index in
                 let object = canvasViewModel.motionObjects[index]
                 customMotionObjectView(object: object, index: index)
@@ -284,36 +192,61 @@ extension CanvasView {
                             }
                             .onEnded { _ in }
                     )
-
                 Circle()
                     .fill(Color.red)
                     .frame(width: 10, height: 10)
-                    .position(x: object.center.xCoord, y: object.center.yCoord)
+                    .position(x: object.edges[0].start.xCoord, y: object.edges[0].start.yCoord)
 
                 Circle()
-                    .fill(Color.red)
+                    .fill(Color.blue)
                     .frame(width: 10, height: 10)
-                    .position(x: object.top.xCoord, y: object.top.yCoord)
+                    .position(x: object.edges[1].start.xCoord, y: object.edges[1].start.yCoord)
 
                 Circle()
-                    .fill(Color.red)
+                    .fill(Color.black)
                     .frame(width: 10, height: 10)
-                    .position(x: object.topLeft.xCoord, y: object.topLeft.yCoord)
+                    .position(x: object.edges[0].end.xCoord, y: object.edges[0].end.yCoord)
 
                 Circle()
-                    .fill(Color.red)
+                    .fill(Color.purple)
                     .frame(width: 10, height: 10)
-                    .position(x: object.topRight.xCoord, y: object.topRight.yCoord)
+                    .position(x: object.edges[1].end.xCoord, y: object.edges[1].end.yCoord)
 
-                Circle()
-                    .fill(Color.red)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.bottomLeft.xCoord, y: object.bottomLeft.yCoord)
 
-                Circle()
-                    .fill(Color.red)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.bottomRight.xCoord, y: object.bottomRight.yCoord)
+            } else {
+                ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
+                    .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+                    .onTapGesture {
+                        guard !canvasViewModel.isStartState else {
+                            return
+                        }
+                        if canvasViewModel.isDeleteState {
+                            canvasViewModel.removeAndRender(removeObjectIndex: index)
+                        }
+                    }
+                    .onLongPressGesture(minimumDuration: Constants.longDuration) {
+                        guard !canvasViewModel.isStartState else {
+                            return
+                        }
+                        canvasViewModel.removeAndRender(removeObjectIndex: index)
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                guard !canvasViewModel.isStartState else {
+                                    return
+                                }
+                                if canvasViewModel.isResizeState {
+                                    canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
+                                } else if canvasViewModel.isRotateState {
+                                    canvasViewModel.updateObjectOrientation(index: index,
+                                                                            dragLocation: value.location)
+                                } else {
+                                    canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
+                                }
+                            }
+                            .onEnded { _ in }
+                    )
             }
         }
     }

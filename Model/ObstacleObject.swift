@@ -81,12 +81,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
         }
     }
 
-    func initPoints() {
-        top = center.add(vector: Vector(horizontal: 0.0, vertical: -circumradius))
-        topLeft = center.add(vector: Vector(horizontal: -circumradius, vertical: -circumradius))
-        topRight = center.add(vector: Vector(horizontal: circumradius, vertical: -circumradius))
-        bottomLeft = center.add(vector: Vector(horizontal: -circumradius, vertical: circumradius))
-        bottomRight = center.add(vector: Vector(horizontal: circumradius, vertical: circumradius))
+    func initInitials() {
         initialTop = top
         initialTopLeft = topLeft
         initialTopRight = topRight
@@ -94,9 +89,18 @@ class ObstacleObject: GameObject, RectangularMovableObject {
         initialBottomRight = bottomRight
     }
 
+    func initPoints() {
+        top = center.add(vector: Vector(horizontal: 0.0, vertical: -circumradius))
+        topLeft = center.add(vector: Vector(horizontal: -circumradius, vertical: -circumradius))
+        topRight = center.add(vector: Vector(horizontal: circumradius, vertical: -circumradius))
+        bottomLeft = center.add(vector: Vector(horizontal: -circumradius, vertical: circumradius))
+        bottomRight = center.add(vector: Vector(horizontal: circumradius, vertical: circumradius))
+        initInitials()
+    }
+
     func initEdges() {
-        let leftEdge = Line(start: bottomLeft, end: topLeft)
-        let rightEdge = Line(start: bottomRight, end: topRight)
+        let leftEdge = Line(start: bottomLeft, end: topLeft).rescale(magnitude: 1.5)
+        let rightEdge = Line(start: bottomRight, end: topRight).rescale(magnitude: 1.5)
         let topEdge = Line(start: topLeft, end: topRight)
         let bottomEdge = Line(start: bottomLeft, end: bottomRight)
         edges = [leftEdge, rightEdge, topEdge, bottomEdge]
@@ -105,11 +109,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
     func initPointsAndEdges() {
         initPoints()
         initEdges()
-        initialTop = top
-        initialTopLeft = topLeft
-        initialTopRight = topRight
-        initialBottomLeft = bottomLeft
-        initialBottomRight = bottomRight
+        initInitials()
         addObserver(self, forKeyPath: #keyPath(halfWidth), options: [.old, .new], context: nil)
     }
 
@@ -119,14 +119,14 @@ class ObstacleObject: GameObject, RectangularMovableObject {
 
     override func changeCenter(newCenter: Point) {
         center.setCartesian(xCoord: newCenter.xCoord, yCoord: newCenter.yCoord)
-        initPoints()
         changeOrientation(to: orientation)
+        initPoints()
         initEdges()
     }
 
     func resizePoints() {
-        initPoints()
         changeOrientation(to: orientation)
+        initPoints()
         initEdges()
     }
 
@@ -138,94 +138,43 @@ class ObstacleObject: GameObject, RectangularMovableObject {
         return checkNoIntersection(with: gameObject) && checkBorders()
     }
 
-    // TODO: Move to physics engine
     func rotateTopPoint(rotationAngle: Double) -> Point {
         let newX = initialTop.xCoord + circumradius * sin(rotationAngle)
         let newY = (initialTop.yCoord + circumradius * (1 - cos(rotationAngle)))
         return Point(xCoord: newX, yCoord: newY)
     }
 
-    func rotatePoint(initialPoint: Point, rotationAngle: Double) -> Point {
-        let newX = initialPoint.xCoord + circumradius * sin(rotationAngle)
-        let newY = (initialPoint.yCoord + circumradius * (1 - cos(rotationAngle)))
-        return Point(xCoord: newX, yCoord: newY)
+    func getBottomRight(from newTop: Point) -> Point {
+        var rightX = newTop.xCoord + top.distance(to: bottomRight) * cos(orientation + Double.pi / 3)
+        var rightY = newTop.yCoord + top.distance(to: bottomRight) * sin(orientation + Double.pi / 3)
+        return Point(xCoord: rightX, yCoord: rightY)
     }
 
-    func rotatePointReverse(initialPoint: Point, rotationAngle: Double) -> Point {
-        let newX = initialPoint.xCoord + circumradius * (1 - sin(rotationAngle))
-        let newY = (initialPoint.yCoord + circumradius * (cos(rotationAngle)))
-        return Point(xCoord: newX, yCoord: newY)
+    func getBottomLeft(from newTop: Point) -> Point {
+        var leftX = newTop.xCoord + top.distance(to: bottomLeft) * cos(orientation + 2 * Double.pi / 3)
+        var leftY = newTop.yCoord + top.distance(to: bottomLeft) * sin(orientation + 2 * Double.pi / 3)
+        return Point(xCoord: leftX, yCoord: leftY)
     }
 
-    /*
-    func rotatePoint(point: Point, rotationAngle: Double) -> Point {
-        let newX = point.xCoord + circumradius * sin(rotationAngle)
-        let newY = point.yCoord + circumradius * (1 - cos(rotationAngle))
-        return Point(xCoord: newX, yCoord: newY)
+    func getVerticalLine(start: Point, from bottomLine: Line) -> Line {
+        let perpendicularVector = bottomLine.getLineVector().getPerpendicularVector()
+        let verticalDistance = bottomLine.distanceFromPointToLine(point: top)
+        return Line(start: start, vector: perpendicularVector, maxDistance: verticalDistance)
     }
-    */
-
-    /*
-    private func rotatePoint(point: Point, rotationAngle: Double) -> Point {
-        let rotationAngle = rotationAngle * Double.pi / 180.0 + Double.pi / 4
-        let relativeX = point.xCoord - center.xCoord
-        let relativeY = point.yCoord - center.yCoord
-
-        let rotatedX = relativeX * cos(rotationAngle) - relativeY * sin(rotationAngle)
-        let rotatedY = relativeX * sin(rotationAngle) + relativeY * cos(rotationAngle)
-
-        let newX = rotatedX + center.xCoord
-        let newY = rotatedY + center.yCoord
-
-        return Point(xCoord: newX, yCoord: newY)
-    }
-    */
 
     override func changeOrientation(to end: Double) {
         orientation = end
-        /*
-        let newX = initialTop.xCoord + circumradius * sin(end)
-        let newY = initialTop.yCoord + circumradius * (1 - cos(end))
-        top = Point(xCoord: newX, yCoord: newY)
-        */
-
         let newTop = rotateTopPoint(rotationAngle: end)
-
-
-        var rightX = newTop.xCoord + top.distance(to: bottomRight) * cos(end + Double.pi / 3)
-        var rightY = newTop.yCoord + top.distance(to: bottomRight) * sin(end + Double.pi / 3)
-
-        let newBottomRight = Point(xCoord: rightX, yCoord: rightY)
-
-        var leftX = newTop.xCoord + top.distance(to: bottomLeft) * cos(end + 2 * Double.pi / 3)
-        var leftY = newTop.yCoord + top.distance(to: bottomLeft) * sin(end + 2 * Double.pi / 3)
-
-        let newBottomLeft = Point(xCoord: leftX, yCoord: leftY)
-
+        let newBottomRight = getBottomRight(from: newTop)
+        let newBottomLeft = getBottomLeft(from: newTop)
 
         let bottomLine = Line(start: newBottomRight, end: newBottomLeft)
-
-        let perpendicularVector = bottomLine.getLineVector().getPerpendicularVector()
-
-        let verticalDistance = bottomLine.distanceFromPointToLine(point: top)
-
-        let verticalLineLeft = Line(start: bottomLeft, vector: perpendicularVector, maxDistance: verticalDistance)
-
-        let verticalLineRight = Line(start: bottomRight, vector: perpendicularVector, maxDistance: verticalDistance)
-
-
-
-
-
-        //let verticalLine = Line(start: <#T##Point#>, vector: <#T##Vector#>)
+        let verticalLineLeft = getVerticalLine(start: bottomLeft, from: bottomLine)
+        let verticalLineRight = getVerticalLine(start: bottomRight, from: bottomLine)
 
         top = newTop
         topLeft = verticalLineLeft.end
         topRight = verticalLineRight.end
-        //topLeft = rotatePointReverse(initialPoint: initialTopLeft, rotationAngle: end)
-        //topRight = rotatePointReverse(initialPoint: initialTopRight, rotationAngle: end)
-        //bottomLeft = rotatePoint(initialPoint: initialBottomLeft, rotationAngle: end)
-        //bottomRight = rotatePoint(initialPoint: initialBottomRight, rotationAngle: end)
         bottomLeft = newBottomLeft
         bottomRight = newBottomRight
         initEdges()

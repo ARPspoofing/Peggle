@@ -19,6 +19,8 @@ extension CircularMovableObject {
             return distanceBetweenMotionObjectSquared > sumMotionObjectsRadiusSquared
         } else if let sharp = gameObject as? TriangularMovableObject {
             return !(sharp.isIntersecting(with: self) || sharp.circleInsideTriangle(peg: self))
+        } else if let obstacle = gameObject as? RectangularMovableObject {
+            return !obstacle.isIntersecting(with: self)
         } else {
             return false
         }

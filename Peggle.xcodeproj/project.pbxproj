@@ -90,7 +90,7 @@
 		91C2B66A2B904D920013DD9F /* ObstacleDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6692B904D920013DD9F /* ObstacleDisplayView.swift */; };
 		91C2B66C2B904ECB0013DD9F /* IconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B66B2B904ECB0013DD9F /* IconsView.swift */; };
 		91C2B66E2B9063490013DD9F /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B66D2B9063490013DD9F /* StatusView.swift */; };
-		91C2B6702B9073DB0013DD9F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B66F2B9073DB0013DD9F /* GameOverView.swift */; };
+		91C2B6702B9073DB0013DD9F /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B66F2B9073DB0013DD9F /* CustomAlertView.swift */; };
 		91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D997782B8EDD6300DB5364 /* ReappearObject.swift */; };
 		91D9977B2B8EF99C00DB5364 /* RectangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */; };
 		91D9977D2B8F16F700DB5364 /* ObstacleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */; };
@@ -204,7 +204,7 @@
 		91C2B6692B904D920013DD9F /* ObstacleDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleDisplayView.swift; sourceTree = "<group>"; };
 		91C2B66B2B904ECB0013DD9F /* IconsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsView.swift; sourceTree = "<group>"; };
 		91C2B66D2B9063490013DD9F /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
-		91C2B66F2B9073DB0013DD9F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		91C2B66F2B9073DB0013DD9F /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		91D997782B8EDD6300DB5364 /* ReappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReappearObject.swift; sourceTree = "<group>"; };
 		91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularMovableObject.swift; sourceTree = "<group>"; };
 		91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleObject.swift; sourceTree = "<group>"; };
@@ -368,7 +368,7 @@
 				916E677D2B85EA3000960D5D /* CaptureObjectView.swift */,
 				911EB4BA2B8C4998009B206E /* StartView.swift */,
 				911EB4BC2B8C66DA009B206E /* AmmoView.swift */,
-				91C2B66F2B9073DB0013DD9F /* GameOverView.swift */,
+				91C2B66F2B9073DB0013DD9F /* CustomAlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -721,7 +721,7 @@
 				91517C0D2B72495900F1E45D /* ShooterView.swift in Sources */,
 				916E67842B86D2CF00960D5D /* InactiveObjectView.swift in Sources */,
 				91C2B65A2B9047E70013DD9F /* IntroDisplayView.swift in Sources */,
-				91C2B6702B9073DB0013DD9F /* GameOverView.swift in Sources */,
+				91C2B6702B9073DB0013DD9F /* CustomAlertView.swift in Sources */,
 				91986ED42B5E6C6900D1C72C /* PaletteButtonsView.swift in Sources */,
 				916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */,
 				91C2B65C2B9048C30013DD9F /* DecalView.swift in Sources */,

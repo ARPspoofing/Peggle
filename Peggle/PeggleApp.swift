@@ -13,8 +13,8 @@ struct PeggleApp: App {
     var body: some Scene {
         WindowGroup {
             //AmmoView()
-            StartView()
-            //CanvasView()
+            //StartView()
+            CanvasView()
         }
     }
 }

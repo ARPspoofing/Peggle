@@ -12,7 +12,7 @@ import SwiftUI
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
-    let paletteObjects: [String] = [/*Constants.normalObject Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject,*/ Constants.obstacleObject]
+    let paletteObjects: [String] = [Constants.normalObject, /* Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject,*/ Constants.obstacleObject]
     let modelMap = ModelMap()
 
     @Published var gameObjects: [GameObject]

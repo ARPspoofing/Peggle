@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ObstacleDisplayView: View {
-    private let infoWidth: CGFloat = Constants.screenWidth / 12
-    private let infoHeight: CGFloat = Constants.screenWidth / 9
+    private let infoWidth: CGFloat = Constants.screenWidth / 13
+    private let infoHeight: CGFloat = Constants.screenWidth / 7
     private let obstacle = "obstacleObject"
 
     var body: some View {
         Image(obstacle)
             .resizable()
-            .frame(width: infoWidth, height: infoWidth)
+            .frame(width: infoWidth, height: infoHeight)
     }
 }
 

@@ -33,6 +33,12 @@ struct Line: Codable {
         self.end = calculateEndPoint(maxDistance: maxDistance)
     }
 
+    init(end: Point, vector: Vector, maxDistance: Double) {
+        self.end = end
+        self.vector = vector
+        self.start = calculateStartPoint(maxDistance: maxDistance)
+    }
+
     var squaredLength: Double {
         start.squareDistance(to: end)
     }
@@ -55,6 +61,14 @@ struct Line: Codable {
             endPointY = recalculateEndPoint(normalizedVector)
         }
         return Point(xCoord: endPointX, yCoord: endPointY)
+    }
+
+    func calculateStartPoint(maxDistance: Double = Constants.screenHeight) -> Point {
+        let normalizedVector = vector.normalize()
+        //let maxDistance = Constants.screenHeight
+        var startPointX = end.xCoord - normalizedVector.horizontal * maxDistance
+        var startPointY = end.yCoord - normalizedVector.vertical * maxDistance
+        return Point(xCoord: startPointX, yCoord: startPointY)
     }
 
     /*
@@ -84,6 +98,11 @@ struct Line: Codable {
 
     func getLineVector() -> Vector {
         end.subtract(point: start)
+    }
+
+    func rescale(magnitude: Double) -> Line {
+        let scaleVector: Vector = getLineVector().scale(magnitude)
+        return Line(end: end, vector: scaleVector, maxDistance: scaleVector.getLength())
     }
 
     func getLinePointVector(point: Point) -> Vector {
