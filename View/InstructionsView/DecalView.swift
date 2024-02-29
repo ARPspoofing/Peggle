@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct DecalView: View {
-    let anubis = "anubis"
-    private let decalDim: CGFloat = 100.0
+    private let anubis = "anubis"
+    private let decalDim: CGFloat = 80.0
 
     var body: some View {
         Image(anubis)

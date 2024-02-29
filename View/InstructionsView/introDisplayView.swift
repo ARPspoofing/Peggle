@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct IntroDisplayView: View {
-    let base = "base"
-    let intro = "How To Play"
+    private let base = "base"
+    private let intro = "How To Play"
     private let fontSize: CGFloat = 20
 
     var body: some View {

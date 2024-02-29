@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct SharpDisplayView: View {
-
     private let sharp = "pyramidBlock"
-    private let infoWidth: CGFloat = Constants.screenWidth / 3
+    private let infoWidth: CGFloat = Constants.screenWidth / 9
 
     var body: some View {
         Image(sharp)
             .resizable()
-            .frame(width: infoWidth / 3, height: infoWidth / 3)
+            .frame(width: infoWidth, height: infoWidth)
     }
 }

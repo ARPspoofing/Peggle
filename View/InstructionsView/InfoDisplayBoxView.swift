@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InfoDisplayBoxView: View {
-    
     private let infoWidth: CGFloat = Constants.screenWidth / 3
     private let infoHeight: CGFloat = Constants.screenWidth / 3
     private let desertDarkBrown = Color(red: 195/255, green: 169/255, blue: 114/255)

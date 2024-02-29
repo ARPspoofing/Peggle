@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ObjectDisplayView: View {
+    @State private var currentImageIndex = 0
     private let reappearImages: [String] = ["reappearObject", "reappearObjectActive"]
     private let actionImages: [String] = ["actionObject", "actionObjectActive"]
     private let oscillateImages: [String] = ["oscillateObject", "oscillateObjectActive"]
-    let powerText = "Special objects are spook, kaboom and oscillate."
-    private let infoWidth: CGFloat = Constants.screenWidth / 3
-    @State private var currentImageIndex = 0
+    private let powerText = "Special objects are spook, kaboom and oscillate."
+    private let infoWidth: CGFloat = Constants.screenWidth / 12
+    private let textWidth: CGFloat = Constants.screenWidth / 3
 
     var body: some View {
         VStack {
@@ -25,7 +26,7 @@ struct ObjectDisplayView: View {
             Text(powerText)
                 .font(.system(size: 20, weight: .bold))
                 .lineLimit(nil)
-                .frame(width: infoWidth)
+                .frame(width: textWidth)
         }
     }
 }
@@ -34,7 +35,7 @@ extension ObjectDisplayView {
     private func objectDisplay(with images: [String]) -> some View {
         Image(images[currentImageIndex])
             .resizable()
-            .frame(width: infoWidth / 4, height: infoWidth / 4)
+            .frame(width: infoWidth, height: infoWidth)
             .onAppear {
                 Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
                     currentImageIndex = (currentImageIndex + 1) % 2
