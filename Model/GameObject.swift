@@ -31,6 +31,11 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     var isDisappear = false
     var handleOverlapCount = 0
 
+    let initialWidth: Double = 25.0
+    let maxWidth: Double = 50.0
+    let minDistance: Double = 0.0
+    let maxDistance: Double = 200.0
+
     init(name: String) {
         self.name = name
     }
@@ -81,6 +86,26 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
 
     func distance(to object: GameObject) -> Double {
         self.center.distance(to: object.center)
+    }
+
+    func calcDistance(point: CGPoint) -> Double {
+        let newPoint = Point(xCoord: point.x, yCoord: point.y)
+        let deltaX = newPoint.xCoord - center.xCoord
+        let deltaY = newPoint.yCoord - center.yCoord
+        return sqrt(deltaX * deltaX + deltaY * deltaY)
+    }
+
+    func calcAngle(to point: CGPoint) -> Double {
+        center.calcAngle(to: point)
+    }
+
+    func scaleWidth(point: CGPoint) -> Double {
+        let distance = calcDistance(point: point)
+        let distanceRange = maxDistance - minDistance
+        let widthRange = maxWidth - initialWidth
+        let normalizedDistance = (distance - minDistance) / distanceRange
+        let scaledWidth = initialWidth + widthRange * normalizedDistance
+        return min(scaledWidth, maxWidth)
     }
 
     func makeDeepCopy() -> GameObject {

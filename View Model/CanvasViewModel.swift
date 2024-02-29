@@ -33,16 +33,12 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isAnimating = false
     @Published var lineDistance: Double = 0.0
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
+    let maxAmmo = 10
 
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
     let capturePosition = Point(xCoord: Constants.screenWidth / 2, yCoord: Constants.gameHeight - 50)
     let motionObject = Constants.motionObject
     let captureObject = Constants.captureObject
-
-    let initialWidth: Double = 25.0
-    let maxWidth: Double = 50.0
-    let minDistance: Double = 0.0
-    let maxDistance: Double = 200.0
 
     var isDelegated = false
     @Published var gameEngine: GameEngine?
@@ -72,65 +68,8 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         startTimer()
     }
 
-    func unselectObjects() {
-        selectedObject = nil
-    }
-
-    func unselectStateButtons() {
-        isDeleteState = false
-        isRotateState = false
-        isResizeState = false
-    }
-
-    func untoggleDelete() {
-        guard !isDeleteState else {
-            isDeleteState.toggle()
-            return
-        }
-    }
-
-    func untoggleResize() {
-        guard !isResizeState else {
-            isResizeState.toggle()
-            return
-        }
-    }
-
-    func untoggleRotate() {
-        guard !isRotateState else {
-            isRotateState.toggle()
-            return
-        }
-    }
-
-    func toggleDeleteState() {
-        unselectObjects()
-        isResizeState = false
-        isRotateState = false
-        isDeleteState.toggle()
-    }
-
-    func toggleResizeState() {
-        unselectObjects()
-        isDeleteState = false
-        isRotateState = false
-        isResizeState.toggle()
-    }
-
-    func toggleRotateState() {
-        unselectObjects()
-        isDeleteState = false
-        isResizeState = false
-        isRotateState.toggle()
-    }
-
-    // TODO: Make it neater
     func initRemainingAmmo() {
-        for idx in 1...10 {
-            // TODO: Place in mapping
-            var object = MotionObject(center: Point(xCoord: 50, yCoord: Constants.screenHeight - (Double(idx) * 50)), name: "motion", velocity: Vector(horizontal: 0.0, vertical: 8.0))
-            remainingAmmo.append(object)
-        }
+        remainingAmmo = modelMap.createAmmoObject(maxAmmo: maxAmmo)
     }
 
     func render(_ location: CGPoint, _ selectedObject: String) {
@@ -210,27 +149,11 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects[index] = object
     }
 
-    func calcDistance(center: Point, point: CGPoint) -> Double {
-        let newPoint = Point(xCoord: point.x, yCoord: point.y)
-        let deltaX = newPoint.xCoord - center.xCoord
-        let deltaY = newPoint.yCoord - center.yCoord
-        return sqrt(deltaX * deltaX + deltaY * deltaY)
-    }
-
-    func scaleWidth(center: Point, point: CGPoint) -> Double {
-        let distance = calcDistance(center: center, point: point)
-        let distanceRange = maxDistance - minDistance
-        let widthRange = maxWidth - initialWidth
-        let normalizedDistance = (distance - minDistance) / distanceRange
-        let scaledWidth = initialWidth + widthRange * normalizedDistance
-        return min(scaledWidth, maxWidth)
-    }
-
     func updateObjectWidth(index: Int, dragLocation: CGPoint) {
         let object = gameObjects[index]
         let objectDeepCopy = object.makeDeepCopy()
 
-        let finalWidth = scaleWidth(center: object.center, point: dragLocation)
+        let finalWidth = object.scaleWidth(point: dragLocation)
         objectDeepCopy.changeHalfWidth(newHalfWidth: finalWidth)
 
         guard checkCanDrag(objectDeepCopy, index) else {
@@ -241,27 +164,11 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects[index] = object
     }
 
-    func backgroundOnDragGesture(point: Point) {
-        let axisVector = Vector(horizontal: 0, vertical: 1)
-        let touchVector = Vector(horizontal: point.xCoord - Constants.screenWidth / 2, vertical: point.yCoord)
-        let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
-        shooterRotation = angleInRadians
-        firstObjectInSightDistance()
-    }
-
-    func calcAngle(from center: Point, to point: CGPoint) -> Double {
-        let newPoint = Point(xCoord: point.x, yCoord: point.y)
-        let axisVector = Vector(horizontal: center.xCoord, vertical: center.yCoord)
-        let touchVector = Vector(horizontal: newPoint.xCoord - center.xCoord,
-                                 vertical: newPoint.yCoord - center.yCoord)
-        return axisVector.getAngleInRadians(with: touchVector)
-    }
-
     func updateObjectOrientation(index: Int, dragLocation: CGPoint) {
         untoggleDelete()
         let object = gameObjects[index]
         let objectDeepCopy = object.makeDeepCopy()
-        let angleInRadians = calcAngle(from: object.center, to: dragLocation)
+        let angleInRadians = object.calcAngle(to: dragLocation)
         objectDeepCopy.changeOrientation(to: angleInRadians)
 
         guard checkCanDrag(objectDeepCopy, index) else {
@@ -271,35 +178,13 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects[index] = object
     }
 
-    /*
-    func isGameObjectInLineOfSight(_ gameObject: GameObject) -> Bool {
-        let vector: Vector = getBallVector()
-        let origin: Point = shooterPosition
-        let slope = vector.vertical / vector.horizontal
-        let yIntercept = origin.yCoord - (slope * origin.xCoord)
-        let vectorY = (slope * gameObject.center.xCoord) + yIntercept
-        let range: Double = 50.0
-        return (vectorY >= gameObject.center.yCoord - range) && (vectorY <= gameObject.center.yCoord + range)
+    func backgroundOnDragGesture(point: Point) {
+        let axisVector = Vector(horizontal: 0, vertical: 1)
+        let touchVector = Vector(horizontal: point.xCoord - Constants.screenWidth / 2, vertical: point.yCoord)
+        let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
+        shooterRotation = angleInRadians
+        firstObjectInSightDistance()
     }
-    */
-
-    /*
-    func isGameObjectInLineOfSight(_ gameObject: GameObject) -> Bool {
-
-        var origin: Point = shooterPosition.deepCopy()
-        let range = gameObject.halfWidth * 2
-        let vector: Vector = getBallVector()
-
-        while origin.xCoord <= Constants.screenWidth && origin.xCoord >= 0.0 && origin.yCoord >= 0.0
-                && origin.yCoord <= Constants.gameHeight {
-            if origin.xCoord >= gameObject.center.xCoord - range && origin.xCoord <= gameObject.center.xCoord + range && origin.yCoord >= gameObject.center.yCoord - range && origin.yCoord <= gameObject.center.yCoord + range {
-                return true
-            }
-            origin = origin.add(vector: vector)
-        }
-        return false
-    }
-    */
 
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
@@ -324,26 +209,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         return line.isPointNearLine(point: gameObject.center, range: range * range)
     }
 
-    /*
-    let vector: Vector = getBallVector()
-    let origin: Point = shooterPosition
-    let range = gameObject.halfWidth * 2
-
-    if vector.horizontal == 0 {
-        return abs(gameObject.center.xCoord - origin.xCoord) <= range
-    }
-
-    let slope = vector.vertical / vector.horizontal
-    let yIntercept = origin.yCoord - (slope * origin.xCoord)
-
-    let vectorY = (slope * gameObject.center.xCoord) + yIntercept
-    print(vectorY, gameObject.center.yCoord, (vectorY >= gameObject.center.yCoord - range) && (vectorY <= gameObject.center.yCoord + range), Constants.gameHeight - vectorY)
-
-    return ((vectorY >= gameObject.center.yCoord - range) && (vectorY <= gameObject.center.yCoord + range))
-    */
-
     func firstObjectInSightDistance() {
-        //var closestGameObject: GameObject?
         var minDistance = Constants.screenHeight
         let origin: Point = shooterPosition
         for gameObject in gameObjects {
@@ -351,17 +217,67 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
                 let distance = sqrt(pow(gameObject.center.xCoord - origin.xCoord, 2) + pow(gameObject.center.yCoord - origin.yCoord, 2))
                 if distance < minDistance {
                     minDistance = distance
-                    //closestGameObject = gameObject
                 }
             }
         }
         lineDistance = minDistance
-        //return closestGameObject
-        //return minDistance
     }
 }
 
-// TODO: Make this neater (isShooting, isDoneShooting, showingCircle)
+extension CanvasViewModel {
+    func unselectObjects() {
+        selectedObject = nil
+    }
+
+    func unselectStateButtons() {
+        isDeleteState = false
+        isRotateState = false
+        isResizeState = false
+    }
+
+    func untoggleDelete() {
+        guard !isDeleteState else {
+            isDeleteState.toggle()
+            return
+        }
+    }
+
+    func untoggleResize() {
+        guard !isResizeState else {
+            isResizeState.toggle()
+            return
+        }
+    }
+
+    func untoggleRotate() {
+        guard !isRotateState else {
+            isRotateState.toggle()
+            return
+        }
+    }
+
+    func toggleDeleteState() {
+        unselectObjects()
+        isResizeState = false
+        isRotateState = false
+        isDeleteState.toggle()
+    }
+
+    func toggleResizeState() {
+        unselectObjects()
+        isDeleteState = false
+        isRotateState = false
+        isResizeState.toggle()
+    }
+
+    func toggleRotateState() {
+        unselectObjects()
+        isDeleteState = false
+        isResizeState = false
+        isRotateState.toggle()
+    }
+}
+
 extension CanvasViewModel {
     func initGameEngineAndDelegate() {
         self.gameEngine?.stop()

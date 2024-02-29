@@ -27,6 +27,8 @@ struct InstructionView: View {
     let ankh = "ankh"
     let horus = "horus"
     let anubis = "anubis"
+    let buttonText = "Done"
+    let intro = "How To Play"
     let shooterText = "Rotate the scarab shooter and tap on the background to shoot."
     let captureText = "When a ball falls into the scarab, you get a free ball, but the limit is 10."
     let powerText = "Special objects are spook, kaboom and oscillate."
@@ -34,6 +36,7 @@ struct InstructionView: View {
 
     private let maxOffset: CGFloat = 70.0
     private let maxRotationAngle: CGFloat = 180.0
+    private let decalDim: CGFloat = 100.0
     private let infoWidth: CGFloat = Constants.screenWidth / 3
     private let infoHeight: CGFloat = Constants.screenWidth / 3
     private let infoSpacing: CGFloat = Constants.screenWidth / 10
@@ -42,41 +45,20 @@ struct InstructionView: View {
     private let shadowColor = Color.black.opacity(0.6)
     private let shadowRadius: CGFloat = 5
     private let shadowY: CGFloat = 3
+    private let fontSize: CGFloat = 20
 
     var body: some View {
         NavigationStack {
             ZStack {
                 screenDisplay
                 VStack {
-                    ZStack {
-                        Image(base)
-                        Text("How To Play")
-                        .font(.system(size: 20, weight: .bold))
-                    }
-
+                    IntroDisplayView()
                     Spacer()
-                    HStack {
-                        Spacer()
-                        gridDisplay
-                        Spacer()
-                    }
+                    gridDisplay
                     Spacer()
-                    Image(anubis)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
+                    DecalView()
                     Spacer()
-                    Button(action: {
-                        readyToNavigate = true
-                        }) {
-                            Text("Done")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.black)
-                                .padding(.horizontal, 100)
-                                .padding(.vertical, 20)
-                                .background(desertDarkBrown)
-                                .cornerRadius(8)
-                        }
+                    customButton
                 }
             }
         }
@@ -106,10 +88,51 @@ extension InstructionView {
     }
 }
 
+/*
+extension InstructionView {
+    private var introDisplay: some View {
+        ZStack {
+            Image(base)
+            Text(intro)
+            .font(.system(size: fontSize, weight: .bold))
+        }
+    }
+}
+*/
+
+extension InstructionView {
+    private var customButton: some View {
+        Button(action: {
+            readyToNavigate = true
+            }) {
+                Text(buttonText)
+                    .font(.system(size: fontSize, weight: .bold))
+                    .foregroundColor(.black)
+                    .padding(.horizontal, 100)
+                    .padding(.vertical, 20)
+                    .background(desertDarkBrown)
+                    .cornerRadius(8)
+            }
+    }
+}
+
+/*
+extension InstructionView {
+    private var bottomDecal: some View {
+        Image(anubis)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: decalDim, height: decalDim)
+    }
+}
+*/
+
+
 extension InstructionView {
     private var shooterInfoDisplay: some View {
         ZStack {
-            infoDisplayBox
+            InfoDisplayBoxView()
+            //ShooterDisplayView()
             shooterDisplay
         }
     }
@@ -118,8 +141,9 @@ extension InstructionView {
 extension InstructionView {
     private var captureInfoDisplay: some View {
         ZStack {
-            infoDisplayBox
+            InfoDisplayBoxView()
             captureDisplay
+            //CaptureDisplayView()
         }
     }
 }
@@ -127,8 +151,8 @@ extension InstructionView {
 extension InstructionView {
     private var powerInfoDisplay: some View {
         ZStack {
-            infoDisplayBox
-            powerDisplay
+            InfoDisplayBoxView()
+            ObjectDisplayView()
         }
     }
 }
@@ -136,8 +160,8 @@ extension InstructionView {
 extension InstructionView {
     private var themeInfoDisplay: some View {
         ZStack {
-            infoDisplayBox
-            themeDisplay
+            InfoDisplayBoxView()
+            ThemeDisplayView()
         }
     }
 }
@@ -160,8 +184,6 @@ extension InstructionView {
                 .lineLimit(nil)
                 .frame(width: infoWidth)
         }
-
-
     }
 }
 
@@ -187,7 +209,9 @@ extension InstructionView {
 
     }
 }
+//*/
 
+/*
 extension InstructionView {
     private func objectDisplay(with images: [String]) -> some View {
         Image(images[currentImageIndex])
@@ -216,7 +240,9 @@ extension InstructionView {
         }
     }
 }
+*/
 
+/*
 extension InstructionView {
     private var sharpDisplay: some View {
         Image(sharp)
@@ -247,7 +273,9 @@ extension InstructionView {
         }
     }
 }
+*/
 
+/*
 extension InstructionView {
     private var infoDisplayBox: some View {
         ZStack {
@@ -258,29 +286,34 @@ extension InstructionView {
         }
     }
 }
+*/
 
 extension InstructionView {
     private var gridDisplay: some View {
-        VStack(spacing: infoSpacing) {
-            HStack(spacing: infoSpacing) {
-                shooterInfoDisplay
-                captureInfoDisplay
+        HStack {
+            Spacer()
+            VStack(spacing: infoSpacing) {
+                HStack(spacing: infoSpacing) {
+                    shooterInfoDisplay
+                    captureInfoDisplay
+                }
+                HStack {
+                    Image(hieroglyph)
+                        .resizable()
+                        .frame(width: infoWidth / 2, height: infoWidth / 3)
+                    Image(ankh)
+                        .resizable()
+                        .frame(width: infoWidth / 2, height: infoWidth / 3)
+                    Image(horus)
+                        .resizable()
+                        .frame(width: infoWidth / 2, height: infoWidth / 3)
+                }
+                HStack(spacing: infoSpacing) {
+                    powerInfoDisplay
+                    themeInfoDisplay
+                }
             }
-            HStack {
-                Image(hieroglyph)
-                    .resizable()
-                    .frame(width: infoWidth / 2, height: infoWidth / 3)
-                Image(ankh)
-                    .resizable()
-                    .frame(width: infoWidth / 2, height: infoWidth / 3)
-                Image(horus)
-                    .resizable()
-                    .frame(width: infoWidth / 2, height: infoWidth / 3)
-            }
-            HStack(spacing: infoSpacing) {
-                powerInfoDisplay
-                themeInfoDisplay
-            }
+            Spacer()
         }
     }
 }

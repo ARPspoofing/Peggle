@@ -41,4 +41,15 @@ struct ModelMap {
     func createObstacleObject(center: Point, type: String, circumradius: Double, orientation: Double) -> ObstacleObject {
         ObstacleObject(center: center, name: type, circumradius: circumradius, orientation: orientation)
     }
+
+    func createAmmoObject(maxAmmo: Int) -> [MotionObject] {
+        var ammo: [MotionObject] = []
+        var ammoVel = 8.0
+        var ammoX = 50.0
+        for idx in 1...maxAmmo {
+            var object = MotionObject(center: Point(xCoord: ammoX, yCoord: Constants.screenHeight - (Double(idx) * ammoX)), name: "ammo", velocity: Vector(horizontal: 0.0, vertical: ammoVel))
+            ammo.append(object)
+        }
+        return ammo
+    }
 }

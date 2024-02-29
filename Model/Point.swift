@@ -104,6 +104,14 @@ struct Point: Codable {
         sqrt(squareDistance(to: point))
     }
 
+    func calcAngle(to point: CGPoint) -> Double {
+        let newPoint = Point(xCoord: point.x, yCoord: point.y)
+        let axisVector = Vector(horizontal: xCoord, vertical: yCoord)
+        let touchVector = Vector(horizontal: newPoint.xCoord - xCoord,
+                                 vertical: newPoint.yCoord - yCoord)
+        return axisVector.getAngleInRadians(with: touchVector)
+    }
+
     func deepCopy() -> Point {
         Point(xCoord: self.xCoord, yCoord: self.yCoord)
     }

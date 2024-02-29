@@ -81,6 +81,13 @@
 		91AD1B3F2B78E544009E6BC6 /* GameEngineDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B3E2B78E544009E6BC6 /* GameEngineDelegate.swift */; };
 		91AD1B472B7909F4009E6BC6 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AD1B462B7909F4009E6BC6 /* GameEngine.swift */; };
 		91C2B6572B900F910013DD9F /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6562B900F910013DD9F /* InstructionView.swift */; };
+		91C2B65A2B9047E70013DD9F /* IntroDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6592B9047E70013DD9F /* IntroDisplayView.swift */; };
+		91C2B65C2B9048C30013DD9F /* DecalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B65B2B9048C30013DD9F /* DecalView.swift */; };
+		91C2B65E2B90490A0013DD9F /* InfoDisplayBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B65D2B90490A0013DD9F /* InfoDisplayBoxView.swift */; };
+		91C2B6642B904A8C0013DD9F /* ObjectDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6632B904A8C0013DD9F /* ObjectDisplayView.swift */; };
+		91C2B6662B904BE60013DD9F /* SharpDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6652B904BE60013DD9F /* SharpDisplayView.swift */; };
+		91C2B6682B904D590013DD9F /* ThemeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6672B904D590013DD9F /* ThemeDisplayView.swift */; };
+		91C2B66A2B904D920013DD9F /* ObstacleDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6692B904D920013DD9F /* ObstacleDisplayView.swift */; };
 		91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D997782B8EDD6300DB5364 /* ReappearObject.swift */; };
 		91D9977B2B8EF99C00DB5364 /* RectangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */; };
 		91D9977D2B8F16F700DB5364 /* ObstacleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */; };
@@ -185,6 +192,13 @@
 		91AD1B3E2B78E544009E6BC6 /* GameEngineDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineDelegate.swift; sourceTree = "<group>"; };
 		91AD1B462B7909F4009E6BC6 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		91C2B6562B900F910013DD9F /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
+		91C2B6592B9047E70013DD9F /* IntroDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDisplayView.swift; sourceTree = "<group>"; };
+		91C2B65B2B9048C30013DD9F /* DecalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecalView.swift; sourceTree = "<group>"; };
+		91C2B65D2B90490A0013DD9F /* InfoDisplayBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDisplayBoxView.swift; sourceTree = "<group>"; };
+		91C2B6632B904A8C0013DD9F /* ObjectDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDisplayView.swift; sourceTree = "<group>"; };
+		91C2B6652B904BE60013DD9F /* SharpDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpDisplayView.swift; sourceTree = "<group>"; };
+		91C2B6672B904D590013DD9F /* ThemeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDisplayView.swift; sourceTree = "<group>"; };
+		91C2B6692B904D920013DD9F /* ObstacleDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleDisplayView.swift; sourceTree = "<group>"; };
 		91D997782B8EDD6300DB5364 /* ReappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReappearObject.swift; sourceTree = "<group>"; };
 		91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularMovableObject.swift; sourceTree = "<group>"; };
 		91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleObject.swift; sourceTree = "<group>"; };
@@ -340,6 +354,7 @@
 		91986EBA2B5E19EC00D1C72C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				91C2B6582B9047D80013DD9F /* InstructionsView */,
 				91F382732B7F1E8A0012C0D1 /* MainView */,
 				91F3826E2B7F1E070012C0D1 /* AnimationsView */,
 				91F3826D2B7F1DE20012C0D1 /* ShootersView */,
@@ -405,6 +420,20 @@
 				916E67AC2B88E70100960D5D /* RotateButtonConstants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		91C2B6582B9047D80013DD9F /* InstructionsView */ = {
+			isa = PBXGroup;
+			children = (
+				91C2B6592B9047E70013DD9F /* IntroDisplayView.swift */,
+				91C2B65B2B9048C30013DD9F /* DecalView.swift */,
+				91C2B65D2B90490A0013DD9F /* InfoDisplayBoxView.swift */,
+				91C2B6632B904A8C0013DD9F /* ObjectDisplayView.swift */,
+				91C2B6652B904BE60013DD9F /* SharpDisplayView.swift */,
+				91C2B6672B904D590013DD9F /* ThemeDisplayView.swift */,
+				91C2B6692B904D920013DD9F /* ObstacleDisplayView.swift */,
+			);
+			path = InstructionsView;
 			sourceTree = "<group>";
 		};
 		91F3826C2B7F1DBD0012C0D1 /* ButtonsView */ = {
@@ -622,6 +651,7 @@
 				91517C092B720ABD00F1E45D /* PhysicsBody.swift in Sources */,
 				91986ECC2B5E291500D1C72C /* Peg.swift in Sources */,
 				914BF73F2B8082C400032478 /* PhysicsRigidBody.swift in Sources */,
+				91C2B6662B904BE60013DD9F /* SharpDisplayView.swift in Sources */,
 				91986EF52B63B35700D1C72C /* ClearBackgroundView.swift in Sources */,
 				91986ED62B5E6DA200D1C72C /* ObjectView.swift in Sources */,
 				91986ED22B5E2D5600D1C72C /* Vector.swift in Sources */,
@@ -633,12 +663,14 @@
 				919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */,
 				91986ED82B5EC57900D1C72C /* ObjectViewModel.swift in Sources */,
 				91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */,
+				91C2B6682B904D590013DD9F /* ThemeDisplayView.swift in Sources */,
 				91986ECE2B5E293A00D1C72C /* Level.swift in Sources */,
 				916E67802B8620E200960D5D /* TriangularMovableObject.swift in Sources */,
 				919753FD2B6DD05600DBF559 /* LevelManager.xcdatamodeld in Sources */,
 				916E67862B86D32400960D5D /* ActiveObjectView.swift in Sources */,
 				914BF7472B81DFA500032478 /* ActionButtonsViewAlert.swift in Sources */,
 				91986EE52B5FC6F900D1C72C /* MovableObject.swift in Sources */,
+				91C2B6642B904A8C0013DD9F /* ObjectDisplayView.swift in Sources */,
 				91F382722B7F1E610012C0D1 /* ParticlesModifier.swift in Sources */,
 				91986EE12B5FBE4E00D1C72C /* Constants.swift in Sources */,
 				916E678A2B86D36E00960D5D /* CirclesOverlay.swift in Sources */,
@@ -672,12 +704,15 @@
 				916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */,
 				911EB4BB2B8C4998009B206E /* StartView.swift in Sources */,
 				916E67A32B8848D000960D5D /* Polygon.swift in Sources */,
+				91C2B65E2B90490A0013DD9F /* InfoDisplayBoxView.swift in Sources */,
 				916E67882B86D34500960D5D /* ImageWithOverlay.swift in Sources */,
 				914BF73D2B80823D00032478 /* PhysicsElasticCollision.swift in Sources */,
 				91517C0D2B72495900F1E45D /* ShooterView.swift in Sources */,
 				916E67842B86D2CF00960D5D /* InactiveObjectView.swift in Sources */,
+				91C2B65A2B9047E70013DD9F /* IntroDisplayView.swift in Sources */,
 				91986ED42B5E6C6900D1C72C /* PaletteButtonsView.swift in Sources */,
 				916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */,
+				91C2B65C2B9048C30013DD9F /* DecalView.swift in Sources */,
 				916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */,
 				91986EC02B5E1D6300D1C72C /* BackgroundView.swift in Sources */,
 				916E67A72B888B9500960D5D /* ResizeButtonView.swift in Sources */,
@@ -687,6 +722,7 @@
 				916E67822B86CEDA00960D5D /* Sharp.swift in Sources */,
 				916E67AD2B88E70100960D5D /* RotateButtonConstants.swift in Sources */,
 				916211042B763C95002F51A9 /* GameEngineBody.swift in Sources */,
+				91C2B66A2B904D920013DD9F /* ObstacleDisplayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
