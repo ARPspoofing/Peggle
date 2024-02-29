@@ -14,16 +14,18 @@ struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
     let centerY = 250.0 / 2.0
 
-    let dismissButton   = CustomAlertButton(title: "RETRY LEVEL")
-    let primaryButton   = CustomAlertButton(title: "RETRY LEVEL")
+    let dismissButton   = CustomAlertButton(title: "Retry Level")
+    let primaryButton   = CustomAlertButton(title: "Retry Level")
     let secondaryButton = CustomAlertButton(title: "Cancel")
 
-    let title = "Try Again!"
-    let message = """
-                Tip: Clear blue pegs out of the way to get to orange pegs.
-                """
-
     var body: some View {
+        let roundedScore = String(format: "%.0f", canvasViewModel.score)
+        let title = "Try Again!"
+        let message = """
+Score: \(roundedScore)
+Tip: Clear blue pegs out of the way to get to orange pegs.
+"""
+
         // TODO: Add limitation to prevent adding ball on testtube
         ZStack(alignment: .top) {
             ZStack {

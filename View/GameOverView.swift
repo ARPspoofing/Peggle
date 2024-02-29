@@ -57,11 +57,15 @@ struct CustomAlert: View {
     let dismissButton: CustomAlertButton?
     let primaryButton: CustomAlertButton?
     let secondaryButton: CustomAlertButton?
+    let desertLightBrown = Color(red: 209/255, green: 188/255, blue: 140/255)
+    let rustBrown = Color(red: 108/255, green: 55/255, blue: 68/255)
+    let rustBrowns = Color(red: 108/255, green: 55/255, blue: 68/255)
 
     // MARK: Private
     @State private var opacity: CGFloat           = 0
     @State private var backgroundOpacity: CGFloat = 0
     @State private var scale: CGFloat             = 0.001
+
 
     @Environment(\.dismiss) private var dismiss
 
@@ -92,7 +96,7 @@ struct CustomAlert: View {
         }
         .padding(24)
         .frame(width: 320)
-        .background(.white)
+        .background(desertLightBrown)
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.4), radius: 16, x: 0, y: 12)
     }
@@ -114,7 +118,7 @@ struct CustomAlert: View {
         if !message.isEmpty {
             Text(message)
                 .font(.system(size: title.isEmpty ? 18 : 16))
-                .foregroundColor(title.isEmpty ? .black : .gray)
+                .foregroundColor(title.isEmpty ? .black : rustBrown)
                 .lineSpacing(24 - UIFont.systemFont(ofSize: title.isEmpty ? 18 : 16).lineHeight)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -215,40 +219,13 @@ struct CustomAlert: View {
     }
 }
 
-#if DEBUG
-struct CustomAlert_Previews: PreviewProvider {
-
-    static var previews: some View {
-        let dismissButton   = CustomAlertButton(title: "OK")
-        let primaryButton   = CustomAlertButton(title: "OK")
-        let secondaryButton = CustomAlertButton(title: "Cancel")
-
-        let title = "This is your life. Do what you want and do it often."
-        let message = """
-                    If you don't like something, change it.
-                    If you don't like your job, quit.
-                    If you don't have enough time, stop watching TV.
-                    """
-
-        return VStack {
-            CustomAlert(title: title, message: message, dismissButton: nil,           primaryButton: nil,           secondaryButton: nil)
-            CustomAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: nil,           secondaryButton: nil)
-            CustomAlert(title: title, message: message, dismissButton: nil,           primaryButton: primaryButton, secondaryButton: secondaryButton)
-        }
-        .previewDevice("iPhone 13 Pro Max")
-        .preferredColorScheme(.light)
-    }
-}
-#endif
-
-
 struct CustomAlertButton: View {
 
     // MARK: - Value
     // MARK: Public
     let title: LocalizedStringKey
     var action: (() -> Void)? = nil
-
+    private let desertDarkBrown = Color(red: 195/255, green: 169/255, blue: 114/255)
 
     // MARK: - View
     // MARK: Public
@@ -259,11 +236,11 @@ struct CustomAlertButton: View {
         } label: {
             Text(title)
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.white)
+                .foregroundColor(.black)
                 .padding(.horizontal, 10)
         }
         .frame(height: 30)
-        .background(Color.purple)
+        .background(desertDarkBrown)
         .cornerRadius(15)
     }
 }

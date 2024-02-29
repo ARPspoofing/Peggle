@@ -332,6 +332,8 @@ extension CanvasViewModel {
         calcScore()
         if isEmptyAmmo() {
             isGameOver = true
+            stopTimer()
+            captureObjects.removeAll()
         }
         objectWillChange.send()
     }
