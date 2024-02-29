@@ -17,8 +17,8 @@ struct InstructionView: View {
     private let shooter = "scarab-beetle-rotate"
     private let capture = "scarabShooterGold"
     private let buttonText = "Done"
-    private let shooterText = "Rotate the scarab shooter and tap on the background to shoot."
-    private let captureText = "When a ball falls into the scarab, you get a free ball, but the limit is 10."
+    private let shooterText = "Rotate the scarab shooter, then tap on the background to shoot."
+    private let captureText = "When a ball falls into the scarab, you receive a free ball, but the limit is 10."
 
     private let maxOffset: CGFloat = 70.0
     private let maxRotationAngle: CGFloat = 180.0

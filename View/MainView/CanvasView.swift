@@ -14,6 +14,15 @@ struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
     let centerY = 250.0 / 2.0
 
+    let dismissButton   = CustomAlertButton(title: "RETRY LEVEL")
+    let primaryButton   = CustomAlertButton(title: "RETRY LEVEL")
+    let secondaryButton = CustomAlertButton(title: "Cancel")
+
+    let title = "Try Again!"
+    let message = """
+                Tip: Clear blue pegs out of the way to get to orange pegs.
+                """
+
     var body: some View {
         // TODO: Add limitation to prevent adding ball on testtube
         ZStack(alignment: .top) {
@@ -24,11 +33,12 @@ struct CanvasView: View {
                 .position(x: 50, y: 650)
                 //.frame(height: 1000)
             }
-
-            Text("Elapsed Time: \(canvasViewModel.elapsedTime, specifier: "%.0f") seconds")
-
             motionObjectDisplay
             captureObjectDisplay
+            if canvasViewModel.isGameOver {
+                CustomAlert(title: title, message: message, dismissButton: nil,
+                            primaryButton: primaryButton, secondaryButton: secondaryButton)
+            }
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
             }
@@ -60,23 +70,26 @@ struct CanvasView: View {
 
 extension CanvasView {
     private var backgroundDisplay: some View {
-        BackgroundView()
-            .gesture(DragGesture().onChanged({ value in
-                canvasViewModel.backgroundOnDragGesture(point: Point(xCoord: value.location.x,
-                                                                     yCoord: value.location.y))
-            }))
-            .gesture(DragGesture(minimumDistance: 0)
-                .onEnded { coordinate in
-                    if canvasViewModel.isStartState {
-                        canvasViewModel.shootBall()
-                    } else {
-                        guard let selectedObject = canvasViewModel.selectedObject else {
-                            return
+        ZStack(alignment: .top) {
+            BackgroundView()
+                .gesture(DragGesture().onChanged({ value in
+                    canvasViewModel.backgroundOnDragGesture(point: Point(xCoord: value.location.x,
+                                                                         yCoord: value.location.y))
+                }))
+                .gesture(DragGesture(minimumDistance: 0)
+                    .onEnded { coordinate in
+                        if canvasViewModel.isStartState {
+                            canvasViewModel.shootBall()
+                        } else {
+                            guard let selectedObject = canvasViewModel.selectedObject else {
+                                return
+                            }
+                            canvasViewModel.render(coordinate.location, selectedObject)
                         }
-                        canvasViewModel.render(coordinate.location, selectedObject)
                     }
-                }
-            )
+                )
+            StatusView()
+        }
     }
 }
 
@@ -171,6 +184,7 @@ extension CanvasView {
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
+            GeometryReader { geometry in
             ForEach(canvasViewModel.gameObjects, id: \.self) { object in
                 if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
                     Group {
@@ -186,6 +200,7 @@ extension CanvasView {
                     )
                 }
             }
+            }.scaleEffect(2.0)
         }
         .animation(
             canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?

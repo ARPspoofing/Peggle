@@ -12,7 +12,7 @@ struct ObjectDisplayView: View {
     private let reappearImages: [String] = ["reappearObject", "reappearObjectActive"]
     private let actionImages: [String] = ["actionObject", "actionObjectActive"]
     private let oscillateImages: [String] = ["oscillateObject", "oscillateObjectActive"]
-    private let powerText = "Special objects are spook, kaboom and oscillate."
+    private let powerText = "The special objects are Spook, Kaboom, and Oscillate."
     private let infoWidth: CGFloat = Constants.screenWidth / 12
     private let textWidth: CGFloat = Constants.screenWidth / 3
 

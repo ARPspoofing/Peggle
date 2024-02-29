@@ -25,6 +25,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isResizeState = false
     @Published var isRotateState = false
     @Published var isStartState = false
+    @Published var isGameOver = false
 
     @Published private(set) var shooterRotation: Double = .zero
     @Published var isShooting = false
@@ -33,8 +34,13 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isAnimating = false
     @Published var lineDistance: Double = 0.0
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
-    let maxAmmo = 10
+    @Published var score = 0.0
+    @Published var pathEndPointX = 0.0
+    @Published var pathEndPointY = 0.0
+    @Published var pathCount = 0
+    
 
+    let maxAmmo = 10
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
     let capturePosition = Point(xCoord: Constants.screenWidth / 2, yCoord: Constants.gameHeight - 50)
     let motionObject = Constants.motionObject
@@ -49,16 +55,16 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     var timer: Timer?
 
     init() {
-        self.gameObjects = []
-        self.motionObjects = []
-        self.captureObjects = []
+        gameObjects = []
+        motionObjects = []
+        captureObjects = []
         initRemainingAmmo()
     }
 
     init(gameObjects: [GameObject]) {
         self.gameObjects = gameObjects
-        self.motionObjects = []
-        self.captureObjects = []
+        motionObjects = []
+        captureObjects = []
         initRemainingAmmo()
     }
 
@@ -178,12 +184,28 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects[index] = object
     }
 
+
+    func updatePathEndPoints() {
+        pathEndPointX = shooterPosition.xCoord + getBallVector().horizontal * lineDistance
+        pathEndPointY = shooterPosition.yCoord + getBallVector().vertical * lineDistance
+    }
+
+    func calcPathDots() {
+        let deltaX = pathEndPointX - shooterPosition.xCoord
+        let deltaY = pathEndPointY - shooterPosition.yCoord
+        let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
+        let distanceBetweenDots = 15.0
+        pathCount = Int(distance / distanceBetweenDots)
+    }
+
     func backgroundOnDragGesture(point: Point) {
         let axisVector = Vector(horizontal: 0, vertical: 1)
         let touchVector = Vector(horizontal: point.xCoord - Constants.screenWidth / 2, vertical: point.yCoord)
         let angleInRadians = axisVector.getAngleInRadians(with: touchVector)
         shooterRotation = angleInRadians
         firstObjectInSightDistance()
+        updatePathEndPoints()
+        calcPathDots()
     }
 
     func startTimer() {
@@ -200,6 +222,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     func stopTimer() {
         timer?.invalidate()
         timer = nil
+        isGameOver = true
     }
 
     func isGameObjectInLineOfSight(_ gameObject: GameObject) -> Bool {
@@ -221,6 +244,10 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
             }
         }
         lineDistance = minDistance
+    }
+
+    func calcScore() {
+        score += modelMap.getTotalScore(for: gameObjects)
     }
 }
 
@@ -280,14 +307,18 @@ extension CanvasViewModel {
 
 extension CanvasViewModel {
     func initGameEngineAndDelegate() {
-        self.gameEngine?.stop()
-        self.gameEngine = nil
-        self.gameEngine = GameEngine(motionObjects: &self.motionObjects,
-                                     gameObjects: &self.gameObjects,
-                                     captureObjects: &self.captureObjects,
-                                     ammo: &self.remainingAmmo)
-        self.gameEngine?.gameEngineDelegate = self
+        gameEngine?.stop()
+        gameEngine = nil
+        gameEngine = GameEngine(motionObjects: &motionObjects,
+                                     gameObjects: &gameObjects,
+                                     captureObjects: &captureObjects,
+                                     ammo: &remainingAmmo)
+        gameEngine?.gameEngineDelegate = self
         isDelegated = true
+    }
+
+    func isEmptyAmmo() -> Bool {
+        remainingAmmo.isEmpty
     }
 
     func gameEngineDidUpdate() {
@@ -295,8 +326,12 @@ extension CanvasViewModel {
         remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
         isShooting = !motionObjects.isEmpty
         if !isShooting {
-            self.gameObjects = self.gameObjects.filter { !$0.isActive }
+            gameObjects = gameObjects.filter { !$0.isActive }
             isDoneShooting = true
+        }
+        calcScore()
+        if isEmptyAmmo() {
+            isGameOver = true
         }
         objectWillChange.send()
     }
@@ -315,14 +350,14 @@ extension CanvasViewModel {
         isDoneShooting = false
         isShowingCircle = true
         let motionObject = MotionObject(center: shooterPosition, name: motionObject, velocity: getBallVector())
-        self.motionObjects.append(motionObject)
+        motionObjects.append(motionObject)
         initGameEngineAndDelegate()
     }
 
     func initCaptureObject() {
         let captureObject = CaptureObject(center: capturePosition, name: captureObject)
-        self.captureObjects.removeAll()
-        self.captureObjects.append(captureObject)
+        captureObjects.removeAll()
+        captureObjects.append(captureObject)
         initGameEngineAndDelegate()
     }
 }

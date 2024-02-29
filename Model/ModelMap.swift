@@ -44,12 +44,35 @@ struct ModelMap {
 
     func createAmmoObject(maxAmmo: Int) -> [MotionObject] {
         var ammo: [MotionObject] = []
-        var ammoVel = 8.0
-        var ammoX = 50.0
+        let ammoVel = 8.0
+        let ammoX = 50.0
         for idx in 1...maxAmmo {
-            var object = MotionObject(center: Point(xCoord: ammoX, yCoord: Constants.screenHeight - (Double(idx) * ammoX)), name: "ammo", velocity: Vector(horizontal: 0.0, vertical: ammoVel))
+            let center = Point(xCoord: ammoX, yCoord: Constants.screenHeight - (Double(idx) * ammoX))
+            let velocity = Vector(horizontal: 0.0, vertical: ammoVel)
+            let object = MotionObject(center: center, name: "ammo", velocity: velocity)
             ammo.append(object)
         }
         return ammo
+    }
+
+    func getEntityScore(for object: GameObject) -> Double {
+        let entityScore: [String: Double] = [
+            Constants.normalObject: 10.0,
+            Constants.reappearObject: 10.0,
+            Constants.actionObject: 100.0,
+            Constants.oscillateObject: 500.0
+        ]
+        return entityScore[object.name] ?? 0.0
+    }
+
+    func getTotalScore(for gameObjects: [GameObject]) -> Double {
+        var score = 0.0
+        for object in gameObjects {
+            guard object.isActive else {
+                continue
+            }
+            score += getEntityScore(for: object)
+        }
+        return score
     }
 }
