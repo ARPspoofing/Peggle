@@ -33,25 +33,6 @@ struct ShooterView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                /*
-                if !viewModel.isGameOver {
-                    let endPointX = viewModel.pathEndPointX
-                    let endPointY = viewModel.pathEndPointY
-                    let numberOfDots = viewModel.pathCount
-
-                    ForEach(0..<numberOfDots, id: \.self) { index in
-                        let progress = CGFloat(index) / CGFloat(numberOfDots - 1)
-                        let x = viewModel.shooterPosition.xCoord + (endPointX - viewModel.shooterPosition.xCoord) * Double(progress)
-
-                        let y: CGFloat = viewModel.shooterPosition.yCoord + (endPointY - viewModel.shooterPosition.yCoord) * Double(progress)
-                        
-                        Circle()
-                            .fill(Color.red.opacity(0.8))
-                            .frame(width: 8, height: 8)
-                            .position(x: x, y: y)
-                    }
-                }
-                */
                 shooterSight
                 Image("scarab-beetle")
                     .resizable()
