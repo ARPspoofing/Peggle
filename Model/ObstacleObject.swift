@@ -1,5 +1,5 @@
 //
-//  Rectangle.swift
+//  ObstacleObject.swift
 //  Peggle
 //
 //  Created by Muhammad Reyaaz on 28/2/24.
@@ -8,8 +8,8 @@
 import SwiftUI
 import Foundation
 
-@objc(Rectangle)
-class Rectangle: GameObject, RectangularMovableObject {
+@objc(ObstacleObject)
+class ObstacleObject: GameObject, RectangularMovableObject {
 
     var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var topLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
@@ -231,7 +231,7 @@ class Rectangle: GameObject, RectangularMovableObject {
         initEdges()
     }
 
-    override func makeDeepCopy() -> Rectangle {
-        Rectangle(center: self.center, name: self.name, circumradius: self.circumradius, orientation: self.orientation)
+    override func makeDeepCopy() -> ObstacleObject {
+        ObstacleObject(center: self.center, name: self.name, circumradius: self.circumradius, orientation: self.orientation)
     }
 }

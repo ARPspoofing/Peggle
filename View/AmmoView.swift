@@ -80,7 +80,7 @@ struct AmmoView: View {
                  let object = MotionObject(center: Point(xCoord: 100, yCoord: Double(index) * 50), name: "motion", velocity: Vector(horizontal: 3.0, vertical: 3.0))
                  customMotionObjectView(object: object, index: index)
              }
-             Rectangle()
+             ObstacleObject()
                  .fill(
                      Material.thin
                  )
@@ -92,7 +92,7 @@ struct AmmoView: View {
                  blue: 255/255,
                  opacity: colorOpacity)
          }
-         .clipShape(RoundedRectangle(cornerRadius: 15))
+         .clipShape(RoundedObstacleObject(cornerRadius: 15))
          .border(
              Color(
                  red: 255/255,

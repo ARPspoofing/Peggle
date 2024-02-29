@@ -11,61 +11,85 @@ struct StartView: View {
     @State private var readyToNavigate : Bool = false
     @State private var isButtonClicked = false
     @State private var isSecondaryButtonClicked = false
+    private let startScreen = "startScreen"
+    private let text = "Start"
+    private let scroll = "scroll"
+    private let fontSize: CGFloat = 30
+    private let padding: CGFloat = 10
+    private let paddingBottom: CGFloat = 30
+    private let paddingSides: CGFloat = 20
+    private let radius: CGFloat = 10
+    private let width: CGFloat = 1
+    private let scrollFrame: CGFloat = 200
+    private let desertBrown = Color(red: 241/255, green: 195/255, blue: 102/255)
+    private let shadowColor = Color.black.opacity(0.6)
+    private let shadowRadius: CGFloat = 5
+    private let shadowY: CGFloat = 3
+
 
     var body: some View {
         NavigationStack {
             ZStack {
-                Image("startScreen")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                    .navigationBarBackButtonHidden(true)
-                    .navigationDestination(isPresented: $readyToNavigate) {
-                        CanvasView()
-                    }
-                    .overlay(
+                startScreenDisplay
+                .overlay(
+                    Button(action: {
+                    }) {
+                        ZStack(alignment: .bottom) {
+                        scrollDisplay
                         Button(action: {
-                                //readyToNavigate = true
-                            }) {
-                                ZStack(alignment: .bottom) {
-                                    Image("scroll")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 200, height: 200)
-
-                                    Button(action: {
-                                        readyToNavigate = true
-                                    }) {
-                                        Text("Start")
-                                            .foregroundColor(.black)
-                                            .font(.system(size: 30, weight: .bold))
-                                            .padding(.horizontal, 10)
-                                            .padding(.vertical, 10)
-
-                                            .background(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .fill(Color(red: 241/255, green: 195/255, blue: 102/255))
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 10)
-                                                                    .stroke(Color.black, lineWidth: 1)
-                                                            )
-                                                    )
-                                            .cornerRadius(10)
-                                    }
-                                    .padding(.bottom, 30)
-                                    .shadow(color: Color.black.opacity(0.6), radius: 5, x: 0, y: 3)
-                                    /*
-                                    Text("Start")
-                                        .foregroundColor(.black)
-                                        .font(.system(size: 35, weight: .bold))
-                                        .padding(.bottom, 50)
-                                    */
-                                }
-                            }
-                            .padding(20)
-                        )
+                            readyToNavigate = true
+                        }) {
+                            textDisplay
+                        }
+                        .padding(.bottom, paddingBottom)
+                        .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
+                        }
+                    }
+                .padding(paddingSides)
+                )
             }.navigationBarBackButtonHidden(true)
         }.navigationBarBackButtonHidden(true)
+    }
+}
+
+extension StartView {
+    private var startScreenDisplay: some View {
+        Image(startScreen)
+            .resizable()
+            .scaledToFill()
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $readyToNavigate) {
+                InstructionView()
+            }
+    }
+}
+
+extension StartView {
+    private var textDisplay: some View {
+        Text(text)
+            .foregroundColor(.black)
+            .font(.system(size: fontSize, weight: .bold))
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding)
+            .background(
+                RoundedRectangle(cornerRadius: padding)
+                    .fill(desertBrown)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: radius)
+                        .stroke(Color.black, lineWidth: width)
+                    )
+            )
+            .cornerRadius(radius)
+    }
+}
+
+extension StartView {
+    private var scrollDisplay: some View {
+        Image(scroll)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: scrollFrame, height: scrollFrame)
     }
 }
 

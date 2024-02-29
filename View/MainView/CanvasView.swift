@@ -9,6 +9,7 @@ import SwiftUI
 
 // TODO: Remove top of background and replace with points bar
 // TODO: Remove width and height if necessary
+// TODOL Fix hackish implementation of balls at the side
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
     let centerY = 250.0 / 2.0
@@ -21,6 +22,7 @@ struct CanvasView: View {
                 Image("glass")
                 .opacity(0.55)
                 .position(x: 50, y: 650)
+                //.frame(height: 1000)
             }
 
             Text("Elapsed Time: \(canvasViewModel.elapsedTime, specifier: "%.0f") seconds")
