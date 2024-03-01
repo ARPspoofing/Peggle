@@ -38,34 +38,6 @@ struct CanvasView: View {
 }
 
 extension CanvasView {
-    private var gameOverAlert: some View {
-        ZStack {
-            let dismissButton   = CustomAlertButton(title: "Retry Level")
-            let primaryButton   = CustomAlertButton(title: "Retry Level")
-            let secondaryButton = CustomAlertButton(title: "Cancel")
-            let roundedScore = String(format: "%.0f", canvasViewModel.score)
-            let title = "Try Again!"
-            let message = """
-    Score: \(roundedScore)
-    Tip: Clear blue pegs out of the way to get to orange pegs.
-    """
-            if canvasViewModel.isGameOver {
-                CustomAlertView(title: title, message: message, dismissButton: nil,
-                            primaryButton: primaryButton, secondaryButton: secondaryButton)
-            }
-        }
-    }
-}
-
-extension CanvasView {
-    private var glassDisplay: some View {
-        Image("glass")
-        .opacity(0.55)
-        .position(x: 50, y: 650)
-    }
-}
-
-extension CanvasView {
     private var backgroundDisplay: some View {
         ZStack(alignment: .top) {
             BackgroundView()
@@ -157,104 +129,39 @@ extension CanvasView {
 extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
-            if let rectangle = object as? RectangularMovableObject {
-                let object = rectangle
-                ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
-                    // Shift down if ractangle
-                    .position(x: object.retrieveXCoord(), y: object.retrieveYCoord() /*+ (object.center.yCoord - object.top.yCoord) * 0.5*/)
-                    .onTapGesture {
-                        guard !canvasViewModel.isStartState else {
-                            return
-                        }
-                        if canvasViewModel.isDeleteState {
-                            canvasViewModel.removeAndRender(removeObjectIndex: index)
-                        }
+            ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
+                .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+                .onTapGesture {
+                    guard !canvasViewModel.isStartState else {
+                        return
                     }
-                    .onLongPressGesture(minimumDuration: Constants.longDuration) {
-                        guard !canvasViewModel.isStartState else {
-                            return
-                        }
+                    if canvasViewModel.isDeleteState {
                         canvasViewModel.removeAndRender(removeObjectIndex: index)
                     }
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                guard !canvasViewModel.isStartState else {
-                                    return
-                                }
-                                if canvasViewModel.isResizeState {
-                                    canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
-                                } else if canvasViewModel.isRotateState {
-                                    canvasViewModel.updateObjectOrientation(index: index,
-                                                                            dragLocation: value.location)
-                                } else {
-                                    canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
-                                }
-                            }
-                            .onEnded { _ in }
-                    )
-
-                Circle()
-                    .fill(Color.blue)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.top.xCoord, y: object.top.yCoord)
-
-                Circle()
-                    .fill(Color.red)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.edges[0].start.xCoord, y: object.edges[0].start.yCoord)
-
-                Circle()
-                    .fill(Color.blue)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.edges[1].start.xCoord, y: object.edges[1].start.yCoord)
-
-                Circle()
-                    .fill(Color.black)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.edges[0].end.xCoord, y: object.edges[0].end.yCoord)
-
-                Circle()
-                    .fill(Color.purple)
-                    .frame(width: 10, height: 10)
-                    .position(x: object.edges[1].end.xCoord, y: object.edges[1].end.yCoord)
-
-
-            } else {
-                ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
-                    .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
-                    .onTapGesture {
-                        guard !canvasViewModel.isStartState else {
-                            return
-                        }
-                        if canvasViewModel.isDeleteState {
-                            canvasViewModel.removeAndRender(removeObjectIndex: index)
-                        }
+                }
+                .onLongPressGesture(minimumDuration: Constants.longDuration) {
+                    guard !canvasViewModel.isStartState else {
+                        return
                     }
-                    .onLongPressGesture(minimumDuration: Constants.longDuration) {
-                        guard !canvasViewModel.isStartState else {
-                            return
-                        }
-                        canvasViewModel.removeAndRender(removeObjectIndex: index)
-                    }
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                guard !canvasViewModel.isStartState else {
-                                    return
-                                }
-                                if canvasViewModel.isResizeState {
-                                    canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
-                                } else if canvasViewModel.isRotateState {
-                                    canvasViewModel.updateObjectOrientation(index: index,
-                                                                            dragLocation: value.location)
-                                } else {
-                                    canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
-                                }
+                    canvasViewModel.removeAndRender(removeObjectIndex: index)
+                }
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            guard !canvasViewModel.isStartState else {
+                                return
                             }
-                            .onEnded { _ in }
-                    )
-            }
+                            if canvasViewModel.isResizeState {
+                                canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
+                            } else if canvasViewModel.isRotateState {
+                                canvasViewModel.updateObjectOrientation(index: index,
+                                                                        dragLocation: value.location)
+                            } else {
+                                canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
+                            }
+                        }
+                        .onEnded { _ in }
+                )
         }
     }
 }
@@ -270,6 +177,34 @@ extension CanvasView {
     private func customCaptureObjectView(object: GameObject, index: Int, width: Double, height: Double) -> some View {
         CaptureObjectView(width: width, height: height)
             .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+    }
+}
+
+extension CanvasView {
+    private var gameOverAlert: some View {
+        ZStack {
+            let dismissButton   = CustomAlertButton(title: "Retry Level")
+            let primaryButton   = CustomAlertButton(title: "Retry Level")
+            let secondaryButton = CustomAlertButton(title: "Cancel")
+            let roundedScore = String(format: "%.0f", canvasViewModel.score)
+            let title = "Try Again!"
+            let message = """
+    Score: \(roundedScore)
+    Tip: Clear blue pegs out of the way to get to orange pegs.
+    """
+            if canvasViewModel.isGameOver {
+                CustomAlertView(title: title, message: message, dismissButton: nil,
+                            primaryButton: primaryButton, secondaryButton: secondaryButton)
+            }
+        }
+    }
+}
+
+extension CanvasView {
+    private var glassDisplay: some View {
+        Image("glass")
+        .opacity(0.55)
+        .position(x: 50, y: 650)
     }
 }
 

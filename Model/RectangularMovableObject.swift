@@ -18,6 +18,7 @@ protocol RectangularMovableObject: MovableObject, Polygon {
 
 extension RectangularMovableObject {
 
+    // TODO: Handle circle rectangle intersection
     func isIntersecting(with peg: CircularMovableObject) -> Bool {
        let squaredRadius = peg.radius * peg.radius
        for edge in edges {
@@ -28,13 +29,27 @@ extension RectangularMovableObject {
                return true
            }
 
-           let vectorA = topLeft.subtract(point: peg.center)
-           let vectorB = topLeft.subtract(point: topRight)
-           let dotA = vectorA.dotProduct(with: vectorB)
-           let dotB = vectorB.dotProduct(with: vectorB)
-           let vectorC = topLeft.subtract(point: bottomLeft)
-           let dotC = vectorA.dotProduct(with: vectorC)
-           let dotD = vectorC.dotProduct(with: vectorC)
+           var vectorA = topLeft.subtract(point: peg.center)
+           var vectorB = topLeft.subtract(point: topRight)
+           var dotA = vectorA.dotProduct(with: vectorB)
+           var dotB = vectorB.dotProduct(with: vectorB)
+           var vectorC = topLeft.subtract(point: bottomLeft)
+           var dotC = vectorA.dotProduct(with: vectorC)
+           var dotD = vectorC.dotProduct(with: vectorC)
+
+           if 0 <= dotA && dotA <= dotB && 0 <= dotC && dotC <= dotD {
+               return true
+           } else {
+               return false
+           }
+
+           vectorA = topRight.subtract(point: peg.center)
+           vectorB = topRight.subtract(point: topLeft)
+           dotA = vectorA.dotProduct(with: vectorB)
+           dotB = vectorB.dotProduct(with: vectorB)
+           vectorC = topRight.subtract(point: bottomRight)
+           dotC = vectorA.dotProduct(with: vectorC)
+           dotD = vectorC.dotProduct(with: vectorC)
 
            if 0 <= dotA && dotA <= dotB && 0 <= dotC && dotC <= dotD {
                return true

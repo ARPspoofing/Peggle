@@ -11,6 +11,7 @@ struct StartView: View {
     @State private var readyToNavigate : Bool = false
     @State private var isButtonClicked = false
     @State private var isSecondaryButtonClicked = false
+
     private let startScreen = "startScreen"
     private let text = "Start"
     private let scroll = "scroll"
@@ -37,6 +38,7 @@ struct StartView: View {
                         ZStack(alignment: .bottom) {
                         scrollDisplay
                         Button(action: {
+                            AudioManager.shared.play(fileName: "buttonClickAudio", isLooping: true)
                             readyToNavigate = true
                         }) {
                             textDisplay
@@ -47,6 +49,9 @@ struct StartView: View {
                     }
                 .padding(paddingSides)
                 )
+            }
+            .onAppear {
+                AudioManager.shared.play(fileName: "mainMenuAudio", isLooping: true)
             }.navigationBarBackButtonHidden(true)
         }.navigationBarBackButtonHidden(true)
     }
