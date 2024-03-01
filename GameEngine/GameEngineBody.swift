@@ -80,8 +80,12 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         handlePlaneBoundaries(&object)
     }
 
-    internal func handleCaptureObjectBoundaries(_ object: inout MotionObject) {
-        handleSideBoundaries(&object)
+    internal func handleCaptureObjectBoundaries(_ object: inout CaptureObject) {
+        //handleSideBoundaries(&object)
+        guard !object.checkLeftBorder() || !object.checkRightBorder() else {
+            return
+        }
+        object.reverseHorizontalVelocity()
     }
 
     func handleAmmoBottomBoundary(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
@@ -168,6 +172,15 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    internal func handleBounce(for captureObject: inout CaptureObject, and object: inout MotionObject) {
+        var captureObjectPhysics = PhysicsBody(object: captureObject, position: captureObject.center, mass: gameObjectMass)
+        var motionObjectPhysics = PhysicsBody(object: object, position: object.center)
+
+        motionObjectPhysics.velocity = object.velocity
+        captureObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &captureObjectPhysics)
+        object.velocity = motionObjectPhysics.velocity
+    }
+
     private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
         for gameObject in gameObjects {
             var mutatableGameObject = gameObject
@@ -176,6 +189,19 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
                 continue
             }
             handleIntersection(for: &mutatableGameObject, and: &object)
+        }
+        for captureObject in captureObjects {
+            var mutatableCaptureObject = captureObject
+            guard !object.checkNoIntersection(with: mutatableCaptureObject) else {
+                continue
+            }
+            if object.isReappear {
+                handleBounce(for: &mutatableCaptureObject, and: &object)
+            } else {
+                self.ammo.removeAll()
+                //self.ammo.append(MotionObject(name: "amm"))
+            }
+
         }
     }
 
@@ -213,6 +239,11 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     internal func updateObjectPosition(_ object: inout MotionObject) {
         object.center = object.center.add(vector: object.velocity)
+    }
+
+    internal func updateCaptureObjectPosition(_ object: inout CaptureObject) {
+        object.center = object.center.add(vector: object.velocity)
+        object.calcTopLine()
     }
 
     private func incrementExitCount() {
@@ -278,8 +309,8 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     @objc func updateCaptureObjects() {
         // TODO: Add multiple frozen capture objects (vel = 0) when all gameObjects are eliminated
         for index in captureObjects.indices {
-            var object: MotionObject = captureObjects[index]
-            updateObjectPosition(&object)
+            var object: CaptureObject = captureObjects[index]
+            updateCaptureObjectPosition(&object)
             handleCaptureObjectBoundaries(&object)
         }
     }

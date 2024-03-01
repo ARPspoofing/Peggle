@@ -23,7 +23,10 @@ struct CanvasView: View {
             }
             motionObjectDisplay
             captureObjectDisplay
-            gameOverAlert
+            if canvasViewModel.isGameOver {
+                GameOverView()
+            }
+
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
             }
@@ -175,11 +178,32 @@ extension CanvasView {
 
 extension CanvasView {
     private func customCaptureObjectView(object: GameObject, index: Int, width: Double, height: Double) -> some View {
-        CaptureObjectView(width: width, height: height)
-            .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+        ZStack {
+            CaptureObjectView(width: width, height: height)
+                .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+            if let capture = object as? CaptureObject {
+                Circle()
+                    .stroke(Color.red, lineWidth: 5)
+                    .frame(width: 5, height: 5)
+                    .position(x: capture.topLine.start.xCoord, y: capture.topLine.start.yCoord)
+                Circle()
+                    .stroke(Color.red, lineWidth: 5)
+                    .frame(width: 5, height: 5)
+                    .position(x: capture.topLine.end.xCoord, y: capture.topLine.end.yCoord)
+                Circle()
+                    .stroke(Color.red, lineWidth: 5)
+                    .frame(width: 5, height: 5)
+                    .position(x: capture.bottomLeft.xCoord, y: capture.bottomLeft.yCoord)
+                Circle()
+                    .stroke(Color.red, lineWidth: 5)
+                    .frame(width: 5, height: 5)
+                    .position(x: capture.bottomRight.xCoord, y: capture.bottomRight.yCoord)
+            }
+        }
     }
 }
 
+/*
 extension CanvasView {
     private var gameOverAlert: some View {
         ZStack {
@@ -199,6 +223,7 @@ extension CanvasView {
         }
     }
 }
+*/
 
 extension CanvasView {
     private var glassDisplay: some View {

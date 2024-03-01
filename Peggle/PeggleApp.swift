@@ -21,7 +21,17 @@ struct PeggleApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        AudioManager.shared.playMainMenuAudio(isLooping: true)
+        return true
+    }
+
+    func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        .portrait
+        return .portrait
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        AudioManager.shared.stopAll()
     }
 }

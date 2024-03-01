@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CustomAlertView: View {
+    @State private var isNavigationActive = false
 
     let title: String
     let message: String
@@ -26,16 +27,21 @@ struct CustomAlertView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        ZStack {
-            dimView
-            alertView
-                .scaleEffect(scale)
-                .opacity(opacity)
-        }
-        .ignoresSafeArea()
-        .transition(.opacity)
-        .task {
-            animate(isShown: true)
+        NavigationStack {
+            ZStack {
+                dimView
+                alertView
+                    .scaleEffect(scale)
+                    .opacity(opacity)
+            }
+            .navigationDestination(isPresented: $isNavigationActive) {
+                CanvasView()
+            }
+            .ignoresSafeArea()
+            .transition(.opacity)
+            .task {
+                animate(isShown: true)
+            }
         }
     }
 
@@ -141,25 +147,20 @@ struct CustomAlertView: View {
     }
 
     private func animate(isShown: Bool, completion: (() -> Void)? = nil) {
-        switch isShown {
-        case true:
+        if isShown {
             opacity = 1
-
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9, blendDuration: 0).delay(0.5)) {
                 backgroundOpacity = 1
                 scale             = 1
             }
-
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 completion?()
             }
-
-        case false:
+        } else {
             withAnimation(.easeOut(duration: 0.2)) {
                 backgroundOpacity = 0
                 opacity           = 0
             }
-
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 completion?()
             }
@@ -168,23 +169,28 @@ struct CustomAlertView: View {
 }
 
 struct CustomAlertButton: View {
-
+    @EnvironmentObject private var viewModel: CanvasViewModel
+    @State private var isNavigationActive = false
     let title: LocalizedStringKey
     var action: (() -> Void)? = nil
     private let desertDarkBrown = Color(red: 195/255, green: 169/255, blue: 114/255)
 
     var body: some View {
-        Button {
-          action?()
-
-        } label: {
+        NavigationLink(destination: CanvasView(), isActive: $isNavigationActive) {
+                EmptyView()
+            }
+            .hidden()
+        Button(action: {
+            isNavigationActive = true
+        }) {
             Text(title)
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.black)
                 .padding(.horizontal, 10)
-        }
-        .frame(height: 30)
-        .background(desertDarkBrown)
-        .cornerRadius(15)
+        }.frame(height: 30)
+            .background(desertDarkBrown)
+            .cornerRadius(15)
+
+        //*/
     }
 }

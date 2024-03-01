@@ -28,7 +28,7 @@ struct StatusView: View {
                         )
                         .foregroundColor(desertDarkBrown)
                         .shadow(color: Color.black.opacity(0.6), radius: 10, x: 10, y: 10)
-                    Text("Score: \(viewModel.score, specifier: "%.0f") points")
+                    Text("\(viewModel.score, specifier: "%.0f") points")
                         .foregroundColor(.black)
                         .font(.system(size: 20, weight: .bold))
                 }
@@ -42,7 +42,7 @@ struct StatusView: View {
                         )
                         .foregroundColor(desertDarkBrown)
                         .shadow(color: Color.black.opacity(0.6), radius: 10, x: 10, y: 10)
-                    Text("Time: \(60.0 - viewModel.elapsedTime, specifier: "%.0f") seconds")
+                    Text("\(60.0 - viewModel.elapsedTime, specifier: "%.0f") sec")
                         .foregroundColor(.black)
                         .font(.system(size: 20, weight: .bold))
                 }

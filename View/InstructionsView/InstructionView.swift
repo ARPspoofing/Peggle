@@ -46,7 +46,7 @@ struct InstructionView: View {
                     customButton
                 }
             }
-        }
+        }.transition(.slide)
     }
 }
 
@@ -76,6 +76,7 @@ extension InstructionView {
 extension InstructionView {
     private var customButton: some View {
         Button(action: {
+            AudioManager.shared.playButtonClickAudio()
             readyToNavigate = true
             }) {
                 Text(buttonText)

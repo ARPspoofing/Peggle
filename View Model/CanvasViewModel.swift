@@ -12,7 +12,7 @@ import SwiftUI
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
-    let paletteObjects: [String] = [Constants.normalObject, /* Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject,*/ Constants.obstacleObject]
+    let paletteObjects: [String] = [Constants.normalObject, /* Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject,*/ Constants.actionObject, Constants.obstacleObject]
     let modelMap = ModelMap()
 
     @Published var gameObjects: [GameObject]
@@ -26,6 +26,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isRotateState = false
     @Published var isStartState = false
     @Published var isGameOver = false
+    @Published var isWin = false
 
     @Published private(set) var shooterRotation: Double = .zero
     @Published var isShooting = false
@@ -38,11 +39,11 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var pathEndPointX = 0.0
     @Published var pathEndPointY = 0.0
     @Published var pathCount = 0
-    
+    @Published var isNavigationActive = false
 
     let maxAmmo = 10
     let shooterPosition = Point(xCoord: Constants.screenWidth / 2, yCoord: 75)
-    let capturePosition = Point(xCoord: Constants.screenWidth / 2, yCoord: Constants.gameHeight - 50)
+    let capturePosition = Point(xCoord: Constants.screenWidth / 2, yCoord: Constants.gameHeight - 100)
     let motionObject = Constants.motionObject
     let captureObject = Constants.captureObject
 
@@ -68,10 +69,15 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         initRemainingAmmo()
     }
 
+    // TODO: Add alert if no orange pegs
     func start() {
+        guard !checkNoActiveObjects() else {
+            return
+        }
         isStartState.toggle()
         initGameEngineAndDelegate()
         startTimer()
+        AudioManager.shared.playGameAudio()
     }
 
     func initRemainingAmmo() {
@@ -330,12 +336,29 @@ extension CanvasViewModel {
             isDoneShooting = true
         }
         calcScore()
-        if isEmptyAmmo() {
-            isGameOver = true
-            stopTimer()
-            captureObjects.removeAll()
-        }
+        displayFinalStatus()
         objectWillChange.send()
+    }
+
+    func checkNoActiveObjects() -> Bool {
+        !gameObjects.contains { $0.name == Constants.actionObject }
+    }
+
+    func displayFinalStatus() {
+        guard isEmptyAmmo() || elapsedTime == 60 || checkNoActiveObjects() else {
+            return
+        }
+        isGameOver = true
+        stopTimer()
+        removeAllObjects()
+        toggleWinConditions()
+    }
+
+    func toggleWinConditions() {
+        isWin = checkNoActiveObjects()
+        /*
+        isWin ? AudioManager.shared.playVictoryAudio(isLooping: true) : AudioManager.shared.playGameOverAudio(isLooping: true)
+        */
     }
 
     func getBallVector() -> Vector {
@@ -361,5 +384,12 @@ extension CanvasViewModel {
         captureObjects.removeAll()
         captureObjects.append(captureObject)
         initGameEngineAndDelegate()
+    }
+
+    func removeAllObjects() {
+        gameObjects.removeAll()
+        motionObjects.removeAll()
+        remainingAmmo.removeAll()
+        captureObjects.removeAll()
     }
 }

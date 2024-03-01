@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Once click start againm after going back, cannot start. Need fix
 struct StartView: View {
     @State private var readyToNavigate : Bool = false
     @State private var isButtonClicked = false
@@ -38,7 +39,7 @@ struct StartView: View {
                         ZStack(alignment: .bottom) {
                         scrollDisplay
                         Button(action: {
-                            AudioManager.shared.play(fileName: "buttonClickAudio", isLooping: true)
+                            AudioManager.shared.playButtonClickAudio()
                             readyToNavigate = true
                         }) {
                             textDisplay
@@ -50,10 +51,8 @@ struct StartView: View {
                 .padding(paddingSides)
                 )
             }
-            .onAppear {
-                AudioManager.shared.play(fileName: "mainMenuAudio", isLooping: true)
-            }.navigationBarBackButtonHidden(true)
-        }.navigationBarBackButtonHidden(true)
+        }
+        .transition(.slide)
     }
 }
 

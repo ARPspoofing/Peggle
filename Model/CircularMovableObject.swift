@@ -13,6 +13,9 @@ extension CircularMovableObject {
     // TODO: Clean up
     // TODO: Abstract to intersection handler
     func checkNoIntersection(with gameObject: GameObject) -> Bool {
+        if let captureObject = gameObject as? CaptureObject {
+            return !captureObject.isIntersecting(with: self)
+        }
         if let peg = gameObject as? CircularMovableObject {
             let distanceBetweenMotionObjectSquared: Double = center.squareDistance(to: peg.center)
             let sumMotionObjectsRadiusSquared: Double = (radius + peg.radius) * (radius + peg.radius)

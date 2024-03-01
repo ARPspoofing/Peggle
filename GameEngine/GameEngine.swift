@@ -27,7 +27,6 @@ class GameEngine: GameEngineBody, ObservableObject {
                    gameObjects: &gameObjects,
                    captureObjects: &captureObjects,
                    ammo: &ammo)
-        //self.motionObjects = motionObjects
 
         displayLink = CADisplayLink(target: self, selector: #selector(updateBallPosition))
         displayLink?.preferredFramesPerSecond = framesPerSecond
