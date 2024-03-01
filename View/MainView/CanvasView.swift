@@ -160,7 +160,8 @@ extension CanvasView {
             if let rectangle = object as? RectangularMovableObject {
                 let object = rectangle
                 ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
-                    .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+                    // Shift down if ractangle
+                    .position(x: object.retrieveXCoord(), y: object.retrieveYCoord() /*+ (object.center.yCoord - object.top.yCoord) * 0.5*/)
                     .onTapGesture {
                         guard !canvasViewModel.isStartState else {
                             return
@@ -192,6 +193,12 @@ extension CanvasView {
                             }
                             .onEnded { _ in }
                     )
+
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 10, height: 10)
+                    .position(x: object.top.xCoord, y: object.top.yCoord)
+
                 Circle()
                     .fill(Color.red)
                     .frame(width: 10, height: 10)

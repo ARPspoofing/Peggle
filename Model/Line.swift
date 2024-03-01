@@ -19,12 +19,23 @@ struct Line: Codable {
     init(start: Point, end: Point) {
         self.start = start
         self.end = end
+        self.vector = getLineVector()
     }
 
     init(start: Point, vector: Vector) {
         self.start = start
         self.vector = vector
         self.end = calculateEndPoint()
+    }
+
+    init(vector: Vector, distance: Double, middle: Point) {
+        self.vector = vector
+
+        let normalizedVector = vector.normalize()
+        let displacementX = normalizedVector.horizontal * (distance / 2)
+        let displacementY = normalizedVector.vertical * (distance / 2)
+        self.start = Point(xCoord: middle.xCoord - displacementX, yCoord: middle.yCoord - displacementY)
+        self.end = Point(xCoord: middle.xCoord + displacementX, yCoord: middle.yCoord + displacementY)
     }
 
     init(start: Point, vector: Vector, maxDistance: Double) {

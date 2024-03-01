@@ -27,6 +27,20 @@ extension RectangularMovableObject {
            guard distanceFromPointToLine(point: peg.center, line: edge) >= peg.radius else {
                return true
            }
+
+           let vectorA = topLeft.subtract(point: peg.center)
+           let vectorB = topLeft.subtract(point: topRight)
+           let dotA = vectorA.dotProduct(with: vectorB)
+           let dotB = vectorB.dotProduct(with: vectorB)
+           let vectorC = topLeft.subtract(point: bottomLeft)
+           let dotC = vectorA.dotProduct(with: vectorC)
+           let dotD = vectorC.dotProduct(with: vectorC)
+
+           if 0 <= dotA && dotA <= dotB && 0 <= dotC && dotC <= dotD {
+               return true
+           } else {
+               return false
+           }
        }
        return false
    }
@@ -48,35 +62,24 @@ extension RectangularMovableObject {
                (point.yCoord >= min(line.start.yCoord, line.end.yCoord) && point.yCoord <= max(line.start.yCoord, line.end.yCoord))
     }
 
-    /*
     func isNotIntersecting(with object: Polygon) -> Bool {
-        for edge in object.edges {
-            for side in edges {
-                if linesIntersect(line1: edge, line2: side) {
-                    print("is intersecting")
+
+        for edge in edges {
+            for objectEdge in object.edges {
+                if linesIntersect(line1: edge, line2: objectEdge) {
                     return false
                 }
             }
         }
-        print("is not intersecting")
-        return true
-    }
-    */
 
-    func isNotIntersecting(with object: Polygon) -> Bool {
-        if self.edges[0].end.xCoord < object.edges[1].start.xCoord
+        guard self.edges[0].end.xCoord < object.edges[1].start.xCoord
             && self.edges[1].start.xCoord > object.edges[0].end.xCoord
             && self.edges[0].end.yCoord < object.edges[1].start.yCoord
-            && self.edges[1].start.yCoord > object.edges[0].end.yCoord {
-            return false
-        } else {
+            && self.edges[1].start.yCoord > object.edges[0].end.yCoord else {
             return true
         }
+        return false
     }
-
-
-
-
 
    func checkNoIntersection(with gameObject: GameObject) -> Bool {
        if let object = gameObject as? CircularMovableObject {
