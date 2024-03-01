@@ -8,10 +8,6 @@
 import Foundation
 
 struct Line: Codable {
-
-    static private(set) var zero = Line(start: Point(xCoord: 0.0, yCoord: 0.0),
-                                        end: Point(xCoord: 0.0, yCoord: 0.0))
-
     private(set) var start: Point = Point(xCoord: 0.0, yCoord: 0.0)
     private(set) var end: Point = Point(xCoord: 0.0, yCoord: 0.0)
     private(set) var vector = Vector(horizontal: 0.0, vertical: 0.0)
@@ -30,12 +26,7 @@ struct Line: Codable {
 
     init(vector: Vector, distance: Double, middle: Point) {
         self.vector = vector
-
-        let normalizedVector = vector.normalize()
-        let displacementX = normalizedVector.horizontal * (distance / 2)
-        let displacementY = normalizedVector.vertical * (distance / 2)
-        self.start = Point(xCoord: middle.xCoord - displacementX, yCoord: middle.yCoord - displacementY)
-        self.end = Point(xCoord: middle.xCoord + displacementX, yCoord: middle.yCoord + displacementY)
+        calcStartEndFromMiddle(middle: middle, distance: distance)
     }
 
     init(start: Point, vector: Vector, maxDistance: Double) {
@@ -64,7 +55,6 @@ struct Line: Codable {
 
     func calculateEndPoint(maxDistance: Double = Constants.screenHeight) -> Point {
         let normalizedVector = vector.normalize()
-        //let maxDistance = Constants.screenHeight
         var endPointX = start.xCoord + normalizedVector.horizontal * maxDistance
         var endPointY = start.yCoord + normalizedVector.vertical * maxDistance
         if endPointX < 0 {
@@ -76,24 +66,21 @@ struct Line: Codable {
 
     func calculateStartPoint(maxDistance: Double = Constants.screenHeight) -> Point {
         let normalizedVector = vector.normalize()
-        //let maxDistance = Constants.screenHeight
-        var startPointX = end.xCoord - normalizedVector.horizontal * maxDistance
-        var startPointY = end.yCoord - normalizedVector.vertical * maxDistance
+        let startPointX = end.xCoord - normalizedVector.horizontal * maxDistance
+        let startPointY = end.yCoord - normalizedVector.vertical * maxDistance
         return Point(xCoord: startPointX, yCoord: startPointY)
     }
 
-    /*
-    func calculateEndPointWithDistance(_ distance: Double) -> Point {
-        let normalizedVector = vector.normalize()
-        var endPointX = start.xCoord + normalizedVector.horizontal * distance
-        var endPointY = start.yCoord + normalizedVector.vertical * distance
-        return Point(xCoord: endPointX, yCoord: endPointY)
-    }
-    */
-
-
     func recalculateEndPoint(_ vector: Vector) -> Double {
         return start.yCoord - (start.xCoord / vector.horizontal) * vector.vertical
+    }
+
+    mutating func calcStartEndFromMiddle(middle: Point, distance: Double) {
+        let normalizedVector = vector.normalize()
+        let displacementX = normalizedVector.horizontal * (distance / 2)
+        let displacementY = normalizedVector.vertical * (distance / 2)
+        start = Point(xCoord: middle.xCoord - displacementX, yCoord: middle.yCoord - displacementY)
+        end = Point(xCoord: middle.xCoord + displacementX, yCoord: middle.yCoord + displacementY)
     }
 
     func squaredDistanceFromPointToLine(point: Point) -> Double {
@@ -109,6 +96,10 @@ struct Line: Codable {
 
     func getLineVector() -> Vector {
         end.subtract(point: start)
+    }
+
+    func getPerpendicularVector() -> Vector {
+        getLineVector().getPerpendicularVector()
     }
 
     func rescale(magnitude: Double) -> Line {
