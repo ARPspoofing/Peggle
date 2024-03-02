@@ -85,9 +85,8 @@ class GameEngineWorld {
 
     // MARK: Bounce
     internal func handleBounce(for captureObject: inout CaptureObject, and object: inout MotionObject) {
-        var captureObjectPhysics = PhysicsBody(object: captureObject, position: captureObject.center, mass: gameObjectMass)
-        var motionObjectPhysics = PhysicsBody(object: object, position: object.center)
-
+        var captureObjectPhysics = PhysicsBody(position: captureObject.center, mass: gameObjectMass, isBlast: false, velocity: captureObject.velocity)
+        var motionObjectPhysics = PhysicsBody(position: object.center, isBlast: false, velocity: object.velocity)
         motionObjectPhysics.velocity = object.velocity
         captureObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &captureObjectPhysics)
         object.velocity = motionObjectPhysics.velocity

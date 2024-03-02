@@ -86,7 +86,6 @@ class LocalFileManager {
 
         do {
             let jsonData = String(data: levelData, encoding: .utf8)
-            print("json data: ", jsonData)
             try jsonData?.write(to: path, atomically: true, encoding: .utf8)
             assert(checkRepresentation())
             return successSavingLevelMessage

@@ -6,37 +6,60 @@
 //
 
 class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
-    // TODO: Remove dependency on game object. Just return new velocity and position
-    private(set) var object: GameObject
     private(set) var position: Vector
     private(set) var mass = 8.0
+    private(set) var isBlast = false
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
 
-    init(object: GameObject, position: Vector) {
-        self.object = object
+    init(position: Vector) {
         self.position = position
     }
 
-    init(object: GameObject, position: Point) {
-        self.object = object
+    init(position: Point) {
         self.position = position.convertToVector()
     }
 
-    init(object: GameObject, position: Vector, mass: Double) {
-        self.object = object
+    init(position: Vector, mass: Double) {
         self.position = position
         self.mass = mass
     }
 
-    init(object: GameObject, position: Point, mass: Double) {
-        self.object = object
+    init(position: Point, mass: Double) {
         self.position = position.convertToVector()
         self.mass = mass
     }
 
-    private func getOverlapStatus() -> Bool {
-        object.isHandleOverlap
+    init(position: Vector, mass: Double, isBlast: Bool) {
+        self.position = position
+        self.mass = mass
+        self.isBlast = isBlast
+    }
+
+    init(position: Point, mass: Double, isBlast: Bool) {
+        self.position = position.convertToVector()
+        self.mass = mass
+        self.isBlast = isBlast
+    }
+
+    init(position: Vector, mass: Double, isBlast: Bool, velocity: Vector) {
+        self.position = position
+        self.mass = mass
+        self.isBlast = isBlast
+        self.velocity = velocity
+    }
+
+    init(position: Point, isBlast: Bool, velocity: Vector) {
+        self.position = position.convertToVector()
+        self.isBlast = isBlast
+        self.velocity = velocity
+    }
+
+    init(position: Point, mass: Double, isBlast: Bool, velocity: Vector) {
+        self.position = position.convertToVector()
+        self.mass = mass
+        self.isBlast = isBlast
+        self.velocity = velocity
     }
 
     private func getUnitNormVector(from: Vector, to: Vector) -> Vector? {
@@ -72,11 +95,10 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
         let resultantTanVel = resultantTanVector(tanVec: tanVel, src: collider)
         collider.velocity = resultantNormVel.add(vector: resultantTanVel)
         collidee.velocity = collider.velocity.getComplement()
-        if collidee.object.isBlast {
-            collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -5))
-            // TODO: setting hasBlasted to true is possibly redundant
-            collidee.object.hasBlasted = true
+        guard isBlast else {
+            return
         }
+        collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -5))
     }
 
     func doElasticCollision(collider: inout PhysicsBody, collidee: inout PhysicsBody) {

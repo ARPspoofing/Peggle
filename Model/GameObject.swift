@@ -9,33 +9,26 @@ import UIKit
 
 class GameObject: NSObject, Identifiable, Codable, DisappearObject {
 
+    @objc dynamic var halfWidth: Double = Constants.defaultHalfWidth
     private(set) var id = UUID()
     var name: String
-
     var center = Point(xCoord: 0.0, yCoord: 0.0)
-    // TODO: Fix orientation and halfWidth, add init for width
     var orientation: Double = 0.0
-    @objc dynamic var halfWidth: Double = Constants.defaultHalfWidth
     var initialTop: Point = Point(xCoord: 0.0, yCoord: 0.0)
 
-    // TODO: Abstract this out, make it neater
     var isBlast = false
     var isSpook = false
     var hasBlasted = false
-    var activeIdx = 0
-
-
     var isActive = false
-
     var isHandleOverlap = false
     var isDisappear = false
+    var activeIdx = 0
     var handleOverlapCount = 0
 
     var initialWidth: Double = 25.0
     var maxWidth: Double = 50.0
     var minDistance: Double = 0.0
     var maxDistance: Double = 200.0
-
     var health: Double = 100.0
 
     init(name: String) {

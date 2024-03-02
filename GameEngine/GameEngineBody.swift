@@ -162,27 +162,37 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
         isHandleOverlapObjects(motionObject: &object, isIntersect: &isIntersect)
     }
 
-    internal func handleCollision(motionObject: inout MotionObject, gameObject: inout GameObject) {
+    internal func toggleBlast(for gameObject: inout GameObject) {
         if gameObject.isBlast && !gameObject.hasBlasted {
             var blastObjects: [GameObject] = getBlastObjects(from: &gameObject)
             setObjectsActive(gameObjects: &blastObjects)
         }
-        // TODO: Do not make physics body update the object position. Update at game engine
-        var gameObjectPhysics = PhysicsBody(object: gameObject, position: gameObject.center, mass: gameObjectMass)
-        var motionObjectPhysics = PhysicsBody(object: motionObject, position: motionObject.center)
+    }
+
+    internal func assignCollisionVel(motionObject: inout MotionObject, gameObject: inout GameObject) {
+        var gameObjectPhysics = PhysicsBody(position: gameObject.center, mass: gameObjectMass, isBlast: gameObject.isBlast)
+        var motionObjectPhysics = PhysicsBody(position: motionObject.center, isBlast: motionObject.isBlast, velocity: motionObject.velocity)
 
         motionObjectPhysics.velocity = motionObject.velocity
         gameObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &gameObjectPhysics)
         motionObject.velocity = motionObjectPhysics.velocity
 
-        if !gameObject.hasBlasted && gameObject.health > 0.0 {
-            gameObject.health -= 50.0
-        }
-        
         guard let oscillateObject = gameObject as? OscillateObject else {
             return
         }
         oscillateObject.velocity = gameObjectPhysics.velocity
+    }
+
+    internal func adjustHealth(for gameObject: inout GameObject) {
+        if !gameObject.hasBlasted && gameObject.health > 0.0 {
+            gameObject.health -= 50.0
+        }
+    }
+
+    internal func handleCollision(motionObject: inout MotionObject, gameObject: inout GameObject) {
+        toggleBlast(for: &gameObject)
+        assignCollisionVel(motionObject: &motionObject, gameObject: &gameObject)
+        adjustHealth(for: &gameObject)
     }
 
 

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: Check if peg needs to conform to game object
 @objc(Peg)
 class Peg: GameObject {
     
