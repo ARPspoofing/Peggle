@@ -13,15 +13,14 @@ struct PaletteButtonsView: View {
 
     @EnvironmentObject var viewModel: CanvasViewModel
 
-    // TODO: Remove magic
     var body: some View {
             HStack {
                 pegOptionsDisplay
                 Spacer()
                 rotateOptionDisplay
-                Spacer().frame(width: 100)
+                Spacer().frame(width: constants.rotateWidth)
                 resizeOptionDisplay
-                Spacer().frame(width: 80)
+                Spacer().frame(width: constants.resizeWidth)
                 deleteOptionDisplay
             }
             .padding([.leading, .trailing], constants.leadingPadding)
@@ -37,7 +36,7 @@ extension PaletteButtonsView {
                         let index = rowIndex * 8 + columnIndex
                         if index < viewModel.paletteObjects.count {
                             let selectedObject = viewModel.paletteObjects[index]
-                            ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject, width: 10)
+                            ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject, width: constants.objectWidth)
                                 .onTapGesture { _ in
                                     viewModel.tapObject(selectedObject)
                                 }
@@ -53,7 +52,11 @@ extension PaletteButtonsView {
 }
 
 extension PaletteButtonsView {
-    private func optionDisplay<Content: View>(content: Content, isSelected: Bool, scale: CGFloat, onTap: @escaping () -> Void, size: CGFloat) -> some View {
+    private func optionDisplay<Content: View>(content: Content,
+                                              isSelected: Bool,
+                                              scale: CGFloat,
+                                              onTap: @escaping () -> Void,
+                                              size: CGFloat) -> some View {
         HStack {
             content
                 .opacity(isSelected ? constants.selectedAlpha : constants.unselectedAlpha)
@@ -69,30 +72,30 @@ extension PaletteButtonsView {
 extension PaletteButtonsView {
     private var deleteOptionDisplay: some View {
         optionDisplay(content: DeleteButtonView(),
-                       isSelected: viewModel.isDeleteState,
-                       scale: constants.deleteButtonScale,
-                       onTap: viewModel.toggleDeleteState,
-                       size: constants.deleteSize)
+                      isSelected: viewModel.isDeleteState,
+                      scale: constants.deleteButtonScale,
+                      onTap: viewModel.toggleDeleteState,
+                      size: constants.deleteSize)
     }
 }
 
 extension PaletteButtonsView {
     private var resizeOptionDisplay: some View {
         optionDisplay(content: ResizeButtonView(),
-                       isSelected: viewModel.isResizeState,
-                       scale: constants.resizeButtonScale,
-                       onTap: viewModel.toggleResizeState,
-                       size: constants.resizeSize)
+                      isSelected: viewModel.isResizeState,
+                      scale: constants.resizeButtonScale,
+                      onTap: viewModel.toggleResizeState,
+                      size: constants.resizeSize)
     }
 }
 
 extension PaletteButtonsView {
     private var rotateOptionDisplay: some View {
         optionDisplay(content: RotateButtonView(),
-                       isSelected: viewModel.isRotateState,
-                       scale: constants.rotateButtonScale,
-                       onTap: viewModel.toggleRotateState,
-                       size: constants.rotateSize)
+                      isSelected: viewModel.isRotateState,
+                      scale: constants.rotateButtonScale,
+                      onTap: viewModel.toggleRotateState,
+                      size: constants.rotateSize)
     }
 }
 struct PegButtonsView_Previews: PreviewProvider {

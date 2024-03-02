@@ -11,7 +11,6 @@ import SwiftUI
 
 struct ResizeButtonView: View {
     var body: some View {
-        // TODO: Modify constants to be for resize
         let constants = ResizeButtonConstants()
 
         Image(constants.resize)

@@ -11,6 +11,7 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
     private(set) var isBlast = false
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
+    var dampVelocity = Vector(horizontal: 0.0, vertical: -5)
 
     init(position: Vector) {
         self.position = position
@@ -98,7 +99,7 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
         guard isBlast else {
             return
         }
-        collider.velocity = collider.velocity.add(vector: Vector(horizontal: 0.0, vertical: -5))
+        collider.velocity = collider.velocity.add(vector: dampVelocity)
     }
 
     func doElasticCollision(collider: inout PhysicsBody, collidee: inout PhysicsBody) {

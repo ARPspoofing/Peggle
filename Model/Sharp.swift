@@ -5,10 +5,6 @@
 //  Created by Muhammad Reyaaz on 22/2/24.
 //
 
-// TODO: Encapsulate top, left, right into a class, make construction of top, left, and right neater
-// TODO: Make everything private
-// TODO: Fix two sharp rotated object gap by removing gap, and small overlap
-// TODO: Move everything to PhysicsEngine or Intersection Detector
 import SwiftUI
 import Foundation
 
@@ -76,7 +72,9 @@ class Sharp: GameObject, TriangularMovableObject {
         }
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(halfWidth) {
             resizePoints()
         }
@@ -130,15 +128,6 @@ class Sharp: GameObject, TriangularMovableObject {
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
         return checkNoIntersection(with: gameObject) && checkBorders()
     }
-
-    // TODO: Move to physics engine
-    /*
-    func rotateTopPoint(initialTop: Point, rotationAngle: Double, circumradius: Double) -> Point {
-        let newX = initialTop.xCoord + circumradius * sin(rotationAngle)
-        let newY = initialTop.yCoord + circumradius * (1 - cos(rotationAngle))
-        return Point(xCoord: newX, yCoord: newY)
-    }
-    */
 
     func rotateTopPoint(rotationAngle: Double) -> Point {
         let newX = initialTop.xCoord + circumradius * sin(rotationAngle)

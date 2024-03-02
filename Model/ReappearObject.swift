@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: Add some things
 @objc(ReappearObject)
 class ReappearObject: Peg, StateChangeObject {
 

@@ -7,21 +7,22 @@
 
 import SwiftUI
 
-// TODO: Remove magic numbers
 struct AmmoView: View {
-
     @State var colorOpacity = 0.5
     @State var materialOpacity = 0.5
+    let motionX: CGFloat = 100
+    let motionYMultiple: CGFloat = 50
+    let motion = "motion"
+    let velocity = Vector(horizontal: 3.0, vertical: 3.0)
+
     var body: some View {
         let totalHeight = Double(Array(1...10).count) * 50.0
         let centerY = totalHeight / 2.0
         ZStack {
             ForEach(Array(1...10), id: \.self) { index in
-                let object = MotionObject(center: Point(xCoord: 100, yCoord: Double(index) * 50), name: "motion", velocity: Vector(horizontal: 3.0, vertical: 3.0))
+                let object = MotionObject(center: Point(xCoord: motionX, yCoord: Double(index) * motionYMultiple), name: motion, velocity: velocity)
                 customMotionObjectView(object: object, index: index)
             }
-            Image("glass").position(x: 90, y: centerY)
-                .opacity(0.55)
         }
 
     }

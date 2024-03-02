@@ -7,14 +7,10 @@
 
 import Foundation
 
-// TODO: Inherit from peg perhaps
-// TODO: Make it affect other pegs
-// TODO: Remove unncessary override
 @objc(OscillateObject)
 class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
-    //var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
     var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var oscillateCount: Int = 0

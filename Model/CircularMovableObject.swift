@@ -10,8 +10,6 @@ protocol CircularMovableObject: MovableObject {
 }
 
 extension CircularMovableObject {
-    // TODO: Clean up
-    // TODO: Abstract to intersection handler
     func checkNoIntersection(with gameObject: GameObject) -> Bool {
         if let peg = gameObject as? CircularMovableObject {
             let distanceBetweenMotionObjectSquared: Double = center.squareDistance(to: peg.center)

@@ -20,7 +20,6 @@ struct GameOverView: View {
                 let wonTitle = "You Won!"
                 let retryMessage = "Score: \(roundedScore)\nTip: Clear blue pegs out of the way to get to orange pegs."
                 let wonMessage  = "Score: \(roundedScore)\nCongratulations!"
-                // TODO: Fix timeout isWin condition
                 if !viewModel.isWin {
                     CustomAlertView(title: retryTitle, message: retryMessage, dismissButton: dismissButton,
                                 primaryButton: nil, secondaryButton: nil)

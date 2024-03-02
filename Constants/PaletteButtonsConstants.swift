@@ -19,4 +19,7 @@ struct PaletteButtonsConstants {
     let deleteSize = UIScreen.main.bounds.size.height * 0.8 * 0.1
     let resizeSize = UIScreen.main.bounds.size.height * 0.8 * 0.1
     let rotateSize = UIScreen.main.bounds.size.height * 0.8 * 0.1
+    let rotateWidth: CGFloat = 100
+    let resizeWidth: CGFloat = 80
+    let objectWidth: CGFloat = 10
 }

@@ -7,14 +7,17 @@
 
 import SwiftUI
 
-// TODO: Remove width and height if necessary
-// TODOL Fix hackish implementation of balls at the side
 struct CanvasView: View {
     @StateObject var canvasViewModel = CanvasViewModel()
+    let glass = "glass"
     let centerY = 250.0 / 2.0
+    let glassOpacity: CGFloat = 0.55
+    let glassWidth: CGFloat = 80
+    let glassHeight: CGFloat = Constants.gameHeight - 300
+    let glassX: CGFloat = 25
+    let glassY: CGFloat = Constants.gameHeight / 2 - 100
 
     var body: some View {
-        // TODO: Add limitation to prevent adding ball on testtube
         ZStack(alignment: .top) {
             ZStack {
                 backgroundDisplay
@@ -130,42 +133,57 @@ extension CanvasView {
 extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
-            ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation, isNoHealth: object.health == 0, health: object.health)
+            ObjectView(name: object.name, isActive: object.isActive,
+                       isDisappear: object.isDisappear, width: object.halfWidth,
+                       orientation: object.orientation, isNoHealth: object.health == 0,
+                       health: object.health)
                 .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
                 .onTapGesture {
-                    guard !canvasViewModel.isStartState else {
-                        return
-                    }
-                    if canvasViewModel.isDeleteState {
-                        canvasViewModel.removeAndRender(removeObjectIndex: index)
-                    }
+                    handleTapGesture(index)
                 }
                 .onLongPressGesture(minimumDuration: Constants.longDuration) {
-                    guard !canvasViewModel.isStartState else {
-                        return
-                    }
-                    canvasViewModel.removeAndRender(removeObjectIndex: index)
+                    handleLongPressGesture(index)
                 }
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            guard !canvasViewModel.isStartState else {
-                                return
-                            }
-                            if canvasViewModel.isResizeState {
-                                canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
-                            } else if canvasViewModel.isRotateState {
-                                canvasViewModel.updateObjectOrientation(index: index,
-                                                                        dragLocation: value.location)
-                            } else {
-                                canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
-                            }
+                            handleDragGestureChange(index, value)
                         }
                         .onEnded { _ in }
                 )
         }
     }
+
+    private func handleTapGesture(_ index: Int) {
+        guard !canvasViewModel.isStartState else {
+            return
+        }
+        if canvasViewModel.isDeleteState {
+            canvasViewModel.removeAndRender(removeObjectIndex: index)
+        }
+    }
+
+    private func handleLongPressGesture(_ index: Int) {
+        guard !canvasViewModel.isStartState else {
+            return
+        }
+        canvasViewModel.removeAndRender(removeObjectIndex: index)
+    }
+
+    private func handleDragGestureChange(_ index: Int, _ value: DragGesture.Value) {
+        guard !canvasViewModel.isStartState else {
+            return
+        }
+        if canvasViewModel.isResizeState {
+            canvasViewModel.updateObjectWidth(index: index, dragLocation: value.location)
+        } else if canvasViewModel.isRotateState {
+            canvasViewModel.updateObjectOrientation(index: index, dragLocation: value.location)
+        } else {
+            canvasViewModel.updateObjectPosition(index: index, dragLocation: value.location)
+        }
+    }
 }
+
 
 extension CanvasView {
     private func customMotionObjectView(object: GameObject, index: Int) -> some View {
@@ -185,11 +203,11 @@ extension CanvasView {
 
 extension CanvasView {
     private var glassDisplay: some View {
-        Image("glass")
+        Image(glass)
             .resizable()
-            .opacity(0.55)
-            .frame(width: 80, height: Constants.gameHeight - 300)
-                        .position(x: 25, y: Constants.gameHeight / 2 - 100)
+            .opacity(glassOpacity)
+            .frame(width: glassWidth, height: glassHeight)
+                        .position(x: glassX, y: glassY)
     }
 }
 

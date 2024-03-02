@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-// TODO: Fix bug when animating, should not be able to shoot
-// TODO: When hit the last orange gameObject, should zoom in
-// TODO: Massive tidy up and abstraction
 class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
 
     private let screenWidth = Constants.screenWidth
@@ -239,7 +236,6 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
     }
 
     @objc func updateCaptureObjects() {
-        // TODO: Add multiple frozen capture objects (vel = 0) when all gameObjects are eliminated
         for index in captureObjects.indices {
             var object: CaptureObject = captureObjects[index]
             updateCaptureObjectPosition(&object)
@@ -273,7 +269,6 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    // TODO: Rename to updateGamePosition and have updateBall and updateCapture inside
     @objc func updateBallPosition() {
         incrementExitCount()
         updateMotionObjects()

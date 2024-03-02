@@ -87,7 +87,14 @@ struct Constants {
     static let shooterBase = "shooterBase"
     static let shooterHead = "shooterHead"
     static let none = "none"
-    static let paletteObjects = [Constants.normalObject, Constants.actionObject, Constants.oscillateObject, Constants.reappearObject, Constants.glowObject, Constants.solidObject, Constants.bounceObject, Constants.obstacleObject, Constants.normalObjectSharp, Constants.actionObjectSharp, Constants.oscillateObjectSharp, Constants.reappearObjectSharp, Constants.motionObjectSharp, Constants.solidObjectSharp, Constants.bounceObjectSharp, Constants.sharpObject]
+    static let paletteObjects = [Constants.normalObject, Constants.actionObject,
+                                 Constants.oscillateObject, Constants.reappearObject,
+                                 Constants.glowObject, Constants.solidObject,
+                                 Constants.bounceObject, Constants.obstacleObject,
+                                 Constants.normalObjectSharp, Constants.actionObjectSharp,
+                                 Constants.oscillateObjectSharp, Constants.reappearObjectSharp,
+                                 Constants.motionObjectSharp, Constants.solidObjectSharp,
+                                 Constants.bounceObjectSharp, Constants.sharpObject]
 
     // MARK: Active Image Constants
     static let normalObjectActive = "normalObjectActive"

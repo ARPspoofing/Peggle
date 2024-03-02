@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: Fix animation for some objects. Action object no longer has blast animation
 struct ObjectView: View {
 
     @ObservedObject private var pegViewModel: ObjectViewModel
@@ -23,7 +22,6 @@ struct ObjectView: View {
     private var diameter = 50.0
     private var orientation: CGFloat = 0.0
 
-    // TODO: Remove redundant init
     init(name: String, isHighlighted: Bool) {
         self.name = name
         self.pegViewModel = ObjectViewModel(name: name)

@@ -16,15 +16,22 @@ struct ImageWithOverlay: View {
     var isNoHealth: Bool
     var health: Double
     var actionObjectActive = Constants.actionObjectActive
+    let radius: CGFloat = 5
+    let width: CGFloat = 50
+    let height: CGFloat = 10
+    let fontSize: CGFloat = 12
     @State private var isShowingHealthBar = true
     @Binding var isDoneShooting: Bool
     @Binding var isAnimating: Bool
 
     var body: some View {
-        let obstacleCondition = (imageName.contains(Constants.sharp) || imageName.contains(Constants.obstacle) || imageName.contains(Constants.pointed))
-        let displayCondition = isShowingHealthBar && !isNoHealth && !obstacleCondition
+        let obstacleCondition = (imageName.contains(Constants.sharp) ||
+                                 imageName.contains(Constants.obstacle) ||
+                                 imageName.contains(Constants.pointed))
         if isDoneShooting && isNoHealth && !obstacleCondition {
-            ParticlesOverlay(isBlast: false, diameter: diameter, isDoneShooting: $isDoneShooting, isNoHealth: isNoHealth)
+            ParticlesOverlay(isBlast: false, diameter: diameter,
+                             isDoneShooting: $isDoneShooting,
+                             isNoHealth: isNoHealth)
         } else {
             mainImage
         }
@@ -35,11 +42,14 @@ struct ImageWithOverlay: View {
 extension ImageWithOverlay {
     var mainImage: some View {
         ZStack {
-            let obstacleCondition = (imageName.contains(Constants.sharp) || imageName.contains(Constants.obstacle) || imageName.contains(Constants.pointed))
+            let obstacleCondition = (imageName.contains(Constants.sharp) ||
+                                     imageName.contains(Constants.obstacle) ||
+                                     imageName.contains(Constants.pointed))
             Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .opacity(obstacleCondition ? 1 : (isDisappear || isDoneShooting) && isNoHealth ? 0 : health <= 50.0 ? 0.5 : 1)
+                .opacity(obstacleCondition ? 1 : (isDisappear || isDoneShooting) &&
+                         isNoHealth ? 0 : health <= 50.0 ? 0.5 : 1)
                 .frame(maxWidth: diameter, maxHeight: diameter)
                 .overlay(healthBarOverlay)
                 .if(imageName == actionObjectActive) { view in
@@ -50,14 +60,16 @@ extension ImageWithOverlay {
 
     var healthBarOverlay: some View {
         ZStack(alignment: .topLeading) {
-            let obstacleCondition = (imageName.contains(Constants.sharp) || imageName.contains(Constants.obstacle) || imageName.contains(Constants.pointed))
+            let obstacleCondition = (imageName.contains(Constants.sharp) ||
+                                     imageName.contains(Constants.obstacle) ||
+                                     imageName.contains(Constants.pointed))
             let displayCondition = isShowingHealthBar && !isNoHealth && !obstacleCondition
             if displayCondition {
-                RoundedRectangle(cornerRadius: 5)
-                    .frame(width: 50, height: 10)
+                RoundedRectangle(cornerRadius: radius)
+                    .frame(width: width, height: height)
                     .foregroundColor(.gray)
-                RoundedRectangle(cornerRadius: 5)
-                    .frame(width: CGFloat(health / 2), height: 10)
+                RoundedRectangle(cornerRadius: radius)
+                    .frame(width: CGFloat(health / 2), height: height)
                     .foregroundColor(.green)
                     .onAppear {
                         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
@@ -67,9 +79,9 @@ extension ImageWithOverlay {
                         }
                     }
                 Text("\(Int(health))/100")
-                    .font(.system(size: 12))
+                    .font(.system(size: fontSize))
                     .foregroundColor(.white)
-                    .padding(5)
+                    .padding(radius)
                 CirclesOverlay(
                     isDisplay: isShowingCircle,
                     name: imageName,

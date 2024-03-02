@@ -82,7 +82,6 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     func addExtraAmmo() {
         remainingAmmo = modelMap.createAmmoObject(maxAmmo: remainingAmmo.count + 1)
-        //isReload = false
     }
 
     func render(_ location: CGPoint, _ selectedObject: String) {
@@ -134,7 +133,9 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     }
 
     func addObject(_ point: Point, _ selectedObject: String) {
-        let objectToInsert: GameObject = modelMap.getEntity(center: point, type: selectedObject, halfWidth: Constants.defaultHalfWidth, orientation: 0.0)
+        let objectToInsert: GameObject = modelMap.getEntity(center: point,type: selectedObject,
+                                                            halfWidth: Constants.defaultHalfWidth,
+                                                            orientation: 0.0)
             guard checkCanInsert(objectToInsert) else {
                 return
             }
@@ -212,31 +213,32 @@ extension CanvasViewModel {
         gameEngine?.stop()
         gameEngine = nil
         gameEngine = GameEngine(motionObjects: &motionObjects,
-                                     gameObjects: &gameObjects,
-                                     captureObjects: &captureObjects,
-                                     ammo: &remainingAmmo)
+                                gameObjects: &gameObjects,
+                                captureObjects: &captureObjects,
+                                ammo: &remainingAmmo)
         gameEngine?.gameEngineDelegate = self
         isDelegated = true
     }
 
-    // TODO: Make it neater
     func gameEngineDidUpdate() {
-        motionObjects = motionObjects.filter { !$0.isOutOfBounds }
-
-        let containsAddObject = motionObjects.contains { $0.isAdd }
-        remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
-        motionObjects = motionObjects.filter { !$0.isAdd }
-
-        if containsAddObject {
-            isReload = true
-            addExtraAmmo()
-        }
-
+        filterMotionObjects()
         isShooting = !motionObjects.isEmpty
         filterCondition()
         calcScore()
         displayFinalStatus()
         objectWillChange.send()
+    }
+
+    func filterMotionObjects() {
+        motionObjects = motionObjects.filter { !$0.isOutOfBounds }
+        let containsAddObject = motionObjects.contains { $0.isAdd }
+        remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
+        motionObjects = motionObjects.filter { !$0.isAdd }
+        guard containsAddObject else {
+            return
+        }
+        isReload = true
+        addExtraAmmo()
     }
 
     func filterCondition() {
@@ -254,7 +256,9 @@ extension CanvasViewModel {
     }
 
     func checkObstacle(_ gameObject: GameObject) -> Bool {
-        gameObject.name.contains(Constants.sharp) || gameObject.name.contains(Constants.obstacle) || gameObject.name.contains(Constants.pointed)
+        gameObject.name.contains(Constants.sharp) ||
+        gameObject.name.contains(Constants.obstacle) ||
+        gameObject.name.contains(Constants.pointed)
     }
 
     func isEmptyAmmo() -> Bool {
@@ -297,7 +301,7 @@ extension CanvasViewModel {
     }
 
     func shootBall() {
-        guard !isShooting, !isAnimating, remainingAmmo.count > 0 else {
+        guard !isShooting, !isAnimating, !remainingAmmo.isEmpty else {
             return
         }
         isShooting = true
@@ -324,7 +328,9 @@ extension CanvasViewModel {
 
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             if self.elapsedTime < self.timerDuration {
                 self.elapsedTime += 1
             } else {
@@ -349,12 +355,10 @@ extension CanvasViewModel {
     func firstObjectInSightDistance() {
         var minDistance = Constants.screenHeight
         let origin: Point = shooterPosition
-        for gameObject in gameObjects {
-            if isGameObjectInLineOfSight(gameObject) {
-                let distance = sqrt(pow(gameObject.center.xCoord - origin.xCoord, 2) + pow(gameObject.center.yCoord - origin.yCoord, 2))
-                if distance < minDistance {
-                    minDistance = distance
-                }
+        for gameObject in gameObjects where isGameObjectInLineOfSight(gameObject) {
+            let distance = sqrt(pow(gameObject.center.xCoord - origin.xCoord, 2) + pow(gameObject.center.yCoord - origin.yCoord, 2))
+            if distance < minDistance {
+                minDistance = distance
             }
         }
         lineDistance = minDistance

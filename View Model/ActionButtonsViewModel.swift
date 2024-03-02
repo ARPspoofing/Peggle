@@ -73,20 +73,13 @@ class ActionButtonsViewModel: ObservableObject {
     }
 
     func saveLevels() {
-        savePreloadedLevel(FirstLevel(), name: constants.firstLevel)
-        savePreloadedLevel(SecondLevel(), name: constants.secondLevel)
-        savePreloadedLevel(ThirdLevel(), name: constants.thirdLevel)
+        print(manager.getFirstPreLevel())
+        savePreloadedLevel(name: "firstLevel", manager.getFirstPreLevel())
+        savePreloadedLevel(name: "secondLevel", manager.getSecondPreLevel())
+        savePreloadedLevel(name: "thirdLevel", manager.getThirdPreLevel())
     }
 
-    func savePreloadedLevel(_ levelInfo: PreloadedLevel, name: String) {
-        let levelData = levelInfo.level
-        guard let level = levelData?.data(using: .utf8) else {
-            return
-        }
-        let decodedLevel = try? JSONDecoder().decode(Level.self, from: level)
-        guard let decodedLevelObjects = decodedLevel?.gameObjects else {
-            return
-        }
+    func savePreloadedLevel(name: String, _ decodedLevelObjects: [GameObject]) {
         let message = saveLevel(levelName: name, gameObjects: decodedLevelObjects)
         print(message)
     }

@@ -163,6 +163,54 @@ class CoreDataManager: ObservableObject {
         return delete(entity: levelEntity)
     }
 
+    func getLevelData(_ name: String) -> String {
+        if let filePath = Bundle.main.path(forResource: name, ofType: "txt") {
+            do {
+                let contents = try String(contentsOfFile: filePath, encoding: .utf8)
+                return contents
+            } catch {
+                print("Error reading file: \(error.localizedDescription)")
+            }
+        } else {
+            print("Error: txt file not found.")
+        }
+        return ""
+    }
+
+    func getFirstPreLevel() -> [GameObject] {
+        var firstLevel = FirstLevel()
+        firstLevel.level = Optional(String(getLevelData("firstLevelData")))
+        return getObjectsPreloadedLevel(firstLevel)
+    }
+
+    func getSecondPreLevel() -> [GameObject] {
+        var secondLevel = SecondLevel()
+        secondLevel.level = Optional(String(getLevelData("secondLevelData")))
+        return getObjectsPreloadedLevel(secondLevel)
+    }
+
+    func getThirdPreLevel() -> [GameObject] {
+        var thirdLevel = ThirdLevel()
+        thirdLevel.level = Optional(String(getLevelData("thirdLevelData")))
+        //print("third level", thirdLevel.level)
+        return getObjectsPreloadedLevel(thirdLevel)
+    }
+
+    func getObjectsPreloadedLevel(_ levelInfo: PreloadedLevel) -> [GameObject] {
+        let levelData = levelInfo.level
+        print(levelData)
+        guard let level = levelData?.data(using: .utf8) else {
+            return []
+        }
+        print("after guard level", level)
+        let decodedLevel = try? JSONDecoder().decode(Level.self, from: level)
+        print("after guard decode", decodedLevel)
+        guard let decodedLevelObjects = decodedLevel?.gameObjects else {
+            return []
+        }
+        return decodedLevelObjects
+    }
+
     private func save() -> String {
         do {
             try context.save()

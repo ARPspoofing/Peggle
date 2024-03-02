@@ -16,6 +16,7 @@ struct ParticlesOverlay: View {
     @State private var shouldAnimate = false
     var initialDiameter: CGFloat = 60
     var additionalPadding: CGFloat = 20
+    var opacity: CGFloat = 0.7
     var body: some View {
         ZStack {
             JaggedCircle()
@@ -24,7 +25,7 @@ struct ParticlesOverlay: View {
                         .frame(width: initialDiameter, height: initialDiameter)
             Circle()
                         .fill(Color.white)
-                        .opacity(isBlast || !isNoHealth ? 0 : 0.7)
+                        .opacity(isBlast || !isNoHealth ? 0 : opacity)
                         .frame(width: diameter, height: diameter)
             Circle()
                 .fill(Color.red)

@@ -5,8 +5,6 @@
 //  Created by Muhammad Reyaaz on 21/2/24.
 //
 
-// TODO: Abstract out intersection to intersection handler
-
 import Foundation
 protocol TriangularMovableObject: MovableObject, Polygon {
     var top: Point { get set }

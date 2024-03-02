@@ -21,7 +21,7 @@ struct CaptureObjectView: View {
             if viewModel.isReload {
                 Circle()
                     .fill(Color.red)
-                    .frame(width: 50, height: 50)
+                    .frame(width: defaultDiameter, height: defaultDiameter)
                     .modifier(ParticlesModifier(isBlast: true, isDoneShooting: $viewModel.isReload))
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
