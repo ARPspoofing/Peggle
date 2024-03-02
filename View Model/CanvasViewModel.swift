@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-// TODO: Massive tidy up
-
 class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     private let constants = CanvasViewModelConstants()
-    let paletteObjects: [String] = [Constants.normalObject, /* Constants.actionObject, Constants.sharpObject, Constants.oscillateObject, Constants.reappearObject,*/ Constants.actionObject, Constants.obstacleObject]
+    let paletteObjects: [String] = Constants.paletteObjects
     let modelMap = ModelMap()
 
     @Published var gameObjects: [GameObject]
@@ -38,6 +36,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var score = 0.0
     @Published var pathEndPointX = 0.0
     @Published var pathEndPointY = 0.0
+    @Published var distanceDots = 15.0
     @Published var pathCount = 0
     @Published var isNavigationActive = false
 
@@ -69,11 +68,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         initRemainingAmmo()
     }
 
-    // TODO: Add alert if no orange pegs
     func start() {
-        guard !checkNoActiveObjects() else {
-            return
-        }
         isStartState.toggle()
         initGameEngineAndDelegate()
         startTimer()
@@ -132,18 +127,11 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         }
     }
 
-    // TODO: Allow dynamic half width
     func addObject(_ point: Point, _ selectedObject: String) {
         let objectToInsert: GameObject = modelMap.getEntity(center: point, type: selectedObject, halfWidth: Constants.defaultHalfWidth, orientation: 0.0)
             guard checkCanInsert(objectToInsert) else {
                 return
             }
-            // TODO: Make mapping for selectedObject to powerup
-        /*
-        if selectedObject == "actionObject" {
-            objectToInsert.isBlast = true
-        }
-        */
         gameObjects.append(objectToInsert)
     }
 
@@ -171,7 +159,6 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         guard checkCanDrag(objectDeepCopy, index) else {
             return
         }
-        print("initial width", object.halfWidth)
         object.changeHalfWidth(newHalfWidth: finalWidth)
         gameObjects[index] = object
     }
@@ -190,7 +177,6 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         gameObjects[index] = object
     }
 
-
     func updatePathEndPoints() {
         pathEndPointX = shooterPosition.xCoord + getBallVector().horizontal * lineDistance
         pathEndPointY = shooterPosition.yCoord + getBallVector().vertical * lineDistance
@@ -200,7 +186,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         let deltaX = pathEndPointX - shooterPosition.xCoord
         let deltaY = pathEndPointY - shooterPosition.yCoord
         let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
-        let distanceBetweenDots = 15.0
+        let distanceBetweenDots = distanceDots
         pathCount = Int(distance / distanceBetweenDots)
     }
 
@@ -212,6 +198,113 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         firstObjectInSightDistance()
         updatePathEndPoints()
         calcPathDots()
+    }
+}
+
+extension CanvasViewModel {
+    func initGameEngineAndDelegate() {
+        gameEngine?.stop()
+        gameEngine = nil
+        gameEngine = GameEngine(motionObjects: &motionObjects,
+                                     gameObjects: &gameObjects,
+                                     captureObjects: &captureObjects,
+                                     ammo: &remainingAmmo)
+        gameEngine?.gameEngineDelegate = self
+        isDelegated = true
+    }
+
+    func gameEngineDidUpdate() {
+        motionObjects = motionObjects.filter { !$0.isOutOfBounds }
+        remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
+        isShooting = !motionObjects.isEmpty
+        filterCondition()
+        calcScore()
+        displayFinalStatus()
+        objectWillChange.send()
+    }
+
+    func filterCondition() {
+        guard !isShooting else {
+            return
+        }
+        gameObjects = gameObjects.filter { gameObject in
+            if checkObstacle(gameObject) {
+                return true
+            } else {
+                return gameObject.health > 0
+            }
+        }
+        isDoneShooting = true
+    }
+
+    func checkObstacle(_ gameObject: GameObject) -> Bool {
+        gameObject.name.contains(Constants.sharp) || gameObject.name.contains(Constants.obstacle)
+    }
+
+    func isEmptyAmmo() -> Bool {
+        remainingAmmo.isEmpty
+    }
+
+    func checkActiveObjects() -> Bool {
+        gameObjects.contains { $0.name == Constants.actionObject }
+    }
+
+    func countActiveObjects() -> Int {
+        gameObjects.filter { $0.name == Constants.actionObject }.count
+    }
+
+    func countObjects() -> Int {
+        gameObjects.count
+    }
+
+    func countAmmo() -> Int {
+        remainingAmmo.count
+    }
+
+    func displayFinalStatus() {
+        guard isEmptyAmmo() || elapsedTime == 60 || !checkActiveObjects() else {
+            return
+        }
+        isGameOver = true
+        stopTimer()
+        removeAllObjects()
+        toggleWinConditions()
+    }
+
+    func toggleWinConditions() {
+        isWin = !checkActiveObjects()
+    }
+
+    func getBallVector() -> Vector {
+        let xComponent = cos(shooterRotation)
+        let yComponent = sin(shooterRotation)
+        return Vector(horizontal: -yComponent, vertical: xComponent)
+    }
+
+    func shootBall() {
+        guard !isShooting, !isAnimating, remainingAmmo.count > 0 else {
+            return
+        }
+        isShooting = true
+        isDoneShooting = false
+        isShowingCircle = true
+        let motionObject = MotionObject(center: shooterPosition, name: motionObject, velocity: getBallVector())
+        motionObjects.append(motionObject)
+        initGameEngineAndDelegate()
+    }
+
+    func initCaptureObject() {
+        let captureObject = CaptureObject(center: capturePosition, name: captureObject)
+        captureObjects.removeAll()
+        captureObjects.append(captureObject)
+        initGameEngineAndDelegate()
+    }
+
+    func removeAllObjects() {
+        gameObjects.removeAll()
+        motionObjects.removeAll()
+        remainingAmmo.removeAll()
+        captureObjects.removeAll()
     }
 
     func startTimer() {
@@ -308,88 +401,5 @@ extension CanvasViewModel {
         isDeleteState = false
         isResizeState = false
         isRotateState.toggle()
-    }
-}
-
-extension CanvasViewModel {
-    func initGameEngineAndDelegate() {
-        gameEngine?.stop()
-        gameEngine = nil
-        gameEngine = GameEngine(motionObjects: &motionObjects,
-                                     gameObjects: &gameObjects,
-                                     captureObjects: &captureObjects,
-                                     ammo: &remainingAmmo)
-        gameEngine?.gameEngineDelegate = self
-        isDelegated = true
-    }
-
-    func isEmptyAmmo() -> Bool {
-        remainingAmmo.isEmpty
-    }
-
-    func gameEngineDidUpdate() {
-        motionObjects = motionObjects.filter { !$0.isOutOfBounds }
-        remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
-        isShooting = !motionObjects.isEmpty
-        if !isShooting {
-            gameObjects = gameObjects.filter { !$0.isActive }
-            isDoneShooting = true
-        }
-        calcScore()
-        displayFinalStatus()
-        objectWillChange.send()
-    }
-
-    func checkNoActiveObjects() -> Bool {
-        !gameObjects.contains { $0.name == Constants.actionObject }
-    }
-
-    func displayFinalStatus() {
-        guard isEmptyAmmo() || elapsedTime == 60 || checkNoActiveObjects() else {
-            return
-        }
-        isGameOver = true
-        stopTimer()
-        removeAllObjects()
-        toggleWinConditions()
-    }
-
-    func toggleWinConditions() {
-        isWin = checkNoActiveObjects()
-        /*
-        isWin ? AudioManager.shared.playVictoryAudio(isLooping: true) : AudioManager.shared.playGameOverAudio(isLooping: true)
-        */
-    }
-
-    func getBallVector() -> Vector {
-        let xComponent = cos(shooterRotation)
-        let yComponent = sin(shooterRotation)
-        return Vector(horizontal: -yComponent, vertical: xComponent)
-    }
-
-    func shootBall() {
-        guard !isShooting, !isAnimating, remainingAmmo.count > 0 else {
-            return
-        }
-        isShooting = true
-        isDoneShooting = false
-        isShowingCircle = true
-        let motionObject = MotionObject(center: shooterPosition, name: motionObject, velocity: getBallVector())
-        motionObjects.append(motionObject)
-        initGameEngineAndDelegate()
-    }
-
-    func initCaptureObject() {
-        let captureObject = CaptureObject(center: capturePosition, name: captureObject)
-        captureObjects.removeAll()
-        captureObjects.append(captureObject)
-        initGameEngineAndDelegate()
-    }
-
-    func removeAllObjects() {
-        gameObjects.removeAll()
-        motionObjects.removeAll()
-        remainingAmmo.removeAll()
-        captureObjects.removeAll()
     }
 }

@@ -18,7 +18,7 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     @objc dynamic var halfWidth: Double = Constants.defaultHalfWidth
     var initialTop: Point = Point(xCoord: 0.0, yCoord: 0.0)
 
-    // TODO: Abstract this out
+    // TODO: Abstract this out, make it neater
     var isBlast = false
     var isSpook = false
     var hasBlasted = false
@@ -35,6 +35,8 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     let maxWidth: Double = 50.0
     let minDistance: Double = 0.0
     let maxDistance: Double = 200.0
+
+    var health: Double = 100.0
 
     init(name: String) {
         self.name = name

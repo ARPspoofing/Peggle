@@ -56,6 +56,7 @@ class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
         super.init(center: center, name: name)
         self.radius = radius
         self.orientation = orientation
+        self.startPoint = center.deepCopy()
     }
 
     required init(from decoder: Decoder) throws {

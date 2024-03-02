@@ -21,10 +21,23 @@ struct RadiatingCirclesView: View {
     let green = Color(red: 0/255, green: 128/255, blue: 0/255)
     let blue = Color.blue
     let orange = Color.orange
-    let normalObject = "normalObjectActive"
-    let actionObject = "actionObjectActive"
-    let reappearObject = "reappearObjectActive"
-    let oscillateObject = "oscillateObjectActive"
+
+
+
+    static let sharpObjectActive = "sharpBlockActive"
+    static let obstacleObjectActive = "obstacleObjectActive"
+    static let actionObjectSharpActive = "actionObjectSharpActive"
+    static let bounceObjectActive = "bounceObjectActive"
+    static let bounceObjectSharpActive = "bounceObjectSharpActive"
+    static let glowObjectActive = "glowObjectActive"
+    static let motionObjectSharpActive = "motionObjectSharpActive"
+    static let normalObjectSharpActive = "normalObjectSharpActive"
+    static let oscillateObjectSharpActive = "oscillateObjectSharpActive"
+    static let reappearObjectSharpActive = "reappearObjectSharpActive"
+    static let solidObjectActive = "solidObjectActive"
+    static let solidObjectSharpActive = "solidObjectSharpActive"
+
+
     let multiplier = 5
     let animationDuration = 0.3
     let even = 2
@@ -35,13 +48,13 @@ struct RadiatingCirclesView: View {
             ForEach(0..<5) { index in
                 Circle()
                     .stroke(
-                        name == normalObject ?
+                        name == Constants.normalObjectActive ?
                         (index.isMultiple(of: even) ? lightBlue : blue) :
-                        (name == actionObject ?
+                            (name == Constants.actionObjectActive ?
                         (index.isMultiple(of: even) ? lightOrange : darkOrange) :
-                        (name == oscillateObject ?
+                                (name == Constants.oscillateObjectActive ?
                         (index.isMultiple(of: even) ? lightPurple : purple) :
-                        (name == reappearObject ?
+                                    (name == Constants.reappearObjectActive ?
                         (index.isMultiple(of: even) ? lightGreen : green) :
                         orange)
                         )),

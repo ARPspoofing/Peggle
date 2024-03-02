@@ -15,13 +15,12 @@ struct GameOverView: View {
         NavigationStack {
             ZStack {
                 let dismissButton   = CustomAlertButton(title: "Back")
-                let primaryButton   = CustomAlertButton(title: "Retry")
-                let secondaryButton = CustomAlertButton(title: "Back")
                 let roundedScore = String(format: "%.0f", viewModel.score)
                 let retryTitle = "Try Again!"
                 let wonTitle = "You Won!"
                 let retryMessage = "Score: \(roundedScore)\nTip: Clear blue pegs out of the way to get to orange pegs."
-                let wonMessage  = "Score: \(roundedScore)\nCongratulations for completing this level."
+                let wonMessage  = "Score: \(roundedScore)\nCongratulations!"
+                // TODO: Fix timeout isWin condition
                 if viewModel.isGameOver && viewModel.isWin {
                     CustomAlertView(title: wonTitle, message: wonMessage, dismissButton: dismissButton,
                                 primaryButton: nil, secondaryButton: nil)

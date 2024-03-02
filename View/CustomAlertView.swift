@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Credits to Dan from stackoverflow
 struct CustomAlertView: View {
     @State private var isNavigationActive = false
 
@@ -190,7 +191,5 @@ struct CustomAlertButton: View {
         }.frame(height: 30)
             .background(desertDarkBrown)
             .cornerRadius(15)
-
-        //*/
     }
 }

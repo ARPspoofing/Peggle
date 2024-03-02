@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: When blast, objects still not transparent. Need to set to disappear
 // TODO: Fix bug when animating, should not be able to shoot
 // TODO: When hit the last orange gameObject, should zoom in
 class GameEngineBody: CollisionGameEngine, GravityGameEngine {
@@ -29,6 +28,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     var gameObjects: [GameObject]
     var captureObjects: [CaptureObject]
     var ammo: [MotionObject]
+    var hasExtraAmmo = false
 
     var isUpdating = false
     var isReload = false
@@ -100,12 +100,13 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     func stopAndShootAmmo(_ ammo: inout [MotionObject]) {
         for index in ammo.indices {
             let ammoObject: MotionObject = ammo[index]
-            if (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) {
-                if index == ammo.count - 1 {
-                    ammoObject.velocity = ammoShootVel
-                } else {
-                    ammoObject.velocity = ammoStopVel
-                }
+            guard (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) else {
+                continue
+            }
+            if index == ammo.count - 1 {
+                ammoObject.velocity = ammoShootVel
+            } else {
+                ammoObject.velocity = ammoStopVel
             }
         }
     }
@@ -113,9 +114,10 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     func setAmmoOutOfBounds(_ ammo: inout [MotionObject]) {
         for index in ammo.indices {
             let ammoObject: MotionObject = ammo[index]
-            if ammoObject.center.yCoord == 0 {
-                ammoObject.isOutOfBounds = true
+            guard ammoObject.center.yCoord == 0 else {
+                continue
             }
+            ammoObject.isOutOfBounds = true
         }
     }
 
@@ -137,8 +139,14 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         handleCollision(motionObject: &object, gameObject: &gameObject)
         gameObject.isHandleOverlap = true
         object.isHandleOverlap = true
-        if gameObject is ReappearObject {
-            object.isReappear = true
+        guard gameObject is ReappearObject else {
+            return
+        }
+        object.isReappear = true
+        var capturedObject = object
+
+        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { _ in
+            capturedObject.isReappear = false
         }
     }
 
@@ -153,11 +161,11 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     func toggleActiveAndDisappear(for gameObject: inout GameObject) {
         gameObject.isActive = true
-        if gameObject.hasBlasted {
-            gameObject.isDisappear = true
-            gameObject.handleOverlapCount = 10
+        guard gameObject.hasBlasted else {
             return
         }
+        gameObject.isDisappear = true
+        gameObject.handleOverlapCount = 10
     }
 
     internal func handleIntersection(for gameObject: inout GameObject, and object: inout MotionObject) {
@@ -181,7 +189,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         object.velocity = motionObjectPhysics.velocity
     }
 
-    private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
+    private func handleOverlapGameObjects(motionObject object: inout MotionObject) {
         for gameObject in gameObjects {
             var mutatableGameObject = gameObject
             guard !object.checkNoIntersection(with: mutatableGameObject) else {
@@ -190,6 +198,9 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             }
             handleIntersection(for: &mutatableGameObject, and: &object)
         }
+    }
+
+    private func handleOverlapCaptureObjects(motionObject object: inout MotionObject) {
         for captureObject in captureObjects {
             var mutatableCaptureObject = captureObject
             guard !object.checkNoIntersection(with: mutatableCaptureObject) else {
@@ -198,11 +209,14 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             if object.isReappear {
                 handleBounce(for: &mutatableCaptureObject, and: &object)
             } else {
-                self.ammo.removeAll()
-                //self.ammo.append(MotionObject(name: "amm"))
+                hasExtraAmmo = true
             }
-
         }
+    }
+
+    private func isHandleOverlapObjects(motionObject object: inout MotionObject, isIntersect: inout Bool) {
+        handleOverlapGameObjects(motionObject: &object)
+        handleOverlapCaptureObjects(motionObject: &object)
     }
 
     private func checkAndResetOverlap(isIntersect: inout Bool) {
@@ -229,6 +243,10 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         gameObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &gameObjectPhysics)
         motionObject.velocity = motionObjectPhysics.velocity
 
+        if !gameObject.hasBlasted && gameObject.health > 0.0 {
+            gameObject.health -= 50.0
+        }
+        
         guard let oscillateObject = gameObject as? OscillateObject else {
             return
         }
@@ -247,15 +265,17 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     private func incrementExitCount() {
-        if exitCount < exitThrsh {
-            exitCount += 1
+        guard exitCount < exitThrsh else {
+            return
         }
+        exitCount += 1
     }
 
     internal func addGravity(to object: inout MotionObject) {
-        if exitCount == exitThrsh && !object.isHandleOverlap {
-            object.velocity = object.velocity.add(vector: gravityVelocity)
+        guard exitCount == exitThrsh && !object.isHandleOverlap else {
+            return
         }
+        object.velocity = object.velocity.add(vector: gravityVelocity)
     }
 
     func isInBlastRadius(blastObject: GameObject, gameObject: GameObject) -> Bool {
@@ -265,13 +285,17 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     func doRecursiveBlast(from object: inout GameObject, blastObjects: inout [GameObject]) {
         for index in gameObjects.indices {
             let gameObject = gameObjects[index]
-            if isInBlastRadius(blastObject: object, gameObject: gameObject) {
-                if gameObject.isBlast {
-                    gameObject.hasBlasted = true
-                    blastObjects.append(contentsOf: getBlastObjects(from: &gameObjects[index]))
-                }
-                blastObjects.append(gameObject)
+            guard isInBlastRadius(blastObject: object, gameObject: gameObject) else {
+                continue
             }
+            if gameObject.isBlast {
+                gameObject.hasBlasted = true
+                gameObject.health = 0.0
+                blastObjects.append(contentsOf: getBlastObjects(from: &gameObjects[index]))
+            }
+
+            blastObjects.append(gameObject)
+
         }
     }
 
@@ -315,17 +339,25 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
+    @objc func addAmmo() {
+        self.ammo.append(MotionObject(name: "ammo"))
+    }
+
     @objc func updateAmmo() {
         for index in ammo.indices {
             var object: MotionObject = ammo[index]
             updateObjectPosition(&object)
             handleAmmoBoundaries(&object, &ammo)
         }
+        if hasExtraAmmo {
+            addAmmo()
+            hasExtraAmmo = false
+        }
     }
 
     @objc func updateOscillateObject() {
         for gameObject in gameObjects {
-            guard var object = gameObject as? OscillateObject else {
+            guard let object = gameObject as? OscillateObject else {
                 continue
             }
             object.center = object.center.add(vector: object.velocity)

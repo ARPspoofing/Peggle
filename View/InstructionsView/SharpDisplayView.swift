@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SharpDisplayView: View {
-    private let sharp = "pyramidBlock"
+    private let sharp = "sharpBlock"
     private let infoWidth: CGFloat = Constants.screenWidth / 9
 
     var body: some View {

@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-// TODO: Make it not depend on radius, change image
 struct CaptureObjectView: View {
 
-    let name: String = "scarabShooterGold"
+    let name: String = "captureObjectItem"
     let width: Double
     let height: Double
     var isHighlighted = false

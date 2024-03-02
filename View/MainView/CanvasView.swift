@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: Remove top of background and replace with points bar
 // TODO: Remove width and height if necessary
 // TODOL Fix hackish implementation of balls at the side
 struct CanvasView: View {
@@ -23,10 +22,9 @@ struct CanvasView: View {
             }
             motionObjectDisplay
             captureObjectDisplay
-            if canvasViewModel.isGameOver {
+            if canvasViewModel.isGameOver && canvasViewModel.isStartState {
                 GameOverView()
             }
-
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
             }
@@ -74,14 +72,13 @@ extension CanvasView {
 extension CanvasView {
     private var gameObjectsDisplay: some View {
         ZStack {
-            //GeometryReader { geometry in
             ForEach(canvasViewModel.gameObjects, id: \.self) { object in
                 if let index = canvasViewModel.gameObjects.firstIndex(of: object) {
                     Group {
                         customObjectView(object: object, index: index)
                     }
                     .transition(.opacity.animation(
-                        Animation.easeInOut(duration: canvasViewModel.isStartState ? 1.0 : 0.0)
+                        Animation.easeInOut(duration: canvasViewModel.isStartState && object.health == 0.0 ? 1.0 : 0.0)
                             .delay({
                                 let delayValue = Double(object.activeIdx) / 5
                                 return delayValue
@@ -90,7 +87,6 @@ extension CanvasView {
                     )
                 }
             }
-            //}.scaleEffect(2.0)
         }
         .animation(
             canvasViewModel.isStartState && !canvasViewModel.isDoneShooting ?
@@ -132,7 +128,7 @@ extension CanvasView {
 extension CanvasView {
     private func customObjectView(object: GameObject, index: Int) -> some View {
         ZStack {
-            ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation)
+            ObjectView(name: object.name, isActive: object.isActive, isDisappear: object.isDisappear, width: object.halfWidth, orientation: object.orientation, isNoHealth: object.health == 0, health: object.health)
                 .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
                 .onTapGesture {
                     guard !canvasViewModel.isStartState else {
@@ -181,6 +177,7 @@ extension CanvasView {
         ZStack {
             CaptureObjectView(width: width, height: height)
                 .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+            /*
             if let capture = object as? CaptureObject {
                 Circle()
                     .stroke(Color.red, lineWidth: 5)
@@ -199,31 +196,10 @@ extension CanvasView {
                     .frame(width: 5, height: 5)
                     .position(x: capture.bottomRight.xCoord, y: capture.bottomRight.yCoord)
             }
+            */
         }
     }
 }
-
-/*
-extension CanvasView {
-    private var gameOverAlert: some View {
-        ZStack {
-            let dismissButton   = CustomAlertButton(title: "Retry Level")
-            let primaryButton   = CustomAlertButton(title: "Retry Level")
-            let secondaryButton = CustomAlertButton(title: "Cancel")
-            let roundedScore = String(format: "%.0f", canvasViewModel.score)
-            let title = "Try Again!"
-            let message = """
-    Score: \(roundedScore)
-    Tip: Clear blue pegs out of the way to get to orange pegs.
-    """
-            if canvasViewModel.isGameOver {
-                CustomAlertView(title: title, message: message, dismissButton: nil,
-                            primaryButton: primaryButton, secondaryButton: secondaryButton)
-            }
-        }
-    }
-}
-*/
 
 extension CanvasView {
     private var glassDisplay: some View {

@@ -13,6 +13,8 @@ struct ActiveObjectView: View {
     var isDisappear: Bool
     var isShowingCircle: Bool
     var diameter: CGFloat
+    var isNoHealth: Bool
+    var health: Double
     var orientation: Double
     var activeName = "Active"
     @Binding var isDoneShooting: Bool
@@ -24,6 +26,8 @@ struct ActiveObjectView: View {
             isDisappear: isDisappear,
             isShowingCircle: isShowingCircle,
             diameter: diameter,
+            isNoHealth: isNoHealth,
+            health: health,
             isDoneShooting: $isDoneShooting,
             isAnimating: $isAnimating
         )

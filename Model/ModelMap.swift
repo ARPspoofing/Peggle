@@ -31,7 +31,7 @@ struct ModelMap {
     }
 
     func createOscillate(center: Point, type: String, radius: Double, orientation: Double) -> OscillateObject {
-        OscillateObject(center: center, name: type, radius: radius,orientation: orientation)
+        OscillateObject(center: center, name: type, radius: radius, orientation: orientation)
     }
 
     func createReappear(center: Point, type: String, radius: Double, orientation: Double) -> ReappearObject {

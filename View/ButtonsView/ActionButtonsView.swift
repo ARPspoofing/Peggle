@@ -134,7 +134,7 @@ extension ActionButtonsView {
 extension ActionButtonsView {
     private var customStartButton: some View {
         Button(constants.startLabel) {
-            guard !canvasViewModel.gameObjects.isEmpty else {
+            guard !canvasViewModel.gameObjects.isEmpty, canvasViewModel.checkActiveObjects() else {
                 activeAlert = constants.noStartAlert
                 showAlert = true
                 return

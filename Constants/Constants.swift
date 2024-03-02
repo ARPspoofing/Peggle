@@ -32,7 +32,7 @@ struct Constants {
     static var gameHeight = UIScreen.main.bounds.size.height
     static var canvasHeight = UIScreen.main.bounds.size.height * 0.8
     static var screenHeight = UIScreen.main.bounds.size.height * 0.8
-    static var paletteHeight = UIScreen.main.bounds.size.height * 0.18
+    static var paletteHeight = UIScreen.main.bounds.size.height * 0.14
     static var activeHeight = UIScreen.main.bounds.size.height * 0.1
     static let defaultHalfWidth: CGFloat = 25
 
@@ -47,9 +47,9 @@ struct Constants {
     // MARK: Image Constants
     static let normalObject = "normalObject"
     static let actionObject = "actionObject"
-
-    // TODO: Rename to not be pyramid
-    static let sharpObject = "pyramidBlock"
+    static let sharpObject = "sharpBlock"
+    static let sharp = "Sharp"
+    static let obstacle = "obstacle"
     static let delete = "delete"
     static let background = "background"
     static let motionObject = "motionObject"
@@ -57,9 +57,38 @@ struct Constants {
     static let oscillateObject = "oscillateObject"
     static let reappearObject = "reappearObject"
     static let obstacleObject = "obstacleObject"
+    static let actionObjectSharp = "actionObjectSharp"
+    static let bounceObject = "bounceObject"
+    static let bounceObjectSharp = "bounceObjectSharp"
+    static let glowObject = "glowObject"
+    static let motionObjectSharp = "motionObjectSharp"
+    static let normalObjectSharp = "normalObjectSharp"
+    static let oscillateObjectSharp = "oscillateObjectSharp"
+    static let reappearObjectSharp = "reappearObjectSharp"
+    static let solidObject = "solidObject"
+    static let solidObjectSharp = "solidObjectSharp"
     static let shooterBase = "shooterBase"
     static let shooterHead = "shooterHead"
     static let none = "none"
+    static let paletteObjects = [Constants.normalObject, Constants.actionObject, Constants.oscillateObject, Constants.reappearObject, Constants.glowObject, Constants.solidObject, Constants.bounceObject, Constants.obstacleObject, Constants.normalObjectSharp, Constants.actionObjectSharp, Constants.oscillateObjectSharp, Constants.reappearObjectSharp, Constants.motionObjectSharp, Constants.solidObjectSharp, Constants.bounceObjectSharp, Constants.sharpObject]
+
+    // MARK: Active Image Constants
+    static let normalObjectActive = "normalObjectActive"
+    static let actionObjectActive = "actionObjectActive"
+    static let sharpObjectActive = "sharpBlockActive"
+    static let oscillateObjectActive = "oscillateObjectActive"
+    static let reappearObjectActive = "reappearObjectActive"
+    static let obstacleObjectActive = "obstacleObjectActive"
+    static let actionObjectSharpActive = "actionObjectSharpActive"
+    static let bounceObjectActive = "bounceObjectActive"
+    static let bounceObjectSharpActive = "bounceObjectSharpActive"
+    static let glowObjectActive = "glowObjectActive"
+    static let motionObjectSharpActive = "motionObjectSharpActive"
+    static let normalObjectSharpActive = "normalObjectSharpActive"
+    static let oscillateObjectSharpActive = "oscillateObjectSharpActive"
+    static let reappearObjectSharpActive = "reappearObjectSharpActive"
+    static let solidObjectActive = "solidObjectActive"
+    static let solidObjectSharpActive = "solidObjectSharpActive"
 
     // MARK: Press Durations
     static let longDuration: Double = 1

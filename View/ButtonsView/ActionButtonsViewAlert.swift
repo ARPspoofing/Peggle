@@ -73,6 +73,7 @@ extension ActionButtonsView {
                     levelName: inputText,
                     gameObjects: canvasViewModel.gameObjects
                 )
+                AudioManager.shared.playButtonClickAudio()
                 canvasViewModel.start()
                 canvasViewModel.initCaptureObject()
             },

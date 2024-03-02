@@ -18,58 +18,49 @@ protocol RectangularMovableObject: MovableObject, Polygon {
 
 extension RectangularMovableObject {
 
-    // TODO: Handle circle rectangle intersection
     func isIntersecting(with peg: CircularMovableObject) -> Bool {
-       let squaredRadius = peg.radius * peg.radius
-       for edge in edges {
-           guard peg.center.squareDistance(to: edge.start) >= squaredRadius else {
-               return true
-           }
-           guard distanceFromPointToLine(point: peg.center, line: edge) >= peg.radius else {
-               return true
-           }
+        let squaredRadius = peg.radius * peg.radius
+        for edge in edges {
+            guard peg.center.squareDistance(to: edge.start) >= squaredRadius else {
+                return true
+            }
+            guard distanceFromPointToLine(point: peg.center, line: edge) >= peg.radius else {
+                return true
+            }
+            guard !checkDotProducts(for: peg) else {
+                return true
+            }
+        }
+        return false
+    }
 
-           var vectorA = topLeft.subtract(point: peg.center)
-           var vectorB = topLeft.subtract(point: topRight)
-           var dotA = vectorA.dotProduct(with: vectorB)
-           var dotB = vectorB.dotProduct(with: vectorB)
-           var vectorC = topLeft.subtract(point: bottomLeft)
-           var dotC = vectorA.dotProduct(with: vectorC)
-           var dotD = vectorC.dotProduct(with: vectorC)
+    func checkDotProducts(for peg: CircularMovableObject) -> Bool {
+        var topLeftCenter = topLeft.subtract(point: peg.center)
+        var topLeftRight = topLeft.subtract(point: topRight)
+        var topLeftDot = topLeftCenter.dotProduct(with: topLeftRight)
+        var topLeftRightDot = topLeftRight.dotProduct(with: topLeftRight)
+        var topBottomLeft = topLeft.subtract(point: bottomLeft)
+        var topLeftBottomDot = topLeftCenter.dotProduct(with: topBottomLeft)
+        var topBottomDot = topBottomLeft.dotProduct(with: topBottomLeft)
 
-           if 0 <= dotA && dotA <= dotB && 0 <= dotC && dotC <= dotD {
-               return true
-           } else {
-               return false
-           }
-
-           vectorA = topRight.subtract(point: peg.center)
-           vectorB = topRight.subtract(point: topLeft)
-           dotA = vectorA.dotProduct(with: vectorB)
-           dotB = vectorB.dotProduct(with: vectorB)
-           vectorC = topRight.subtract(point: bottomRight)
-           dotC = vectorA.dotProduct(with: vectorC)
-           dotD = vectorC.dotProduct(with: vectorC)
-
-           if 0 <= dotA && dotA <= dotB && 0 <= dotC && dotC <= dotD {
-               return true
-           } else {
-               return false
-           }
-       }
-       return false
-   }
+        if 0 <= topLeftDot && topLeftDot <= topLeftRightDot
+            && 0 <= topLeftBottomDot && topLeftBottomDot <= topBottomDot {
+            return true
+        }
+        return false
+    }
+    
 
     func distanceFromPointToLine(point: Point, line: Line) -> Double {
         return line.distanceFromPointToLine(point: point)
     }
 
-    func ccw(_ point1: Point, _ point2: Point, _ point3: Point) -> Bool {
+    func checkStartEndIntersect(_ point1: Point, _ point2: Point, _ point3: Point) -> Bool {
         (point3.yCoord - point1.yCoord) * (point2.xCoord - point1.xCoord) > (point2.yCoord - point1.yCoord) * (point3.xCoord - point1.xCoord)
     }
 
     func linesIntersect(line1: Line, line2: Line) -> Bool {
-        ccw(line1.start, line2.start, line2.end) != ccw(line1.end, line2.start, line2.end) && ccw(line1.start, line1.end, line2.start) != ccw(line1.start, line1.end, line2.end)
+        checkStartEndIntersect(line1.start, line2.start, line2.end) != checkStartEndIntersect(line1.end, line2.start, line2.end) && checkStartEndIntersect(line1.start, line1.end, line2.start) != checkStartEndIntersect(line1.start, line1.end, line2.end)
     }
 
     func pointOnLine(point: Point, line: Line) -> Bool {
@@ -78,7 +69,6 @@ extension RectangularMovableObject {
     }
 
     func isNotIntersecting(with object: Polygon) -> Bool {
-
         for edge in edges {
             for objectEdge in object.edges {
                 if linesIntersect(line1: edge, line2: objectEdge) {
@@ -86,7 +76,6 @@ extension RectangularMovableObject {
                 }
             }
         }
-
         guard self.edges[0].end.xCoord < object.edges[1].start.xCoord
             && self.edges[1].start.xCoord > object.edges[0].end.xCoord
             && self.edges[0].end.yCoord < object.edges[1].start.yCoord

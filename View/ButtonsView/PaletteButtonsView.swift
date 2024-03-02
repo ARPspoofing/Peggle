@@ -30,6 +30,8 @@ struct PaletteButtonsView: View {
 
 extension PaletteButtonsView {
     private var pegOptionsDisplay: some View {
+
+        /*
         HStack {
             ForEach(viewModel.paletteObjects, id: \.self) { selectedObject in
                 ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
@@ -38,6 +40,27 @@ extension PaletteButtonsView {
                     }
             }
         }.scaleEffect(constants.paletteButtonsScale, anchor: .leading)
+        */
+
+        VStack {
+            ForEach(0..<2) { rowIndex in
+                HStack {
+                    ForEach(0..<8) { columnIndex in
+                        let index = rowIndex * 8 + columnIndex
+                        if index < viewModel.paletteObjects.count {
+                            let selectedObject = viewModel.paletteObjects[index]
+                            ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject, width: 10)
+                                .onTapGesture { _ in
+                                    viewModel.tapObject(selectedObject)
+                                }
+                        } else {
+                            Spacer()
+                        }
+                    }
+                }
+            }
+        }.scaleEffect(constants.paletteButtonsScale, anchor: .leading)
+
     }
 }
 

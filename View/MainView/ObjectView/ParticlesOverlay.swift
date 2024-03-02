@@ -12,6 +12,7 @@ struct ParticlesOverlay: View {
     var isBlast: Bool
     var diameter: CGFloat
     @Binding var isDoneShooting: Bool
+    var isNoHealth: Bool
     @State private var shouldAnimate = false
     var initialDiameter: CGFloat = 60
     var additionalPadding: CGFloat = 20
@@ -21,12 +22,10 @@ struct ParticlesOverlay: View {
                         .fill(Color.white)
                         .opacity(isBlast ? 1 : 0.0)
                         .frame(width: initialDiameter, height: initialDiameter)
-
             Circle()
                         .fill(Color.white)
-                        .opacity(isBlast ? 0 : 0.7)
+                        .opacity(isBlast || !isNoHealth ? 0 : 0.7)
                         .frame(width: diameter, height: diameter)
-
             Circle()
                 .fill(Color.red)
                 .frame(width: additionalPadding, height: additionalPadding)

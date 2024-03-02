@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO: Once click start againm after going back, cannot start. Need fix
+// TODO: Once click start again after going back, cannot start. Need fix
 struct StartView: View {
     @State private var readyToNavigate : Bool = false
     @State private var isButtonClicked = false
@@ -16,7 +16,11 @@ struct StartView: View {
     private let startScreen = "startScreen"
     private let text = "Start"
     private let scroll = "scroll"
+    private let headingText = "Egyptian Peggle"
     private let fontSize: CGFloat = 30
+    private let headingSize: CGFloat = 50
+    private let headingX: CGFloat = Constants.screenWidth / 1.5
+    private let headingY: CGFloat = 50
     private let padding: CGFloat = 10
     private let paddingBottom: CGFloat = 30
     private let paddingSides: CGFloat = 20
@@ -27,7 +31,6 @@ struct StartView: View {
     private let shadowColor = Color.black.opacity(0.6)
     private let shadowRadius: CGFloat = 5
     private let shadowY: CGFloat = 3
-
 
     var body: some View {
         NavigationStack {
@@ -50,6 +53,10 @@ struct StartView: View {
                     }
                 .padding(paddingSides)
                 )
+                Text(headingText)
+                    .font(.system(size: headingSize, weight: .bold))
+                    .font(.title)
+                    .position(x: headingX, y: headingY)
             }
         }
         .transition(.slide)

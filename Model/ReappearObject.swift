@@ -9,17 +9,16 @@ import Foundation
 
 // TODO: Add some things
 @objc(ReappearObject)
-class ReappearObject: GameObject, StateChangeObject, CircularMovableObject {
+class ReappearObject: Peg, StateChangeObject {
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
-    var radius: Double = Constants.defaultCircleRadius
 
     init(center: Point, name: String, radius: Double) {
         super.init(center: center, name: name)
         self.radius = radius
     }
 
-    init(center: Point, name: String, radius: Double, orientation: Double) {
+    override init(center: Point, name: String, radius: Double, orientation: Double) {
         super.init(center: center, name: name)
         self.radius = radius
         self.orientation = orientation
