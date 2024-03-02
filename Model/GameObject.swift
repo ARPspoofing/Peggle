@@ -14,7 +14,7 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     var name: String
     var center = Point(xCoord: 0.0, yCoord: 0.0)
     var orientation: Double = 0.0
-    var initialTop: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialTop = Point(xCoord: 0.0, yCoord: 0.0)
 
     var isBlast = false
     var isSpook = false

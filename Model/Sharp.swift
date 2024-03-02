@@ -11,16 +11,16 @@ import Foundation
 @objc(Sharp)
 class Sharp: GameObject, TriangularMovableObject {
     private var isObserverRegistered = false
-    var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var left: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var right: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var initialLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var initialRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var top = Point(xCoord: 0.0, yCoord: 0.0)
+    var left = Point(xCoord: 0.0, yCoord: 0.0)
+    var right = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialLeft = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialRight = Point(xCoord: 0.0, yCoord: 0.0)
     var edges: [Line] = []
 
     var circumradius: Double {
         get {
-            return super.halfWidth
+            super.halfWidth
         }
         set(newValue) {
             super.halfWidth = newValue
@@ -29,7 +29,7 @@ class Sharp: GameObject, TriangularMovableObject {
 
     var base: Double {
         get {
-            return super.halfWidth * 2
+            super.halfWidth * 2
         }
         set(newValue) {
             super.halfWidth = newValue / 2
@@ -38,7 +38,7 @@ class Sharp: GameObject, TriangularMovableObject {
 
     var height: Double {
         get {
-            return super.halfWidth * 2
+            super.halfWidth * 2
         }
         set(newValue) {
             super.halfWidth = newValue / 2
@@ -65,7 +65,7 @@ class Sharp: GameObject, TriangularMovableObject {
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-    
+
     deinit {
         if isObserverRegistered {
             removeObserver(self, forKeyPath: #keyPath(halfWidth))
@@ -73,7 +73,7 @@ class Sharp: GameObject, TriangularMovableObject {
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
+                               change: [NSKeyValueChangeKey: Any]?,
                                context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(halfWidth) {
             resizePoints()
@@ -104,10 +104,6 @@ class Sharp: GameObject, TriangularMovableObject {
         isObserverRegistered = true
     }
 
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-    }
-
     override func changeCenter(newCenter: Point) {
         center.setCartesian(xCoord: newCenter.xCoord, yCoord: newCenter.yCoord)
         initPoints()
@@ -126,7 +122,7 @@ class Sharp: GameObject, TriangularMovableObject {
     }
 
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        return checkNoIntersection(with: gameObject) && checkBorders()
+        checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     func rotateTopPoint(rotationAngle: Double) -> Point {

@@ -23,7 +23,6 @@ struct CustomAlertView: View {
     @State private var backgroundOpacity: CGFloat = 0
     @State private var scale: CGFloat             = 0.001
 
-
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -172,13 +171,13 @@ struct CustomAlertButton: View {
     @EnvironmentObject private var viewModel: CanvasViewModel
     @State private var isNavigationActive = false
     let title: LocalizedStringKey
-    var action: (() -> Void)? = nil
-    private let desertDarkBrown = Color(red: 195/255, green: 169/255, blue: 114/255)
+    var action: (() -> Void)?
+    private let desertDarkBrown = Color(red: 195 / 255, green: 169 / 255, blue: 114 / 255)
 
     var body: some View {
         NavigationLink(destination: CanvasView(), isActive: $isNavigationActive) {
-                EmptyView()
-            }
+            EmptyView()
+        }
             .hidden()
         Button(action: {
             isNavigationActive = true

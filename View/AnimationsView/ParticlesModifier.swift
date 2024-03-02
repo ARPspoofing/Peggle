@@ -14,7 +14,7 @@ struct ParticlesModifier: ViewModifier {
     @State var time = 0.0
     @State var scale = 0.1
     let duration = 1.5
-    let rotationSpeedUp = 10000.0
+    let rotationSpeedUp = 10_000.0
 
     func body(content: Content) -> some View {
         ZStack {
@@ -22,7 +22,9 @@ struct ParticlesModifier: ViewModifier {
                 content
                     .hueRotation(Angle(degrees: time * rotationSpeedUp))
                     .scaleEffect(scale)
-                    .modifier(FireworkParticlesGeometryEffect(isBlast: isBlast, time: time, speed: isBlast ? Double.random(in: 20 ... 100) : 20.0))
+                    .modifier(FireworkParticlesGeometryEffect(isBlast: isBlast,
+                                                              time: time,
+                                                              speed: isBlast ? Double.random(in: 20 ... 100) : 20.0))
                     .opacity(((duration - time) / duration))
             }
         }

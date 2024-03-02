@@ -12,14 +12,14 @@ class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
 
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
     var isOutOfBounds = false
-    var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var startPoint = Point(xCoord: 0.0, yCoord: 0.0)
     var oscillateCount: Int = 0
     var oscillateThrsh: Int = 10
     var oscillateDistance: Double = 30.0
 
     var radius: Double {
         get {
-            return super.halfWidth
+            super.halfWidth
         }
         set(newValue) {
             super.halfWidth = newValue
@@ -59,16 +59,17 @@ class OscillateObject: GameObject, StateChangeObject, CircularMovableObject {
         try super.init(from: decoder)
     }
 
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-    }
-
     override func checkBorders() -> Bool {
         checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
     }
 
+    override func changeCenter(newCenter: Point) {
+        center.setCartesian(xCoord: newCenter.xCoord, yCoord: newCenter.yCoord)
+        startPoint = center
+    }
+
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        return checkNoIntersection(with: gameObject) && checkBorders()
+        checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     override func makeDeepCopy() -> OscillateObject {

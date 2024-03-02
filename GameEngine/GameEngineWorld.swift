@@ -19,7 +19,8 @@ class GameEngineWorld {
     internal let blastRadius = 100.0
     internal let gameObjectMass = 100.0
 
-    init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject], captureObjects: inout [CaptureObject], ammo: inout [MotionObject]) {
+    init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject],
+         captureObjects: inout [CaptureObject], ammo: inout [MotionObject]) {
         self.motionObjects = motionObjects
         self.gameObjects = gameObjects
         self.captureObjects = captureObjects
@@ -85,7 +86,10 @@ class GameEngineWorld {
 
     // MARK: Bounce
     internal func handleBounce(for captureObject: inout CaptureObject, and object: inout MotionObject) {
-        var captureObjectPhysics = PhysicsBody(position: captureObject.center, mass: gameObjectMass, isBlast: false, velocity: captureObject.velocity)
+        var captureObjectPhysics = PhysicsBody(position: captureObject.center,
+                                               mass: gameObjectMass,
+                                               isBlast: false,
+                                               velocity: captureObject.velocity)
         var motionObjectPhysics = PhysicsBody(position: object.center, isBlast: false, velocity: object.velocity)
         motionObjectPhysics.velocity = object.velocity
         captureObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &captureObjectPhysics)

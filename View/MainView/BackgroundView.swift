@@ -18,7 +18,7 @@ struct BackgroundView: View {
                 .scaledToFill()
                 .statusBar(hidden: true)
                 .frame(width: Constants.screenWidth,
-                       height: viewModel.isStartState ? Constants.gameHeight: Constants.canvasHeight)
+                       height: viewModel.isStartState ? Constants.gameHeight : Constants.canvasHeight)
         }
     }
 

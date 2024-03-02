@@ -109,6 +109,7 @@
 		91DBD5382B936079001A27EF /* firstLevelData.txt in Resources */ = {isa = PBXBuildFile; fileRef = 91DBD5372B936079001A27EF /* firstLevelData.txt */; };
 		91DBD53A2B936284001A27EF /* secondLevelData.txt in Resources */ = {isa = PBXBuildFile; fileRef = 91DBD5392B936284001A27EF /* secondLevelData.txt */; };
 		91DBD53C2B93629A001A27EF /* thirdLevelData.txt in Resources */ = {isa = PBXBuildFile; fileRef = 91DBD53B2B93629A001A27EF /* thirdLevelData.txt */; };
+		91DBD53E2B937F1D001A27EF /* CanvasViewModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DBD53D2B937F1D001A27EF /* CanvasViewModelObserver.swift */; };
 		91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382642B7E41760012C0D1 /* DisappearObject.swift */; };
 		91F382672B7E48EB0012C0D1 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382662B7E48EB0012C0D1 /* ActiveView.swift */; };
 		91F382692B7E49AC0012C0D1 /* RadiatingCirclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */; };
@@ -238,6 +239,7 @@
 		91DBD5372B936079001A27EF /* firstLevelData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = firstLevelData.txt; sourceTree = "<group>"; };
 		91DBD5392B936284001A27EF /* secondLevelData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = secondLevelData.txt; sourceTree = "<group>"; };
 		91DBD53B2B93629A001A27EF /* thirdLevelData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = thirdLevelData.txt; sourceTree = "<group>"; };
+		91DBD53D2B937F1D001A27EF /* CanvasViewModelObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModelObserver.swift; sourceTree = "<group>"; };
 		91F382642B7E41760012C0D1 /* DisappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisappearObject.swift; sourceTree = "<group>"; };
 		91F382662B7E48EB0012C0D1 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		91F382682B7E49AC0012C0D1 /* RadiatingCirclesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiatingCirclesView.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				91986EEE2B61FEA500D1C72C /* ActionButtonsViewModel.swift */,
 				91986ED72B5EC57900D1C72C /* ObjectViewModel.swift */,
 				91986EDB2B5F4A1700D1C72C /* CanvasViewModel.swift */,
+				91DBD53D2B937F1D001A27EF /* CanvasViewModelObserver.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				91986EC62B5E1DC500D1C72C /* CanvasView.swift in Sources */,
 				911EB4B92B8B4449009B206E /* BlastObject.swift in Sources */,
 				911EB4BD2B8C66DA009B206E /* AmmoView.swift in Sources */,
+				91DBD53E2B937F1D001A27EF /* CanvasViewModelObserver.swift in Sources */,
 				919753FF2B6DD83C00DBF559 /* CoreDataManager.swift in Sources */,
 				91986ED82B5EC57900D1C72C /* ObjectViewModel.swift in Sources */,
 				91F382652B7E41760012C0D1 /* DisappearObject.swift in Sources */,

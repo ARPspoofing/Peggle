@@ -10,7 +10,7 @@ import SwiftUI
 struct ThemeDisplayView: View {
     private let infoWidth: CGFloat = Constants.screenWidth / 3
     private let obstacleText = "Ancient Egypt-themed objects!"
-    
+
     var body: some View {
         VStack {
             HStack {

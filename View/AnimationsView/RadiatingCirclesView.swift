@@ -47,7 +47,7 @@ struct RadiatingCirclesView: View {
                     Constants.sharpObjectActive: index.isMultiple(of: even) ? lightBrown : darkBrown,
                     Constants.bounceObjectActive: index.isMultiple(of: even) ? lightPink : pink,
                     Constants.glowObjectActive: index.isMultiple(of: even) ? yellow : gold,
-                    Constants.solidObjectActive: index.isMultiple(of: even) ? grey : lightGray,
+                    Constants.solidObjectActive: index.isMultiple(of: even) ? grey : lightGray
                 ]
 
                 Circle()

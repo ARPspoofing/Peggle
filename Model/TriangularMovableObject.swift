@@ -14,7 +14,7 @@ protocol TriangularMovableObject: MovableObject, Polygon {
 }
 
 extension TriangularMovableObject {
-    
+
      func isIntersecting(with peg: CircularMovableObject) -> Bool {
         let squaredRadius = peg.radius * peg.radius
         for edge in edges {
@@ -29,7 +29,7 @@ extension TriangularMovableObject {
     }
 
     func distanceFromPointToLine(point: Point, line: Line) -> Double {
-        return line.distanceFromPointToLine(point: point)
+        line.distanceFromPointToLine(point: point)
     }
 
      func edgeIsIntersectingWithPeg(edge: Line, peg: CircularMovableObject) -> Bool {
@@ -57,7 +57,7 @@ extension TriangularMovableObject {
     }
 
     func triangleArea(left: Point, top: Point, right: Point) -> Double {
-        return abs((left.xCoord - top.xCoord) * (right.yCoord - top.yCoord)
+        abs((left.xCoord - top.xCoord) * (right.yCoord - top.yCoord)
                    - (right.xCoord - top.xCoord) * (left.yCoord - top.yCoord))
     }
 

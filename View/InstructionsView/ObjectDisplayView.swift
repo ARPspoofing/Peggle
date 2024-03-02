@@ -37,7 +37,7 @@ extension ObjectDisplayView {
             .resizable()
             .frame(width: infoWidth, height: infoWidth)
             .onAppear {
-                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                     currentImageIndex = (currentImageIndex + 1) % 2
                 }
             }

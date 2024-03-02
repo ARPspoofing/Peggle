@@ -80,7 +80,8 @@ class CoreDataManager: ObservableObject {
             }
             let center = Point(xCoord: pointEntity.xCoord, yCoord: pointEntity.yCoord)
             let orientation = gameEntity.orientation
-            return modelMap.getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth, orientation: orientation)
+            return modelMap.getEntity(center: center, type: gameEntityType,
+                                      halfWidth: gameEntity.halfWidth, orientation: orientation)
         }
         for object in gameObjects {
             print(object)
@@ -192,19 +193,15 @@ class CoreDataManager: ObservableObject {
     func getThirdPreLevel() -> [GameObject] {
         var thirdLevel = ThirdLevel()
         thirdLevel.level = Optional(String(getLevelData("thirdLevelData")))
-        //print("third level", thirdLevel.level)
         return getObjectsPreloadedLevel(thirdLevel)
     }
 
     func getObjectsPreloadedLevel(_ levelInfo: PreloadedLevel) -> [GameObject] {
         let levelData = levelInfo.level
-        print(levelData)
         guard let level = levelData?.data(using: .utf8) else {
             return []
         }
-        print("after guard level", level)
         let decodedLevel = try? JSONDecoder().decode(Level.self, from: level)
-        print("after guard decode", decodedLevel)
         guard let decodedLevelObjects = decodedLevel?.gameObjects else {
             return []
         }

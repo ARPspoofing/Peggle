@@ -89,7 +89,7 @@ struct Point: Codable {
     }
 
     func subtract(point: Point) -> Vector {
-        return Vector(horizontal: self.xCoord - point.xCoord, vertical: self.yCoord - point.yCoord)
+        Vector(horizontal: self.xCoord - point.xCoord, vertical: self.yCoord - point.yCoord)
     }
 
     func squareDistance(to point: Point) -> Double {

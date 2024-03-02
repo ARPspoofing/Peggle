@@ -60,12 +60,14 @@ extension RectangularMovableObject {
     }
 
     func linesIntersect(line1: Line, line2: Line) -> Bool {
-        checkStartEndIntersect(line1.start, line2.start, line2.end) != checkStartEndIntersect(line1.end, line2.start, line2.end) &&
-        checkStartEndIntersect(line1.start, line1.end, line2.start) != checkStartEndIntersect(line1.start, line1.end, line2.end)
+        checkStartEndIntersect(line1.start, line2.start, line2.end) !=
+        checkStartEndIntersect(line1.end, line2.start, line2.end) &&
+        checkStartEndIntersect(line1.start, line1.end, line2.start) !=
+        checkStartEndIntersect(line1.start, line1.end, line2.end)
     }
 
     func pointOnLine(point: Point, line: Line) -> Bool {
-        return (point.xCoord >= min(line.start.xCoord, line.end.xCoord) &&
+        (point.xCoord >= min(line.start.xCoord, line.end.xCoord) &&
                 point.xCoord <= max(line.start.xCoord, line.end.xCoord)) &&
                (point.yCoord >= min(line.start.yCoord, line.end.yCoord) &&
                 point.yCoord <= max(line.start.yCoord, line.end.yCoord))

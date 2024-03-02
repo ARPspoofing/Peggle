@@ -11,23 +11,23 @@ import Foundation
 @objc(ObstacleObject)
 class ObstacleObject: GameObject, RectangularMovableObject {
     private var isObserverRegistered = false
-    var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var topLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var topRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var bottomLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var bottomRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var top = Point(xCoord: 0.0, yCoord: 0.0)
+    var topLeft = Point(xCoord: 0.0, yCoord: 0.0)
+    var topRight = Point(xCoord: 0.0, yCoord: 0.0)
+    var bottomLeft = Point(xCoord: 0.0, yCoord: 0.0)
+    var bottomRight = Point(xCoord: 0.0, yCoord: 0.0)
 
-    var initialTopLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var initialTopRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var initialBottomLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    var initialBottomRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialTopLeft = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialTopRight = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialBottomLeft = Point(xCoord: 0.0, yCoord: 0.0)
+    var initialBottomRight = Point(xCoord: 0.0, yCoord: 0.0)
     var edges: [Line] = []
 
     var prev = 0.0
-    
+
     var circumradius: Double {
         get {
-            return super.halfWidth
+            super.halfWidth
         }
         set(newValue) {
             super.halfWidth = newValue
@@ -36,7 +36,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
 
     var base: Double {
         get {
-            return super.halfWidth * 2
+            super.halfWidth * 2
         }
         set(newValue) {
             super.halfWidth = newValue / 2
@@ -45,7 +45,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
 
     var height: Double {
         get {
-            return super.halfWidth * 2
+            super.halfWidth * 2
         }
         set(newValue) {
             super.halfWidth = newValue / 2
@@ -80,7 +80,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
     }
 
     override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?, change: [NSKeyValueChangeKey : Any]?,
+                               of object: Any?, change: [NSKeyValueChangeKey: Any]?,
                                context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(halfWidth) {
             resizePoints()
@@ -120,10 +120,6 @@ class ObstacleObject: GameObject, RectangularMovableObject {
         isObserverRegistered = true
     }
 
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-    }
-
     override func changeCenter(newCenter: Point) {
         center.setCartesian(xCoord: newCenter.xCoord, yCoord: newCenter.yCoord)
         initPoints()
@@ -142,7 +138,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
     }
 
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        return checkNoIntersection(with: gameObject) && checkBorders()
+        checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     func rotateTopPoint(rotationAngle: Double) -> Point {
@@ -181,6 +177,9 @@ class ObstacleObject: GameObject, RectangularMovableObject {
     }
 
     override func makeDeepCopy() -> ObstacleObject {
-        ObstacleObject(center: self.center, name: self.name, circumradius: self.circumradius, orientation: self.orientation)
+        ObstacleObject(center: self.center,
+                       name: self.name,
+                       circumradius: self.circumradius,
+                       orientation: self.orientation)
     }
 }

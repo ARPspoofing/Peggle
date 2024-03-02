@@ -6,5 +6,5 @@
 //
 
 struct FirstLevel: PreloadedLevel {
-    var level: String? = nil
+    var level: String?
 }

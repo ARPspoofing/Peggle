@@ -47,7 +47,9 @@ struct ObjectView: View {
         self.orientation = orientation
     }
 
-    init(name: String, isActive: Bool, isDisappear: Bool, width: CGFloat, orientation: CGFloat, isNoHealth: Bool, health: Double) {
+    init(name: String, isActive: Bool, isDisappear: Bool,
+         width: CGFloat, orientation: CGFloat,
+         isNoHealth: Bool, health: Double) {
         self.name = name
         self.pegViewModel = ObjectViewModel(name: name)
         self.isHighlighted = true

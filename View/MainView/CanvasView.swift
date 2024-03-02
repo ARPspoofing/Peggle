@@ -184,7 +184,6 @@ extension CanvasView {
     }
 }
 
-
 extension CanvasView {
     private func customMotionObjectView(object: GameObject, index: Int) -> some View {
         MotionObjectView()

@@ -9,7 +9,7 @@ import SwiftUI
 
 // TODO: Once click start again after going back, cannot start. Need fix
 struct StartView: View {
-    @State private var readyToNavigate : Bool = false
+    @State private var readyToNavigate = false
     @State private var isButtonClicked = false
     @State private var isSecondaryButtonClicked = false
 
@@ -27,7 +27,7 @@ struct StartView: View {
     private let radius: CGFloat = 10
     private let width: CGFloat = 1
     private let scrollFrame: CGFloat = 200
-    private let desertBrown = Color(red: 241/255, green: 195/255, blue: 102/255)
+    private let desertBrown = Color(red: 241 / 255, green: 195 / 255, blue: 102 / 255)
     private let shadowColor = Color.black.opacity(0.6)
     private let shadowRadius: CGFloat = 5
     private let shadowY: CGFloat = 3

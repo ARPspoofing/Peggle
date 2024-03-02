@@ -64,7 +64,7 @@ struct Vector: Codable, Equatable {
     }
 
     func normalize() -> Vector {
-        return Vector(horizontal: horizontal / getLength(), vertical: vertical / getLength())
+        Vector(horizontal: horizontal / getLength(), vertical: vertical / getLength())
     }
 
     mutating func changeHorizontalDir() {

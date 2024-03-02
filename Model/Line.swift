@@ -8,8 +8,8 @@
 import Foundation
 
 struct Line: Codable {
-    private(set) var start: Point = Point(xCoord: 0.0, yCoord: 0.0)
-    private(set) var end: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    private(set) var start = Point(xCoord: 0.0, yCoord: 0.0)
+    private(set) var end = Point(xCoord: 0.0, yCoord: 0.0)
     private(set) var vector = Vector(horizontal: 0.0, vertical: 0.0)
 
     init(start: Point, end: Point) {
@@ -72,7 +72,7 @@ struct Line: Codable {
     }
 
     func recalculateEndPoint(_ vector: Vector) -> Double {
-        return start.yCoord - (start.xCoord / vector.horizontal) * vector.vertical
+        start.yCoord - (start.xCoord / vector.horizontal) * vector.vertical
     }
 
     mutating func calcStartEndFromMiddle(middle: Point, distance: Double) {
@@ -128,23 +128,26 @@ struct Line: Codable {
     }
 
     func calculateVectorLength(vector: Vector) -> Double {
-        return sqrt((vector.horizontal * vector.horizontal) + (vector.vertical * vector.vertical))
+        sqrt((vector.horizontal * vector.horizontal) + (vector.vertical * vector.vertical))
     }
 
     func handleZeroLineLength() -> Double {
-        return -1
+        -1
     }
 
     func calculateProjection(pointVector: Vector, lineVector: Vector) -> Double {
-        return ((pointVector.horizontal * lineVector.horizontal) + (pointVector.vertical * lineVector.vertical)) / length
+        ((pointVector.horizontal * lineVector.horizontal) + (pointVector.vertical * lineVector.vertical)) / length
     }
 
     func distanceToPoint(point: Point, from start: Point) -> Double {
-        return sqrt((point.xCoord - start.xCoord) * (point.xCoord - start.xCoord) + (point.yCoord - start.yCoord) * (point.yCoord - start.yCoord))
+        sqrt((point.xCoord - start.xCoord) *
+             (point.xCoord - start.xCoord) +
+             (point.yCoord - start.yCoord) *
+             (point.yCoord - start.yCoord))
     }
 
     func calculatePerpendicularDistance(pointVector: Vector, lineVector: Vector) -> Double {
-        return abs((pointVector.horizontal * lineVector.vertical - pointVector.vertical * lineVector.horizontal) / length)
+        abs((pointVector.horizontal * lineVector.vertical - pointVector.vertical * lineVector.horizontal) / length)
     }
 
     func isPointNearLine(point: Point, range: Double) -> Bool {

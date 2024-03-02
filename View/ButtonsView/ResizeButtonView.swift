@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ResizeButtonView: View {
     var body: some View {
         let constants = ResizeButtonConstants()

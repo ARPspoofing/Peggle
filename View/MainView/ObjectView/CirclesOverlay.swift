@@ -24,7 +24,6 @@ struct CirclesOverlay: View {
                 .scaleEffect(isDisplay ? largeScale : normalScale)
                 .opacity(isDisplay ? 1 : 0)
                 .onAppear {
-                    //isAnimating = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                         withAnimation(.easeInOut(duration: delay)) {
                             isDisplay = false

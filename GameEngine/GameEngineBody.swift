@@ -167,8 +167,12 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
     }
 
     internal func assignCollisionVel(motionObject: inout MotionObject, gameObject: inout GameObject) {
-        var gameObjectPhysics = PhysicsBody(position: gameObject.center, mass: gameObjectMass, isBlast: gameObject.isBlast)
-        var motionObjectPhysics = PhysicsBody(position: motionObject.center, isBlast: motionObject.isBlast, velocity: motionObject.velocity)
+        var gameObjectPhysics = PhysicsBody(position: gameObject.center,
+                                            mass: gameObjectMass,
+                                            isBlast: gameObject.isBlast)
+        var motionObjectPhysics = PhysicsBody(position: motionObject.center,
+                                              isBlast: motionObject.isBlast,
+                                              velocity: motionObject.velocity)
 
         motionObjectPhysics.velocity = motionObject.velocity
         gameObjectPhysics.doElasticCollision(collider: &motionObjectPhysics, collidee: &gameObjectPhysics)
@@ -191,7 +195,6 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
         assignCollisionVel(motionObject: &motionObject, gameObject: &gameObject)
         adjustHealth(for: &gameObject)
     }
-
 
     internal func updateObjectPosition(_ object: inout MotionObject) {
         object.center = object.center.add(vector: object.velocity)

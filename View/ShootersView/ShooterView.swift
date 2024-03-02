@@ -66,9 +66,11 @@ extension ShooterView {
 
             ForEach(0..<numberOfDots, id: \.self) { index in
                 let progress = CGFloat(index) / CGFloat(numberOfDots - 1)
-                let x = viewModel.shooterPosition.xCoord + (endPointX - viewModel.shooterPosition.xCoord) * Double(progress)
+                let x = viewModel.shooterPosition.xCoord +
+                (endPointX - viewModel.shooterPosition.xCoord) * Double(progress)
 
-                let y: CGFloat = viewModel.shooterPosition.yCoord + (endPointY - viewModel.shooterPosition.yCoord) * Double(progress)
+                let y: CGFloat = viewModel.shooterPosition.yCoord +
+                (endPointY - viewModel.shooterPosition.yCoord) * Double(progress)
 
                 Circle()
                     .fill(Color.red.opacity(opacity))

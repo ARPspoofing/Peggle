@@ -14,8 +14,8 @@ class AudioManager: ObservableObject {
     var audioPlayer: AVAudioPlayer?
     var mainMenuAudioPlayer: AVAudioPlayer?
     var buttonClickAudioPlayer: AVAudioPlayer?
-    var isPlaying: Bool = false
-    var isLooping: Bool = false
+    var isPlaying = false
+    var isLooping = false
     let mainMenu = "mainMenuAudio"
     let gameOver = "gameOverAudio"
     let game = "gameAudio"

@@ -13,9 +13,9 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
     var velocity = Vector(horizontal: 0.0, vertical: 0.0)
     var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
-    var isReappear: Bool = false
-    var isAdd: Bool = false
-    var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
+    var isReappear = false
+    var isAdd = false
+    var startPoint = Point(xCoord: 0.0, yCoord: 0.0)
 
     override init(name: String) {
         super.init(name: name)
@@ -41,10 +41,6 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
 
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
-    }
-
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
     }
 
     func resetVelocity(magnitude: Double) {

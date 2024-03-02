@@ -9,10 +9,10 @@ import SwiftUI
 
 @objc(Peg)
 class Peg: GameObject {
-    
+
     var radius: Double {
         get {
-            return super.halfWidth
+            super.halfWidth
         }
         set(newValue) {
             super.halfWidth = newValue
@@ -44,16 +44,12 @@ class Peg: GameObject {
         try super.init(from: decoder)
     }
 
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-    }
-
     override func checkBorders() -> Bool {
         checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
     }
 
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        return checkNoIntersection(with: gameObject) && checkBorders()
+        checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     override func makeDeepCopy() -> Peg {

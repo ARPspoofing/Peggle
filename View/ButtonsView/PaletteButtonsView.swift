@@ -36,7 +36,9 @@ extension PaletteButtonsView {
                         let index = rowIndex * 8 + columnIndex
                         if index < viewModel.paletteObjects.count {
                             let selectedObject = viewModel.paletteObjects[index]
-                            ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject, width: constants.objectWidth)
+                            ObjectView(name: selectedObject,
+                                       isHighlighted: viewModel.selectedObject == selectedObject,
+                                       width: constants.objectWidth)
                                 .onTapGesture { _ in
                                     viewModel.tapObject(selectedObject)
                                 }

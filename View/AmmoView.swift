@@ -16,11 +16,11 @@ struct AmmoView: View {
     let velocity = Vector(horizontal: 3.0, vertical: 3.0)
 
     var body: some View {
-        let totalHeight = Double(Array(1...10).count) * 50.0
-        let centerY = totalHeight / 2.0
         ZStack {
             ForEach(Array(1...10), id: \.self) { index in
-                let object = MotionObject(center: Point(xCoord: motionX, yCoord: Double(index) * motionYMultiple), name: motion, velocity: velocity)
+                let object = MotionObject(center: Point(xCoord: motionX,
+                                                        yCoord: Double(index) * motionYMultiple),
+                                          name: motion, velocity: velocity)
                 customMotionObjectView(object: object, index: index)
             }
         }

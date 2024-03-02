@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InstructionView: View {
-    @State private var readyToNavigate : Bool = false
+    @State private var readyToNavigate = false
     @State private var isButtonClicked = false
     @State private var isSecondaryButtonClicked = false
     @State private var degreesRotating = 0.0
@@ -59,7 +59,7 @@ extension InstructionView {
                     desertLightBrown.opacity(0.9),
                     desertLightBrown.opacity(0.6),
                     desertLightBrown.opacity(0.9),
-                    desertLightBrown.opacity(0.7),
+                    desertLightBrown.opacity(0.7)
                 ]),
                 startPoint: .top,
                 endPoint: .bottom
@@ -86,7 +86,7 @@ extension InstructionView {
                     .padding(.vertical, 20)
                     .background(desertDarkBrown)
                     .cornerRadius(8)
-            }
+        }
     }
 }
 
@@ -137,7 +137,7 @@ extension InstructionView {
                     withAnimation(.linear(duration: 1)
                         .speed(0.5).repeatForever(autoreverses: true)) {
                             degreesRotating = maxRotationAngle
-                        }
+                    }
                 }
             Text(shooterText)
                 .font(.system(size: 20, weight: .bold))
@@ -159,7 +159,7 @@ extension InstructionView {
                         .speed(0.8)
                         .repeatForever(autoreverses: true)) {
                             xOffset = maxOffset
-                        }
+                    }
                 }
             Text(captureText)
                 .font(.system(size: 20, weight: .bold))

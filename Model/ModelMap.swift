@@ -11,13 +11,21 @@ struct ModelMap {
             return createSharpObject(center: center, type: type, circumradius: halfWidth, orientation: orientation)
         } else {
             let entity: [String: GameObject] = [
-                Constants.normalObject: createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
-                Constants.actionObject: createActionPeg(center: center, type: type, radius: halfWidth, orientation: orientation),
-                Constants.oscillateObject: createOscillate(center: center, type: type, radius: halfWidth, orientation: orientation),
-                Constants.reappearObject: createReappear(center: center, type: type, radius: halfWidth, orientation: orientation),
-                Constants.obstacleObject: createObstacleObject(center: center, type: type, circumradius: halfWidth, orientation: orientation)
+                Constants.normalObject: createNormalPeg(center: center, type: type,
+                                                        radius: halfWidth, orientation: orientation),
+                Constants.actionObject: createActionPeg(center: center, type: type,
+                                                        radius: halfWidth, orientation: orientation),
+                Constants.oscillateObject: createOscillate(center: center, type: type,
+                                                           radius: halfWidth, orientation: orientation),
+                Constants.reappearObject: createReappear(center: center, type: type,
+                                                         radius: halfWidth, orientation: orientation),
+                Constants.obstacleObject: createObstacleObject(center: center, type: type,
+                                                               circumradius: halfWidth, orientation: orientation)
             ]
-            return entity[type] ?? createNormalPeg(center: center, type: type, radius: halfWidth, orientation: orientation)
+            return entity[type] ?? createNormalPeg(center: center,
+                                                   type: type,
+                                                   radius: halfWidth,
+                                                   orientation: orientation)
         }
     }
 
@@ -41,7 +49,8 @@ struct ModelMap {
         ReappearObject(center: center, name: type, radius: radius, orientation: orientation)
     }
 
-    func createObstacleObject(center: Point, type: String, circumradius: Double, orientation: Double) -> ObstacleObject {
+    func createObstacleObject(center: Point, type: String,
+                              circumradius: Double, orientation: Double) -> ObstacleObject {
         ObstacleObject(center: center, name: type, circumradius: circumradius, orientation: orientation)
     }
 
