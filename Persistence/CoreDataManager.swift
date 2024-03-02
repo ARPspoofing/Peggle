@@ -82,6 +82,9 @@ class CoreDataManager: ObservableObject {
             let orientation = gameEntity.orientation
             return modelMap.getEntity(center: center, type: gameEntityType, halfWidth: gameEntity.halfWidth, orientation: orientation)
         }
+        for object in gameObjects {
+            print(object)
+        }
         return gameObjects.isEmpty ? nil : gameObjects
     }
 

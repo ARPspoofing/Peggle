@@ -10,7 +10,8 @@ import Foundation
 class ActionButtonsViewModel: ObservableObject {
 
     let constants = ActionViewModelConstants()
-    let manager = CoreDataManager()
+    //let manager = CoreDataManager()
+    let manager = LocalFileManager()
 
     func getLevels() -> [String] {
         manager.getLevelNames()

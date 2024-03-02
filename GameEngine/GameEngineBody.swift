@@ -9,6 +9,7 @@ import SwiftUI
 
 // TODO: Fix bug when animating, should not be able to shoot
 // TODO: When hit the last orange gameObject, should zoom in
+// TODO: Massive tidy up and abstraction
 class GameEngineBody: CollisionGameEngine, GravityGameEngine {
 
     private let screenWidth = Constants.screenWidth

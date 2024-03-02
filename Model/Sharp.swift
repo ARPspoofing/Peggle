@@ -14,6 +14,7 @@ import Foundation
 
 @objc(Sharp)
 class Sharp: GameObject, TriangularMovableObject {
+    private var isObserverRegistered = false
     var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var left: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var right: Point = Point(xCoord: 0.0, yCoord: 0.0)
@@ -68,9 +69,11 @@ class Sharp: GameObject, TriangularMovableObject {
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-
+    
     deinit {
-        removeObserver(self, forKeyPath: #keyPath(halfWidth))
+        if isObserverRegistered {
+            removeObserver(self, forKeyPath: #keyPath(halfWidth))
+        }
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -100,6 +103,7 @@ class Sharp: GameObject, TriangularMovableObject {
         initialLeft = left
         initialRight = right
         addObserver(self, forKeyPath: #keyPath(halfWidth), options: [.old, .new], context: nil)
+        isObserverRegistered = true
     }
 
     override func encode(to encoder: Encoder) throws {

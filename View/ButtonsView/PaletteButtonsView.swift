@@ -30,18 +30,6 @@ struct PaletteButtonsView: View {
 
 extension PaletteButtonsView {
     private var pegOptionsDisplay: some View {
-
-        /*
-        HStack {
-            ForEach(viewModel.paletteObjects, id: \.self) { selectedObject in
-                ObjectView(name: selectedObject, isHighlighted: viewModel.selectedObject == selectedObject)
-                    .onTapGesture {_ in
-                        viewModel.tapObject(selectedObject)
-                    }
-            }
-        }.scaleEffect(constants.paletteButtonsScale, anchor: .leading)
-        */
-
         VStack {
             ForEach(0..<2) { rowIndex in
                 HStack {

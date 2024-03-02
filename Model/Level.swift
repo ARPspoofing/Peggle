@@ -30,7 +30,7 @@ struct Level: Identifiable, Codable {
     func encodeGameObjects(container: inout KeyedEncodingContainer<CodingKeys>) throws {
         var wrapperArray = [GameObjectWrapper]()
         for gameObject in gameObjects {
-            if let gameObject = gameObject as? Peg {
+            if let gameObject = gameObject as? GameObject {
                 let typeString = String(describing: type(of: gameObject))
                 let data = try JSONEncoder().encode(gameObject)
                 let wrapper = GameObjectWrapper(type: typeString, data: data)
