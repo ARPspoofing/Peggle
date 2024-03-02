@@ -21,47 +21,77 @@ struct ImageWithOverlay: View {
     @Binding var isAnimating: Bool
 
     var body: some View {
-        if isDoneShooting && isNoHealth {
+        let obstacleCondition = (imageName.contains(Constants.sharp) || imageName.contains(Constants.obstacle) || imageName.contains(Constants.pointed))
+        let displayCondition = isShowingHealthBar && !isNoHealth && !obstacleCondition
+        if isDoneShooting && isNoHealth && !obstacleCondition {
             ParticlesOverlay(isBlast: false, diameter: diameter, isDoneShooting: $isDoneShooting, isNoHealth: isNoHealth)
         } else {
+            mainImage
+        }
+    }
+}
+
+// MARK: - Computed Properties
+extension ImageWithOverlay {
+    var mainImage: some View {
+        ZStack {
+            let obstacleCondition = (imageName.contains(Constants.sharp) || imageName.contains(Constants.obstacle) || imageName.contains(Constants.pointed))
             Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .opacity((isDisappear || isDoneShooting) && isNoHealth ? 0 : health <= 50.0 ? 0.5 : 1)
+                .opacity(obstacleCondition ? 1 : (isDisappear || isDoneShooting) && isNoHealth ? 0 : health <= 50.0 ? 0.5 : 1)
                 .frame(maxWidth: diameter, maxHeight: diameter)
-                .overlay(
-                    //!(imageName.contains("Sharp") || imageName.contains("obstacle"))
-                    ZStack(alignment: .topTrailing) {
-                        if isShowingHealthBar && !isNoHealth {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 100, height: 10)
-                                .foregroundColor(.gray)
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: CGFloat(health), height: 10)
-                                .foregroundColor(.green)
-                                .onAppear {
-                                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-                                        withAnimation {
-                                            isShowingHealthBar = false
-                                        }
-                                    }
-                                }
-                            Text("\(Int(health))/100")
-                                .font(.system(size: 12))
-                                .foregroundColor(.white)
-                                .padding(5)
+                .overlay(healthBarOverlay)
+                .if(imageName == actionObjectActive) { view in
+                    view.overlay(actionObjectOverlay)
+                }
+        }
+    }
+
+    var healthBarOverlay: some View {
+        ZStack(alignment: .topLeading) {
+            let obstacleCondition = (imageName.contains(Constants.sharp) || imageName.contains(Constants.obstacle) || imageName.contains(Constants.pointed))
+            let displayCondition = isShowingHealthBar && !isNoHealth && !obstacleCondition
+            if displayCondition {
+                RoundedRectangle(cornerRadius: 5)
+                    .frame(width: 50, height: 10)
+                    .foregroundColor(.gray)
+                RoundedRectangle(cornerRadius: 5)
+                    .frame(width: CGFloat(health / 2), height: 10)
+                    .foregroundColor(.green)
+                    .onAppear {
+                        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                            withAnimation {
+                                isShowingHealthBar = false
+                            }
                         }
-                        CirclesOverlay(
-                            isDisplay: isShowingCircle,
-                            name: imageName,
-                            diameter: diameter,
-                            isAnimating: $isAnimating
-                        )
                     }
+                Text("\(Int(health))/100")
+                    .font(.system(size: 12))
+                    .foregroundColor(.white)
+                    .padding(5)
+                CirclesOverlay(
+                    isDisplay: isShowingCircle,
+                    name: imageName,
+                    diameter: diameter,
+                    isAnimating: $isAnimating
                 )
-            if imageName == actionObjectActive {
-                ParticlesOverlay(isBlast: true, diameter: diameter, isDoneShooting: $isDoneShooting, isNoHealth: true)
             }
+        }
+    }
+
+    var actionObjectOverlay: some View {
+        ParticlesOverlay(isBlast: true, diameter: diameter, isDoneShooting: $isDoneShooting, isNoHealth: true)
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func `if`<Content: View>(_ condition: Bool, content: (Self) -> Content) -> some View {
+        if condition {
+            content(self)
+        } else {
+            self
         }
     }
 }

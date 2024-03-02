@@ -35,13 +35,13 @@ extension RectangularMovableObject {
     }
 
     func checkDotProducts(for peg: CircularMovableObject) -> Bool {
-        var topLeftCenter = topLeft.subtract(point: peg.center)
-        var topLeftRight = topLeft.subtract(point: topRight)
-        var topLeftDot = topLeftCenter.dotProduct(with: topLeftRight)
-        var topLeftRightDot = topLeftRight.dotProduct(with: topLeftRight)
-        var topBottomLeft = topLeft.subtract(point: bottomLeft)
-        var topLeftBottomDot = topLeftCenter.dotProduct(with: topBottomLeft)
-        var topBottomDot = topBottomLeft.dotProduct(with: topBottomLeft)
+        let topLeftCenter = topLeft.subtract(point: peg.center)
+        let topLeftRight = topLeft.subtract(point: topRight)
+        let topLeftDot = topLeftCenter.dotProduct(with: topLeftRight)
+        let topLeftRightDot = topLeftRight.dotProduct(with: topLeftRight)
+        let topBottomLeft = topLeft.subtract(point: bottomLeft)
+        let topLeftBottomDot = topLeftCenter.dotProduct(with: topBottomLeft)
+        let topBottomDot = topBottomLeft.dotProduct(with: topBottomLeft)
 
         if 0 <= topLeftDot && topLeftDot <= topLeftRightDot
             && 0 <= topLeftBottomDot && topLeftBottomDot <= topBottomDot {

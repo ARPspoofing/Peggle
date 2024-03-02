@@ -16,9 +16,8 @@ struct CustomAlertView: View {
     let dismissButton: CustomAlertButton?
     let primaryButton: CustomAlertButton?
     let secondaryButton: CustomAlertButton?
-    let desertLightBrown = Color(red: 209/255, green: 188/255, blue: 140/255)
-    let rustBrown = Color(red: 108/255, green: 55/255, blue: 68/255)
-    let rustBrowns = Color(red: 108/255, green: 55/255, blue: 68/255)
+    let desertLightBrown = Constants.desertLightBrown
+    let rustBrown = Constants.rustBrown
 
     @State private var opacity: CGFloat           = 0
     @State private var backgroundOpacity: CGFloat = 0

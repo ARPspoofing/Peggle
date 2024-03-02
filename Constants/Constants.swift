@@ -22,6 +22,9 @@ struct Constants {
     static let red = Color.red
     static let lightGrey = Color(UIColor.lightGray)
     static let customGrey = Color(red: 242, green: 242, blue: 247)
+    static let desertLightBrown = Color(red: 209/255, green: 188/255, blue: 140/255)
+    static let desertDarkBrown = Color(red: 195/255, green: 169/255, blue: 114/255)
+    static let rustBrown = Color(red: 108/255, green: 55/255, blue: 68/255)
 
     // MARK: Button Constants
     static let deleteButtonScale: CGFloat = 0.4
@@ -49,6 +52,7 @@ struct Constants {
     static let actionObject = "actionObject"
     static let sharpObject = "sharpBlock"
     static let sharp = "Sharp"
+    static let pointed = "sharp"
     static let obstacle = "obstacle"
     static let delete = "delete"
     static let background = "background"

@@ -22,9 +22,6 @@ struct CanvasView: View {
             }
             motionObjectDisplay
             captureObjectDisplay
-            if canvasViewModel.isGameOver && canvasViewModel.isStartState {
-                GameOverView()
-            }
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
             }
@@ -32,6 +29,9 @@ struct CanvasView: View {
             gameObjectsDisplay
             if !canvasViewModel.isStartState {
                 PaletteView()
+            }
+            if canvasViewModel.isGameOver && canvasViewModel.isStartState {
+                GameOverView()
             }
         }
         .environmentObject(canvasViewModel)

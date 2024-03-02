@@ -10,7 +10,7 @@ import SwiftUI
 struct PaletteView: View {
     @State private var isKeyboardActive = false
     @State private var keyboardHeight: CGFloat = 0
-    private let desertLightBrown = Color(red: 209/255, green: 188/255, blue: 140/255)
+    private let desertLightBrown = Constants.desertLightBrown
 
     var body: some View {
         GeometryReader { _ in

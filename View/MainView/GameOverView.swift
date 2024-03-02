@@ -21,14 +21,15 @@ struct GameOverView: View {
                 let retryMessage = "Score: \(roundedScore)\nTip: Clear blue pegs out of the way to get to orange pegs."
                 let wonMessage  = "Score: \(roundedScore)\nCongratulations!"
                 // TODO: Fix timeout isWin condition
-                if viewModel.isGameOver && viewModel.isWin {
-                    CustomAlertView(title: wonTitle, message: wonMessage, dismissButton: dismissButton,
-                                primaryButton: nil, secondaryButton: nil)
-                } else if viewModel.isGameOver && !viewModel.isWin {
+                if !viewModel.isWin {
                     CustomAlertView(title: retryTitle, message: retryMessage, dismissButton: dismissButton,
                                 primaryButton: nil, secondaryButton: nil)
+                } else if viewModel.isWin {
+                    CustomAlertView(title: wonTitle, message: wonMessage, dismissButton: dismissButton,
+                                primaryButton: nil, secondaryButton: nil)
                 }
-            }.onAppear {
+            }
+            .onAppear {
                 viewModel.isWin ? AudioManager.shared.playVictoryAudio(isLooping: true) : AudioManager.shared.playGameOverAudio(isLooping: true)
             }
             .onDisappear {

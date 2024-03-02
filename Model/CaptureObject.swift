@@ -50,38 +50,23 @@ class CaptureObject: MotionObject {
         try super.encode(to: encoder)
     }
 
+    // TODO: Tidy Up
     func calcTopLine() {
         let top: Point = center.subtract(vector: Vector(horizontal: 0.0, vertical: Constants.defaultCircleDiameter))
         let topLeft: Point = top.subtract(vector: Vector(horizontal: Constants.defaultCircleDiameter * 2, vertical: 0.0))
         let topRight: Point = top.add(vector: Vector(horizontal: Constants.defaultCircleDiameter * 2, vertical: 0.0))
         topLine = Line(start: topLeft, end: topRight)
 
-        /*
-        let perpLineVector = topLine.getPerpendicularVector()
-        leftLine = Line(start: topLeft, vector: perpLineVector, maxDistance: Constants.defaultCircleDiameter)
-        rightLine = Line(start: topRight, vector: perpLineVector, maxDistance: Constants.defaultCircleDiameter)
-        */
-
         self.bottomLeft = topLeft.add(vector: Vector(horizontal: 0.0, vertical: Constants.defaultCircleDiameter))
-
         self.bottomRight = topRight.add(vector: Vector(horizontal: 0.0, vertical: Constants.defaultCircleDiameter))
-
-
-        edges = [topLine, leftLine, rightLine]
-
         self.topLeft = topLeft
         self.topRight = topRight
-        /*
-        self.bottomLeft = leftLine.start
-        self.bottomRight = rightLine.start
-        */
+
+        edges = [topLine, leftLine, rightLine]
     }
 
-    func calcLeftLine() {
-        let leftLineVector = topLine.getPerpendicularVector()
-
-    }
-
+    /*
+    // TODO: Tidy Up
     func isIntersecting(with object: CircularMovableObject) -> Bool {
 
         /*
@@ -113,7 +98,9 @@ class CaptureObject: MotionObject {
 
             if 0 <= dotA && dotA <= dotB && 0 <= dotC && dotC <= dotD {
                 return true
-            } else {
+            }
+            /*
+            else {
                 return false
             }
 
@@ -130,11 +117,11 @@ class CaptureObject: MotionObject {
             } else {
                 return false
             }
+            */
         }
         return false
-
-
     }
+    */
     
     override func makeDeepCopy() -> CaptureObject {
         CaptureObject(center: self.center, name: self.name, velocity: self.velocity)

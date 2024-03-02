@@ -87,6 +87,8 @@ extension TriangularMovableObject {
             return isNotIntersecting(with: sharp)
         } else if let circle = gameObject as? CircularMovableObject {
             return !(isIntersecting(with: circle) || circleInsideTriangle(peg: circle))
+        } else if let obstacle = gameObject as? RectangularMovableObject {
+            return obstacle.isNotIntersecting(with: self)
         } else {
             return true
         }

@@ -238,7 +238,7 @@ extension CanvasViewModel {
     }
 
     func checkObstacle(_ gameObject: GameObject) -> Bool {
-        gameObject.name.contains(Constants.sharp) || gameObject.name.contains(Constants.obstacle)
+        gameObject.name.contains(Constants.sharp) || gameObject.name.contains(Constants.obstacle) || gameObject.name.contains(Constants.pointed)
     }
 
     func isEmptyAmmo() -> Bool {
@@ -265,10 +265,10 @@ extension CanvasViewModel {
         guard isEmptyAmmo() || elapsedTime == 60 || !checkActiveObjects() else {
             return
         }
-        isGameOver = true
         stopTimer()
-        removeAllObjects()
         toggleWinConditions()
+        isGameOver = true
+        //removeAllObjects()
     }
 
     func toggleWinConditions() {

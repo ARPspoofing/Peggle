@@ -144,17 +144,14 @@ class Sharp: GameObject, TriangularMovableObject {
 
     override func changeOrientation(to end: Double) {
         orientation = end
-
         let newTop = rotateTopPoint(rotationAngle: end)
 
         let rightX = newTop.xCoord + top.distance(to: right) * cos(end + Double.pi / 3)
         let rightY = newTop.yCoord + top.distance(to: right) * sin(end + Double.pi / 3)
-
         let newRight = Point(xCoord: rightX, yCoord: rightY)
 
         let leftX = newTop.xCoord + top.distance(to: left) * cos(end + 2 * Double.pi / 3)
         let leftY = newTop.yCoord + top.distance(to: left) * sin(end + 2 * Double.pi / 3)
-
         let newLeft = Point(xCoord: leftX, yCoord: leftY)
 
         top = newTop

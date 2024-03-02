@@ -9,8 +9,8 @@ import SwiftUI
 
 struct StatusView: View {
     @EnvironmentObject var viewModel: CanvasViewModel
-    private let desertLightBrown = Color(red: 209/255, green: 188/255, blue: 140/255)
-    private let desertDarkBrown = Color(red: 195/255, green: 169/255, blue: 114/255)
+    private let desertLightBrown = Constants.desertLightBrown
+    private let desertDarkBrown = Constants.desertDarkBrown
     private let shadowColor = Color.black.opacity(0.6)
     private let shadowRadius: CGFloat = 5
     private let shadowY: CGFloat = 3

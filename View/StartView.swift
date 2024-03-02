@@ -19,7 +19,7 @@ struct StartView: View {
     private let headingText = "Egyptian Peggle"
     private let fontSize: CGFloat = 30
     private let headingSize: CGFloat = 50
-    private let headingX: CGFloat = Constants.screenWidth / 1.5
+    private let headingX: CGFloat = Constants.screenWidth / 1.6
     private let headingY: CGFloat = 50
     private let padding: CGFloat = 10
     private let paddingBottom: CGFloat = 30
