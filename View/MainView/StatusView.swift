@@ -14,12 +14,11 @@ struct StatusView: View {
     private let shadowColor = Color.black.opacity(0.6)
     private let shadowRadius: CGFloat = 5
     private let shadowY: CGFloat = 3
-    private let fontSize: CGFloat = 20
     private let height: CGFloat = 50
-    private let pointWidth: CGFloat = Constants.screenWidth * 0.29
-    private let timeWidth: CGFloat = Constants.screenWidth * 0.2
-    private let ammoWidth: CGFloat = Constants.screenWidth * 0.17
-    private let countWidth: CGFloat = Constants.screenWidth * 0.2
+    private let pointWidth: CGFloat = Constants.screenWidth * 0.2
+    private let timeWidth: CGFloat = Constants.screenWidth * 0.1
+    private let ammoWidth: CGFloat = Constants.screenWidth * 0.16
+    private let countWidth: CGFloat = Constants.screenWidth * 0.4
     private let radius: CGFloat = 10
     private let lineWidth: CGFloat = 2
     private let opacity: CGFloat = 0.6
@@ -29,22 +28,22 @@ struct StatusView: View {
     var body: some View {
         ZStack(alignment: .trailing) {
             HStack {
+                StatView(width: ammoWidth, text: "Ammo: \(viewModel.countAmmo())")
+
+                let formattedScore = String(format: "%.0f", viewModel.score)
+                StatView(width: pointWidth, text: "\(formattedScore) points")
+
+                let formattedTime = String(format: "%.0f", seconds - viewModel.elapsedTime)
+                StatView(width: timeWidth, text: "\(formattedTime) sec")
+                Rectangle()
+                    .frame(width: timeWidth, height: height)
+                    .opacity(empty)
+
                 StatView(
                     width: countWidth,
                     text: "Total Objects: \(viewModel.countObjects())\n" +
                           "Orange Pegs: \(viewModel.countActiveObjects())"
                 )
-
-                let formattedTime = String(format: "%.0f", seconds - viewModel.elapsedTime)
-                StatView(width: timeWidth, text: "\(formattedTime) sec")
-
-                Rectangle()
-                    .frame(width: timeWidth / 2, height: height)
-                    .opacity(empty)
-
-                StatView(width: ammoWidth, text: "Ammo: \(viewModel.countAmmo())")
-                let formattedScore = String(format: "%.0f", viewModel.score)
-                StatView(width: pointWidth, text: "\(formattedScore) points")
             }.background(desertLightBrown)
         }
     }
@@ -60,10 +59,6 @@ struct StatView: View {
     private let shadowY: CGFloat = 3
     private let fontSize: CGFloat = 20
     private let height: CGFloat = 50
-    private let pointWidth: CGFloat = Constants.screenWidth * 0.29
-    private let timeWidth: CGFloat = Constants.screenWidth * 0.2
-    private let ammoWidth: CGFloat = Constants.screenWidth * 0.17
-    private let countWidth: CGFloat = Constants.screenWidth * 0.2
     private let radius: CGFloat = 10
     private let lineWidth: CGFloat = 2
     private let opacity: CGFloat = 0.6

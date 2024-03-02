@@ -11,6 +11,7 @@ import Foundation
 @objc(ObstacleObject)
 class ObstacleObject: GameObject, RectangularMovableObject {
     private var isObserverRegistered = false
+    private var halfWidthObservation: NSKeyValueObservation?
     var top = Point(xCoord: 0.0, yCoord: 0.0)
     var topLeft = Point(xCoord: 0.0, yCoord: 0.0)
     var topRight = Point(xCoord: 0.0, yCoord: 0.0)
