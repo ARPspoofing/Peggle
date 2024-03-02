@@ -31,10 +31,10 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     var isDisappear = false
     var handleOverlapCount = 0
 
-    let initialWidth: Double = 25.0
-    let maxWidth: Double = 50.0
-    let minDistance: Double = 0.0
-    let maxDistance: Double = 200.0
+    var initialWidth: Double = 25.0
+    var maxWidth: Double = 50.0
+    var minDistance: Double = 0.0
+    var maxDistance: Double = 200.0
 
     var health: Double = 100.0
 

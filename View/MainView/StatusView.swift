@@ -15,14 +15,11 @@ struct StatusView: View {
     private let shadowRadius: CGFloat = 5
     private let shadowY: CGFloat = 3
     private let fontSize: CGFloat = 20
-    private let pointWidth: CGFloat = Constants.screenWidth * 0.30
-    private let pointHeight: CGFloat = 50
+    private let height: CGFloat = 50
+    private let pointWidth: CGFloat = Constants.screenWidth * 0.29
     private let timeWidth: CGFloat = Constants.screenWidth * 0.2
-    private let timeHeight: CGFloat = 50
     private let ammoWidth: CGFloat = Constants.screenWidth * 0.17
-    private let ammoHeight: CGFloat = 50
     private let countWidth: CGFloat = Constants.screenWidth * 0.2
-    private let countHeight: CGFloat = 50
     private let radius: CGFloat = 10
     private let lineWidth: CGFloat = 2
     private let opacity: CGFloat = 0.6
@@ -34,7 +31,7 @@ struct StatusView: View {
             HStack {
                 ZStack {
                     Rectangle()
-                        .frame(width: countWidth, height: countHeight)
+                        .frame(width: countWidth, height: height)
                         .overlay(
                             RoundedRectangle(cornerRadius: radius)
                                 .stroke(Color.black, lineWidth: lineWidth)
@@ -47,7 +44,7 @@ struct StatusView: View {
                 }
                 ZStack {
                     Rectangle()
-                        .frame(width: timeWidth, height: timeHeight)
+                        .frame(width: timeWidth, height: height)
                         .overlay(
                             RoundedRectangle(cornerRadius: radius)
                                 .stroke(Color.black, lineWidth: lineWidth)
@@ -60,12 +57,12 @@ struct StatusView: View {
                 }
                 ZStack {
                     Rectangle()
-                        .frame(width: timeWidth / 2, height: timeHeight)
+                        .frame(width: timeWidth / 2, height: height)
                         .opacity(empty)
                 }
                 ZStack {
                     Rectangle()
-                        .frame(width: ammoWidth, height: ammoHeight)
+                        .frame(width: ammoWidth, height: height)
                         .overlay(
                             RoundedRectangle(cornerRadius: radius)
                                 .stroke(Color.black, lineWidth: lineWidth)
@@ -78,7 +75,7 @@ struct StatusView: View {
                 }
                 ZStack {
                     Rectangle()
-                        .frame(width: pointWidth, height: pointHeight)
+                        .frame(width: pointWidth, height: height)
                         .overlay(
                             RoundedRectangle(cornerRadius: radius)
                                 .stroke(Color.black, lineWidth: lineWidth)

@@ -114,7 +114,7 @@ extension TriangularMovableObject {
     }
 
     func checkTopBorder() -> Bool {
-        self.center.yCoord - self.circumradius > 0
+        self.center.yCoord - self.circumradius > Constants.topWidth
     }
 
     func getArea() -> Double {

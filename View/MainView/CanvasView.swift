@@ -18,14 +18,16 @@ struct CanvasView: View {
         ZStack(alignment: .top) {
             ZStack {
                 backgroundDisplay
-                glassDisplay
+                if canvasViewModel.isStartState {
+                    glassDisplay
+                }
             }
             motionObjectDisplay
             captureObjectDisplay
             if canvasViewModel.isStartState {
                 ShooterView(canvasViewModel)
+                ammoDisplay
             }
-            ammoDisplay
             gameObjectsDisplay
             if !canvasViewModel.isStartState {
                 PaletteView()

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CaptureObjectView: View {
-
+    @EnvironmentObject var viewModel: CanvasViewModel
     let name: String = "captureObjectItem"
     let width: Double
     let height: Double
@@ -16,8 +16,23 @@ struct CaptureObjectView: View {
     let defaultDiameter = 50.0
 
     var body: some View {
-        Image(name)
-            .resizable()
-            .frame(width: CGFloat(width), height: CGFloat(height))
+
+        ZStack {
+            if viewModel.isReload {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 50, height: 50)
+                    .modifier(ParticlesModifier(isBlast: true, isDoneShooting: $viewModel.isReload))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            viewModel.isReload = false
+                        }
+                    }
+            }
+            Image(name)
+                .resizable()
+                .frame(width: CGFloat(width), height: CGFloat(height))
+        }
+
     }
 }

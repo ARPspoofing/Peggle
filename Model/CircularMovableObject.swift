@@ -43,7 +43,7 @@ extension CircularMovableObject {
     }
 
     func checkTopBorder() -> Bool {
-        self.center.yCoord - self.radius > 0
+        self.center.yCoord - self.radius > Constants.topWidth
     }
 
     func getArea() -> Double {

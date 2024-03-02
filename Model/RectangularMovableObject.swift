@@ -115,7 +115,7 @@ extension RectangularMovableObject {
    }
 
    func checkTopBorder() -> Bool {
-       self.center.yCoord - self.height / 2 > 0
+       self.center.yCoord - self.height / 2 > Constants.topWidth
    }
 
    func getArea() -> Double {

@@ -31,6 +31,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
     @Published var isDoneShooting = false
     @Published var isShowingCircle = true
     @Published var isAnimating = false
+    @Published var isReload = false
     @Published var lineDistance: Double = 0.0
     @Published var ballPosition = Point(xCoord: 0.0, yCoord: 0.0)
     @Published var score = 0.0
@@ -81,6 +82,7 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
 
     func addExtraAmmo() {
         remainingAmmo = modelMap.createAmmoObject(maxAmmo: remainingAmmo.count + 1)
+        //isReload = false
     }
 
     func render(_ location: CGPoint, _ selectedObject: String) {
@@ -217,6 +219,7 @@ extension CanvasViewModel {
         isDelegated = true
     }
 
+    // TODO: Make it neater
     func gameEngineDidUpdate() {
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
 
@@ -225,6 +228,7 @@ extension CanvasViewModel {
         motionObjects = motionObjects.filter { !$0.isAdd }
 
         if containsAddObject {
+            isReload = true
             addExtraAmmo()
         }
 

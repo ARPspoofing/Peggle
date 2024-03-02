@@ -12,31 +12,24 @@ struct RadiatingCirclesView: View {
     let isDisplay: Bool
     let name: String
     let diameter: CGFloat
-    let lightBlue = Color(red: 117 / 255, green: 251 / 255, blue: 253 / 255)
-    let lightOrange = Color(red: 240 / 255, green: 200 / 255, blue: 200 / 255)
-    let darkOrange = Color(red: 252 / 255, green: 169 / 255, blue: 3 / 255)
-    let lightPurple = Color(red: 191 / 255, green: 144 / 255, blue: 223 / 255)
-    let purple = Color(red: 148 / 255, green: 0 / 255, blue: 211 / 255)
-    let lightGreen = Color(red: 144/255, green: 238/255, blue: 144/255)
-    let green = Color(red: 0/255, green: 128/255, blue: 0/255)
-    let blue = Color.blue
-    let orange = Color.orange
 
-
-
-    static let sharpObjectActive = "sharpBlockActive"
-    static let obstacleObjectActive = "obstacleObjectActive"
-    static let actionObjectSharpActive = "actionObjectSharpActive"
-    static let bounceObjectActive = "bounceObjectActive"
-    static let bounceObjectSharpActive = "bounceObjectSharpActive"
-    static let glowObjectActive = "glowObjectActive"
-    static let motionObjectSharpActive = "motionObjectSharpActive"
-    static let normalObjectSharpActive = "normalObjectSharpActive"
-    static let oscillateObjectSharpActive = "oscillateObjectSharpActive"
-    static let reappearObjectSharpActive = "reappearObjectSharpActive"
-    static let solidObjectActive = "solidObjectActive"
-    static let solidObjectSharpActive = "solidObjectSharpActive"
-
+    let lightBlue = Constants.lightBlue
+    let lightOrange = Constants.lightOrange
+    let darkOrange = Constants.darkOrange
+    let lightPurple = Constants.lightPurple
+    let purple = Constants.purple
+    let lightGreen = Constants.lightGreen
+    let green = Constants.green
+    let lightPink = Constants.lightPink
+    let gold = Constants.gold
+    let lightGray = Constants.lightGray
+    let blue = Constants.blue
+    let orange = Constants.orange
+    let pink = Constants.pink
+    let yellow = Constants.yellow
+    let grey = Constants.grey
+    let lightBrown = Constants.desertLightBrown
+    let darkBrown = Constants.desertDarkBrown
 
     let multiplier = 5
     let animationDuration = 0.3
@@ -46,20 +39,20 @@ struct RadiatingCirclesView: View {
     var body: some View {
         ZStack {
             ForEach(0..<5) { index in
+
+                let strokeColorMap: [String: Color] = [
+                    Constants.normalObjectActive: index.isMultiple(of: even) ? lightBlue : blue,
+                    Constants.actionObjectActive: index.isMultiple(of: even) ? lightOrange : darkOrange,
+                    Constants.oscillateObjectActive: index.isMultiple(of: even) ? lightPurple : purple,
+                    Constants.reappearObjectActive: index.isMultiple(of: even) ? lightGreen : green,
+                    Constants.sharpObjectActive: index.isMultiple(of: even) ? lightBrown : darkBrown,
+                    Constants.bounceObjectActive: index.isMultiple(of: even) ? lightPink : pink,
+                    Constants.glowObjectActive: index.isMultiple(of: even) ? yellow : gold,
+                    Constants.solidObjectActive: index.isMultiple(of: even) ? grey : lightGray,
+                ]
+
                 Circle()
-                    .stroke(
-                        name == Constants.normalObjectActive ?
-                        (index.isMultiple(of: even) ? lightBlue : blue) :
-                            (name == Constants.actionObjectActive ?
-                        (index.isMultiple(of: even) ? lightOrange : darkOrange) :
-                                (name == Constants.oscillateObjectActive ?
-                        (index.isMultiple(of: even) ? lightPurple : purple) :
-                                    (name == Constants.reappearObjectActive ?
-                        (index.isMultiple(of: even) ? lightGreen : green) :
-                        orange)
-                        )),
-                        lineWidth: lineWidth
-                    )
+                    .stroke(strokeColorMap[name] ?? orange, lineWidth: lineWidth)
                     // TODO: Fix invalid frame dimension negative or infinite
                     .frame(width: diameter - CGFloat(index * multiplier),
                            height: diameter - CGFloat(index * multiplier))
