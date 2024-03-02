@@ -15,6 +15,7 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
     var radius: Double = Constants.defaultCircleRadius
     var isOutOfBounds = false
     var isReappear: Bool = false
+    var isAdd: Bool = false
     var startPoint: Point = Point(xCoord: 0.0, yCoord: 0.0)
 
     override init(name: String) {

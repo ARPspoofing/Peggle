@@ -47,10 +47,10 @@ struct ModelMap {
 
     func createAmmoObject(maxAmmo: Int) -> [MotionObject] {
         var ammo: [MotionObject] = []
-        let ammoVel = 8.0
-        let ammoX = 50.0
+        let ammoVel = 0.0
+        let ammoX = 25.0
         for idx in 1...maxAmmo {
-            let center = Point(xCoord: ammoX, yCoord: Constants.screenHeight - (Double(idx) * ammoX))
+            let center = Point(xCoord: ammoX, yCoord: Constants.gameHeight - 250 - (Double(idx) * ammoX * 2))
             let velocity = Vector(horizontal: 0.0, vertical: ammoVel)
             let object = MotionObject(center: center, name: "ammo", velocity: velocity)
             ammo.append(object)

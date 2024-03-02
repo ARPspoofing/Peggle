@@ -79,6 +79,10 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         remainingAmmo = modelMap.createAmmoObject(maxAmmo: maxAmmo)
     }
 
+    func addExtraAmmo() {
+        remainingAmmo = modelMap.createAmmoObject(maxAmmo: remainingAmmo.count + 1)
+    }
+
     func render(_ location: CGPoint, _ selectedObject: String) {
         addObject(Point(xCoord: location.x, yCoord: location.y), selectedObject)
     }
@@ -215,7 +219,15 @@ extension CanvasViewModel {
 
     func gameEngineDidUpdate() {
         motionObjects = motionObjects.filter { !$0.isOutOfBounds }
+
+        let containsAddObject = motionObjects.contains { $0.isAdd }
         remainingAmmo = remainingAmmo.filter { !$0.isOutOfBounds }
+        motionObjects = motionObjects.filter { !$0.isAdd }
+
+        if containsAddObject {
+            addExtraAmmo()
+        }
+
         isShooting = !motionObjects.isEmpty
         filterCondition()
         calcScore()
@@ -268,7 +280,6 @@ extension CanvasViewModel {
         stopTimer()
         toggleWinConditions()
         isGameOver = true
-        //removeAllObjects()
     }
 
     func toggleWinConditions() {

@@ -28,10 +28,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     var gameObjects: [GameObject]
     var captureObjects: [CaptureObject]
     var ammo: [MotionObject]
-    var hasExtraAmmo = false
-
-    var isUpdating = false
-    var isReload = false
 
     // TODO: Abstract this
     var activeIdx = 1
@@ -88,21 +84,9 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         object.reverseHorizontalVelocity()
     }
 
-    func handleAmmoBottomBoundary(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
-        for ammoObject in ammo {
-            guard object.retrieveYCoord() >= ammoBoundary else {
-                continue
-            }
-            ammoObject.velocity = ammoResetVel
-        }
-    }
-
     func stopAndShootAmmo(_ ammo: inout [MotionObject]) {
         for index in ammo.indices {
             let ammoObject: MotionObject = ammo[index]
-            guard (ammoObject.center.yCoord < ammoObject.startPoint.yCoord) else {
-                continue
-            }
             if index == ammo.count - 1 {
                 ammoObject.velocity = ammoShootVel
             } else {
@@ -121,9 +105,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    // TODO: Move everything to physics engine
     internal func handleAmmoBoundaries(_ object: inout MotionObject, _ ammo: inout [MotionObject]) {
-        handleAmmoBottomBoundary(&object, &ammo)
         stopAndShootAmmo(&ammo)
         setAmmoOutOfBounds(&ammo)
     }
@@ -209,7 +191,7 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
             if object.isReappear {
                 handleBounce(for: &mutatableCaptureObject, and: &object)
             } else {
-                hasExtraAmmo = true
+                object.isAdd = true
             }
         }
     }
@@ -319,7 +301,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     }
 
     @objc func updateMotionObjects() {
-        motionObjects = motionObjects.filter { !$0.isOutOfBounds }
         for index in motionObjects.indices {
             var object = motionObjects[index]
             updateObjectPosition(&object)
@@ -339,19 +320,11 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
         }
     }
 
-    @objc func addAmmo() {
-        self.ammo.append(MotionObject(name: "ammo"))
-    }
-
     @objc func updateAmmo() {
         for index in ammo.indices {
             var object: MotionObject = ammo[index]
             updateObjectPosition(&object)
             handleAmmoBoundaries(&object, &ammo)
-        }
-        if hasExtraAmmo {
-            addAmmo()
-            hasExtraAmmo = false
         }
     }
 
