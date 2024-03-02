@@ -98,6 +98,11 @@
 		91C2B67B2B918C290013DD9F /* gameOverAudio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 91C2B67A2B918C290013DD9F /* gameOverAudio.mp3 */; };
 		91C2B67F2B918ED60013DD9F /* buttonClickAudio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 91C2B67E2B918ED60013DD9F /* buttonClickAudio.mp3 */; };
 		91C2B6812B91B0260013DD9F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C2B6802B91B0260013DD9F /* GameOverView.swift */; };
+		91CDDDE22B93307D002EDDF4 /* FirstLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CDDDE12B93307D002EDDF4 /* FirstLevel.swift */; };
+		91CDDDE42B93368A002EDDF4 /* SecondLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CDDDE32B93368A002EDDF4 /* SecondLevel.swift */; };
+		91CDDDE62B93383D002EDDF4 /* PreloadedLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CDDDE52B93383D002EDDF4 /* PreloadedLevel.swift */; };
+		91CDDDE82B9339E0002EDDF4 /* ThirdLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CDDDE72B9339E0002EDDF4 /* ThirdLevel.swift */; };
+		91CDDDEA2B933BF4002EDDF4 /* GameEngineWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CDDDE92B933BF4002EDDF4 /* GameEngineWorld.swift */; };
 		91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D997782B8EDD6300DB5364 /* ReappearObject.swift */; };
 		91D9977B2B8EF99C00DB5364 /* RectangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */; };
 		91D9977D2B8F16F700DB5364 /* ObstacleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */; };
@@ -219,6 +224,11 @@
 		91C2B67A2B918C290013DD9F /* gameOverAudio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOverAudio.mp3; sourceTree = "<group>"; };
 		91C2B67E2B918ED60013DD9F /* buttonClickAudio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = buttonClickAudio.mp3; path = ../../../../buttonClickAudio.mp3; sourceTree = "<group>"; };
 		91C2B6802B91B0260013DD9F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		91CDDDE12B93307D002EDDF4 /* FirstLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLevel.swift; sourceTree = "<group>"; };
+		91CDDDE32B93368A002EDDF4 /* SecondLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondLevel.swift; sourceTree = "<group>"; };
+		91CDDDE52B93383D002EDDF4 /* PreloadedLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreloadedLevel.swift; sourceTree = "<group>"; };
+		91CDDDE72B9339E0002EDDF4 /* ThirdLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdLevel.swift; sourceTree = "<group>"; };
+		91CDDDE92B933BF4002EDDF4 /* GameEngineWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineWorld.swift; sourceTree = "<group>"; };
 		91D997782B8EDD6300DB5364 /* ReappearObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReappearObject.swift; sourceTree = "<group>"; };
 		91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularMovableObject.swift; sourceTree = "<group>"; };
 		91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleObject.swift; sourceTree = "<group>"; };
@@ -279,6 +289,7 @@
 				91AD1B462B7909F4009E6BC6 /* GameEngine.swift */,
 				914BF7382B80744600032478 /* CollisionGameEngine.swift */,
 				914BF73A2B8074AE00032478 /* GravityGameEngine.swift */,
+				91CDDDE92B933BF4002EDDF4 /* GameEngineWorld.swift */,
 			);
 			path = GameEngine;
 			sourceTree = "<group>";
@@ -300,6 +311,7 @@
 		91986E822B5E19B900D1C72C = {
 			isa = PBXGroup;
 			children = (
+				91CDDDDA2B932BC2002EDDF4 /* PreloadLevels */,
 				91C2B6732B91886E0013DD9F /* Audio */,
 				916211022B763C85002F51A9 /* GameEngine */,
 				91517C072B720A9D00F1E45D /* PhysicsEngine */,
@@ -470,6 +482,17 @@
 				91C2B6712B9187550013DD9F /* AudioManager.swift */,
 			);
 			path = Audio;
+			sourceTree = "<group>";
+		};
+		91CDDDDA2B932BC2002EDDF4 /* PreloadLevels */ = {
+			isa = PBXGroup;
+			children = (
+				91CDDDE52B93383D002EDDF4 /* PreloadedLevel.swift */,
+				91CDDDE12B93307D002EDDF4 /* FirstLevel.swift */,
+				91CDDDE32B93368A002EDDF4 /* SecondLevel.swift */,
+				91CDDDE72B9339E0002EDDF4 /* ThirdLevel.swift */,
+			);
+			path = PreloadLevels;
 			sourceTree = "<group>";
 		};
 		91F3826C2B7F1DBD0012C0D1 /* ButtonsView */ = {
@@ -701,6 +724,7 @@
 				91986ED22B5E2D5600D1C72C /* Vector.swift in Sources */,
 				916E67AB2B88E69C00960D5D /* RotateButtonView.swift in Sources */,
 				91517C112B7375B100F1E45D /* MotionObject.swift in Sources */,
+				91CDDDE42B93368A002EDDF4 /* SecondLevel.swift in Sources */,
 				91986EC62B5E1DC500D1C72C /* CanvasView.swift in Sources */,
 				911EB4B92B8B4449009B206E /* BlastObject.swift in Sources */,
 				911EB4BD2B8C66DA009B206E /* AmmoView.swift in Sources */,
@@ -724,6 +748,7 @@
 				911EB4BF2B8CE249009B206E /* OscillateObject.swift in Sources */,
 				91AD1B3B2B78D3FE009E6BC6 /* StateChangeObject.swift in Sources */,
 				91986EE32B5FC56B00D1C72C /* GameObject.swift in Sources */,
+				91CDDDE22B93307D002EDDF4 /* FirstLevel.swift in Sources */,
 				916E67A12B87829D00960D5D /* Line.swift in Sources */,
 				914BF73B2B8074AE00032478 /* GravityGameEngine.swift in Sources */,
 				91986EC22B5E1D6C00D1C72C /* ActionButtonsView.swift in Sources */,
@@ -745,6 +770,7 @@
 				91F382692B7E49AC0012C0D1 /* RadiatingCirclesView.swift in Sources */,
 				91986E8F2B5E19B900D1C72C /* PeggleApp.swift in Sources */,
 				916E67952B86D4FC00960D5D /* ActionViewModelConstants.swift in Sources */,
+				91CDDDEA2B933BF4002EDDF4 /* GameEngineWorld.swift in Sources */,
 				916E67972B86D50C00960D5D /* DeleteButtonConstants.swift in Sources */,
 				91986EEF2B61FEA500D1C72C /* ActionButtonsViewModel.swift in Sources */,
 				916E678C2B86D38D00960D5D /* ParticlesOverlay.swift in Sources */,
@@ -760,6 +786,8 @@
 				91C2B6702B9073DB0013DD9F /* CustomAlertView.swift in Sources */,
 				91986ED42B5E6C6900D1C72C /* PaletteButtonsView.swift in Sources */,
 				916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */,
+				91CDDDE62B93383D002EDDF4 /* PreloadedLevel.swift in Sources */,
+				91CDDDE82B9339E0002EDDF4 /* ThirdLevel.swift in Sources */,
 				91C2B65C2B9048C30013DD9F /* DecalView.swift in Sources */,
 				916E679D2B86D72400960D5D /* FireworkParticlesGeometryEffect.swift in Sources */,
 				91986EC02B5E1D6300D1C72C /* BackgroundView.swift in Sources */,

@@ -10,8 +10,11 @@ import Foundation
 class ActionButtonsViewModel: ObservableObject {
 
     let constants = ActionViewModelConstants()
-    //let manager = CoreDataManager()
-    let manager = LocalFileManager()
+    let manager = CoreDataManager()
+
+    init() {
+        saveLevels()
+    }
 
     func getLevels() -> [String] {
         manager.getLevelNames()
@@ -67,6 +70,25 @@ class ActionButtonsViewModel: ObservableObject {
         }
         gameObjects = fetchedGameObjects
         return nil
+    }
+
+    func saveLevels() {
+        savePreloadedLevel(FirstLevel(), name: constants.firstLevel)
+        savePreloadedLevel(SecondLevel(), name: constants.secondLevel)
+        savePreloadedLevel(ThirdLevel(), name: constants.thirdLevel)
+    }
+
+    func savePreloadedLevel(_ levelInfo: PreloadedLevel, name: String) {
+        let levelData = levelInfo.level
+        guard let level = levelData?.data(using: .utf8) else {
+            return
+        }
+        let decodedLevel = try? JSONDecoder().decode(Level.self, from: level)
+        guard let decodedLevelObjects = decodedLevel?.gameObjects else {
+            return
+        }
+        let message = saveLevel(levelName: name, gameObjects: decodedLevelObjects)
+        print(message)
     }
 
     func resetLevel(_ gameObjects: inout [GameObject]) {

@@ -11,4 +11,7 @@ struct ActionViewModelConstants {
     let noPegMessage = "There must be at least one peg on the game board"
     let emptyLevelMessage = "Please enter a non empty alphanumeric level name"
     let alphaNumericLevelMessage = "Please enter an alphanumeric level name"
+    let firstLevel = "firstLevel"
+    let secondLevel = "secondLevel"
+    let thirdLevel = "thirdLevel"
 }

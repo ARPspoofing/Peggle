@@ -111,27 +111,14 @@ class LocalFileManager {
             print("\(failedObtainPath)")
             return nil
         }
-
         guard let url = getPathForLevel(levelName), let data = try? Data(contentsOf: url) else {
             print("\(errorGettingData)")
             return nil
         }
-
         guard let savedLevel = try? JSONDecoder().decode(Level.self, from: data) else {
             print("\(errorDecodingData)")
             return nil
         }
-
-        print("decoded saved level", savedLevel)
-        print("test", String(data: data, encoding: .utf8))
-
-        var newString = Optional("{\"id\":\"loaded2\",\"isPreloadedLevel\":false,\"gameObjects\":[{\"type\":\"Peg\",\"data\":\"eyJpZCI6IkJFRkE0M0MwLTI1NTMtNDhGRC1CQjlBLTMyRDk5ODhGN0QwRSIsImlzQWN0aXZlIjpmYWxzZSwib3JpZW50YXRpb24iOjAsImhhbmRsZU92ZXJsYXBDb3VudCI6MCwibWluRGlzdGFuY2UiOjAsIm1heFdpZHRoIjo1MCwibWF4RGlzdGFuY2UiOjIwMCwiaGFzQmxhc3RlZCI6ZmFsc2UsImFjdGl2ZUlkeCI6MCwiaXNEaXNhcHBlYXIiOmZhbHNlLCJpc0hhbmRsZU92ZXJsYXAiOmZhbHNlLCJpbml0aWFsV2lkdGgiOjI1LCJpc1Nwb29rIjpmYWxzZSwiY2VudGVyIjp7InhDb29yZCI6MjYwLCJ5Q29vcmQiOjQ5Ni41LCJyYWRpYWwiOjU2MC40NTcxNzk0NTI2MzIyLCJ0aGV0YSI6MS4wODgzOTU5MjgzMjEwNjg5LCJ1cHBlckJvdW5kIjozLjE0MTU5MjY1MzU4OTc5MzEsIm9yaWdpblgiOjAsImxvd2VyQm91bmQiOi0zLjE0MTU5MjY1MzU4OTc5MzEsIm9yaWdpblkiOjB9LCJpc0JsYXN0IjpmYWxzZSwiaGFsZldpZHRoIjoyNSwiaGVhbHRoIjoxMDAsIm5hbWUiOiJub3JtYWxPYmplY3QiLCJpbml0aWFsVG9wIjp7InhDb29yZCI6MCwieUNvb3JkIjowLCJyYWRpYWwiOjAsInRoZXRhIjowLCJ1cHBlckJvdW5kIjozLjE0MTU5MjY1MzU4OTc5MzEsIm9yaWdpblgiOjAsImxvd2VyQm91bmQiOi0zLjE0MTU5MjY1MzU4OTc5MzEsIm9yaWdpblkiOjB9fQ==\"},{\"type\":\"OscillateObject\",\"data\":\"eyJpZCI6IjkzQjUxQjZBLUJGNkUtNDU0QS1CMDc5LTc5NEY1NDMxQkUzRCIsImlzQWN0aXZlIjpmYWxzZSwib3JpZW50YXRpb24iOjAsImhhbmRsZU92ZXJsYXBDb3VudCI6MCwibWluRGlzdGFuY2UiOjAsIm1heFdpZHRoIjo1MCwibWF4RGlzdGFuY2UiOjIwMCwiaGFzQmxhc3RlZCI6ZmFsc2UsImFjdGl2ZUlkeCI6MCwiaXNEaXNhcHBlYXIiOmZhbHNlLCJpc0hhbmRsZU92ZXJsYXAiOmZhbHNlLCJpbml0aWFsV2lkdGgiOjI1LCJpc1Nwb29rIjpmYWxzZSwiY2VudGVyIjp7InhDb29yZCI6MzQ1LCJ5Q29vcmQiOjQ4OC41LCJyYWRpYWwiOjU5OC4wNDQ1MjE3NTQwMjQ1NywidGhldGEiOjAuOTU1ODkyMzA0NTI1MDM2NiwidXBwZXJCb3VuZCI6My4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5YIjowLCJsb3dlckJvdW5kIjotMy4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5ZIjowfSwiaXNCbGFzdCI6ZmFsc2UsImhhbGZXaWR0aCI6MjUsImhlYWx0aCI6MTAwLCJuYW1lIjoib3NjaWxsYXRlT2JqZWN0IiwiaW5pdGlhbFRvcCI6eyJ4Q29vcmQiOjAsInlDb29yZCI6MCwicmFkaWFsIjowLCJ0aGV0YSI6MCwidXBwZXJCb3VuZCI6My4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5YIjowLCJsb3dlckJvdW5kIjotMy4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5ZIjowfX0=\"},{\"type\":\"Peg\",\"data\":\"eyJpZCI6IkQzQTBGRDUxLTg5REYtNDQzOC1CNjI0LTA1QkM1RDk2RDlCQiIsImlzQWN0aXZlIjpmYWxzZSwib3JpZW50YXRpb24iOjAsImhhbmRsZU92ZXJsYXBDb3VudCI6MCwibWluRGlzdGFuY2UiOjAsIm1heFdpZHRoIjo1MCwibWF4RGlzdGFuY2UiOjIwMCwiaGFzQmxhc3RlZCI6ZmFsc2UsImFjdGl2ZUlkeCI6MCwiaXNEaXNhcHBlYXIiOmZhbHNlLCJpc0hhbmRsZU92ZXJsYXAiOmZhbHNlLCJpbml0aWFsV2lkdGgiOjI1LCJpc1Nwb29rIjpmYWxzZSwiY2VudGVyIjp7InhDb29yZCI6NDMxLCJ5Q29vcmQiOjQ4OSwicmFkaWFsIjo2NTEuODI5NzMyMzY4ODE0MjMsInRoZXRhIjowLjg0ODM1ODMxODU4MzQ1MzEyLCJ1cHBlckJvdW5kIjozLjE0MTU5MjY1MzU4OTc5MzEsIm9yaWdpblgiOjAsImxvd2VyQm91bmQiOi0zLjE0MTU5MjY1MzU4OTc5MzEsIm9yaWdpblkiOjB9LCJpc0JsYXN0IjpmYWxzZSwiaGFsZldpZHRoIjoyNSwiaGVhbHRoIjoxMDAsIm5hbWUiOiJnbG93T2JqZWN0IiwiaW5pdGlhbFRvcCI6eyJ4Q29vcmQiOjAsInlDb29yZCI6MCwicmFkaWFsIjowLCJ0aGV0YSI6MCwidXBwZXJCb3VuZCI6My4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5YIjowLCJsb3dlckJvdW5kIjotMy4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5ZIjowfX0=\"},{\"type\":\"Peg\",\"data\":\"eyJpZCI6IkYyRjc5OUJBLTE3MzMtNDNBQS1BNjUyLUI4NDM2NTg1NTJEQyIsImlzQWN0aXZlIjpmYWxzZSwib3JpZW50YXRpb24iOjAsImhhbmRsZU92ZXJsYXBDb3VudCI6MCwibWluRGlzdGFuY2UiOjAsIm1heFdpZHRoIjo1MCwibWF4RGlzdGFuY2UiOjIwMCwiaGFzQmxhc3RlZCI6ZmFsc2UsImFjdGl2ZUlkeCI6MCwiaXNEaXNhcHBlYXIiOmZhbHNlLCJpc0hhbmRsZU92ZXJsYXAiOmZhbHNlLCJpbml0aWFsV2lkdGgiOjI1LCJpc1Nwb29rIjpmYWxzZSwiY2VudGVyIjp7InhDb29yZCI6NTA4LjUsInlDb29yZCI6NDc2LjUsInJhZGlhbCI6Njk2Ljg2NzYzNDQ5MDIyMzc0LCJ0aGV0YSI6MC43NTI5MjIyNzU4Mjk5Mzk2NSwidXBwZXJCb3VuZCI6My4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5YIjowLCJsb3dlckJvdW5kIjotMy4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5ZIjowfSwiaXNCbGFzdCI6ZmFsc2UsImhhbGZXaWR0aCI6MjUsImhlYWx0aCI6MTAwLCJuYW1lIjoiYm91bmNlT2JqZWN0IiwiaW5pdGlhbFRvcCI6eyJ4Q29vcmQiOjAsInlDb29yZCI6MCwicmFkaWFsIjowLCJ0aGV0YSI6MCwidXBwZXJCb3VuZCI6My4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5YIjowLCJsb3dlckJvdW5kIjotMy4xNDE1OTI2NTM1ODk3OTMxLCJvcmlnaW5ZIjowfX0=\"}]}")
-        guard var newData = newString?.data(using: .utf8) else { return nil }
-
-        let testing = try? JSONDecoder().decode(Level.self, from: newData)
-
-        return testing
-
         assert(checkRepresentation())
         return savedLevel
     }

@@ -10,7 +10,7 @@ import Foundation
 
 @objc(ObstacleObject)
 class ObstacleObject: GameObject, RectangularMovableObject {
-
+    private var isObserverRegistered = false
     var top: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var topLeft: Point = Point(xCoord: 0.0, yCoord: 0.0)
     var topRight: Point = Point(xCoord: 0.0, yCoord: 0.0)
@@ -74,7 +74,9 @@ class ObstacleObject: GameObject, RectangularMovableObject {
     }
 
     deinit {
-        removeObserver(self, forKeyPath: #keyPath(halfWidth))
+        if isObserverRegistered {
+            removeObserver(self, forKeyPath: #keyPath(halfWidth))
+        }
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -113,6 +115,7 @@ class ObstacleObject: GameObject, RectangularMovableObject {
         initEdges()
         initInitials()
         addObserver(self, forKeyPath: #keyPath(halfWidth), options: [.old, .new], context: nil)
+        isObserverRegistered = true
     }
 
     override func encode(to encoder: Encoder) throws {

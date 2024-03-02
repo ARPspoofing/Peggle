@@ -30,7 +30,6 @@ class GameEngineBody: CollisionGameEngine, GravityGameEngine {
     var captureObjects: [CaptureObject]
     var ammo: [MotionObject]
 
-    // TODO: Abstract this
     var activeIdx = 1
 
     init(motionObjects: inout [MotionObject], gameObjects: inout [GameObject], captureObjects: inout [CaptureObject], ammo: inout [MotionObject]) {
