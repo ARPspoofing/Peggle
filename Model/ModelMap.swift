@@ -80,7 +80,7 @@ struct ModelMap {
     func getTotalScore(for gameObjects: [GameObject]) -> Double {
         var score = 0.0
         for object in gameObjects {
-            guard object.isActive else {
+            guard object.isActive && object.health == 0 else {
                 continue
             }
             score += getEntityScore(for: object)

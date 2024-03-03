@@ -167,6 +167,12 @@ extension CanvasViewModel {
     }
 
     func calcScore() {
+        guard !isGameOver else {
+            return
+        }
+        for motionObject in motionObjects where motionObject.isReappear {
+            return
+        }
         score += modelMap.getTotalScore(for: gameObjects)
     }
 }
