@@ -695,6 +695,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
             - Removing from gameplay should not change the action object to an action object
             - Colliding with a motion object should make the shape size remain the same
 
+            TODO: Add more tests for recently implemented things
+
 ## Written Answers
 
 ### Reflecting on your Design
@@ -706,4 +708,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 > - if you were to redo the entire application, is there anything you would
 >   have done differently?
 
-Your answer here
+I have designed the previous problem sets well enough. Since I had a game object that did not have any hardcoded size, but has a default size and able to take in dynamic properties, adding the resizable was rather a breeze. Integrating the rotation was also doable, but the actual rotation and intersection handling when rotating of the rectangular, triangular, and circular pegs was diffcult to ensure that it was correctly implemented. However, this has got to do with the heuristics and not to do with the previous problem sets, and hence with respect to this question, I have designed the previous problem sets well enough. Additionally, in the previous problem sets, I implemented both core data and file manager. Hence, in order to have pre loaded levels, I could simply leverage on the JSON decoder and encoder in the file manager, rather than dealing with constructing SQL statements which would be much more time consuming. Hence, I truly beleive in the previous problem sets, I was able to plan ahead.
+
+If there is any technical debt, I would probably make some of the animations available for iOS 16 and above as well. Currently, some of the animations is only available for iOS 15. However, apart from this, I do not believe there is any technical debt as I have abided by open-closed principle and many software engineering principles as best as I could. Perhaps the only thing I did not manage to try was using storyboard, which is a more legacy version compared to SwiftUI. However, this is more of a learning experience rather than a technical debt.
+
+Overall, I would not have done anything major diffrently as there were many tutorials and help online for SwiftUI. A minor thing was probably to learn more about SwiftUI before starting, but that is trivial and just to implement the application more efficiently rather than keep on refactoring until I am satisfied.
