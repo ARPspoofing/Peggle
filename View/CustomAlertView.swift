@@ -175,8 +175,8 @@ struct CustomAlertButton: View {
     private let desertDarkBrown = Color(red: 195 / 255, green: 169 / 255, blue: 114 / 255)
 
     var body: some View {
-        NavigationLink(destination: CanvasView(), isActive: $isNavigationActive) {
-            EmptyView()
+        NavigationLink(destination: CanvasView().navigationBarBackButtonHidden(true), isActive: $isNavigationActive) {
+            EmptyView().navigationBarBackButtonHidden(true)
         }
         .hidden()
         Button(action: {
