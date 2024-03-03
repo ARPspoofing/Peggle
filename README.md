@@ -353,7 +353,7 @@ Here is how the user will observe the glowing animation when a peg is illuminate
 
 ![MVVM](./Diagrams/PhysicsDiagrams/LightUpOrange.png)
 
-Here is how the user will observe the exploding lit-up pegs when the ball goes out of bounds.
+Here is how the user will observe the exploding lit-up pegs
 
 ![MVVM](./Diagrams/PhysicsDiagrams/ExplodingOrange.png)
 
