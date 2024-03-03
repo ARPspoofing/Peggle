@@ -485,10 +485,10 @@ Additionally, the combination of resized and rotated objects should still adhere
 - Begins with a start page featuring an Ancient Egypt theme accompanied by thematic sound effects.
 - Provides an instruction page with an Ancient Egypt theme and corresponding sound effects.
 - Designed the level designer page with an Ancient Egypt theme and immersive sound.
-- Integrated an Ancient Egypt scarab shooter as the cannon
-![MVVM](./assets/scarabBeetle.png)
+- Integrated an Ancient Egypt scarab beetle shooter as the cannon
+<img src="./assets/scarabBeetle.png" alt="MVVM" width="50">
 
-- Incorporated an Ancient Egypt scarab beetle as the capture bucket object
+- Incorporated an Ancient Egypt scarab wings as the capture bucket object
 ![MVVM](./assets/scarabShooterGold.png)
 
 ### Styling
@@ -522,25 +522,149 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
 ## Integration Tests
 
+- Start Page
+   - When the application is initially launched, an audio should be playing by default
+   - When the start button is tapped, it should trigger a button click audio
+   - When the start button is tapped, it should lead to the instruction page view
+
+- Instruction Page
+   - When the page is seen, the cannon should be rotating continuously
+   - When the page is seen, the capture object bucket should be moving continuously
+   - When the page is seen, the pegs should be blinking every one second
+
 - Level Designer
+
+   - When the page is initally launched, a list of 3 preloaded levels should pop up
 
   - PalleteButtons:
 
     - Blue peg button:
       - When the application is initially launched, it should not be selected by default.
-      - When tapped, it should be selected and other peg image buttons, including the delete button, should be unselected.
-      - When tapped, it should have increase in opacity, and other peg images, including the delete button, opacity should be lesser.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
       - When tapped, it should not change in size
       - When tapped, it should not change in position
 
     - Orange peg button:
       - When the application is initially launched, it should not be selected by default.
-      - When tapped, it should be selected and other peg image buttons, including the delete button, should be unselected.
-      - When tapped, it should have increase in opacity, and other peg images opacity, including the delete button, should be lesser.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Purple peg button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Green peg button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Yellow peg button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Grey peg button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Pink peg button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Sarcophagus button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Pyramid button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+   
+    - Blue triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Orange triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Purple triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Green triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Yellow triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Grey triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Pink triangle button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons, including the delete button, resize button, and rotate button should be unselected.
+      - When tapped, it should have increase in opacity, and other peg images, including the delete button, resize button, and rotate button opacity should be lesser.
       - When tapped, it should not change in size
       - When tapped, it should not change in position
 
     - Delete Button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons should be unselected
+      - When tapped, it should have increase in opacity, and other peg images opacity, should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Resize Button:
+      - When the application is initially launched, it should not be selected by default.
+      - When tapped, it should be selected and other peg image buttons should be unselected
+      - When tapped, it should have increase in opacity, and other peg images opacity, should be lesser.
+      - When tapped, it should not change in size
+      - When tapped, it should not change in position
+
+    - Rotate Button:
       - When the application is initially launched, it should not be selected by default.
       - When tapped, it should be selected and other peg image buttons should be unselected
       - When tapped, it should have increase in opacity, and other peg images opacity, should be lesser.
@@ -568,16 +692,164 @@ I have also inserted screenshots depicting the intended UI views of various acti
       - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
       - Tapping again on the orange peg at the palette panel should deselect the orange peg
 
-    - When delete peg is selected:
-      - Tapping on an empty canvas should not add any pegs
+    - When purple peg is selected:
+      - Tapping on an empty canvas should display the purple peg at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the purple peg at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the purple peg
+      - Tapping at the white panel should not render the purple peg
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the purple peg at the palette panel should deselect the purple peg
+
+    - When green peg is selected:
+      - Tapping on an empty canvas should display the green peg at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the green peg at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the green peg
+      - Tapping at the white panel should not render the green peg
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the green peg at the palette panel should deselect the green peg
+
+    - When yellow peg is selected:
+      - Tapping on an empty canvas should display the yellow peg at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the yellow peg at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the yellow peg
+      - Tapping at the white panel should not render the yellow peg
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the yellow peg at the palette panel should deselect the yellow peg
+
+    - When grey peg is selected:
+      - Tapping on an empty canvas should display the grey peg at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the grey peg at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the grey peg
+      - Tapping at the white panel should not render the grey peg
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the grey peg at the palette panel should deselect the grey peg
+
+    - When pink peg is selected:
+      - Tapping on an empty canvas should display the pink peg at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the pink peg at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the pink peg
+      - Tapping at the white panel should not render the pink peg
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the pink peg at the palette panel should deselect the pink peg
+
+    - When sarcophagus peg is selected:
+      - Tapping on an empty canvas should display the sarcophagus peg at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the sarcophagus peg at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the sarcophagus peg
+      - Tapping at the white panel should not render the sarcophagus peg
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the sarcophagus peg at the palette panel should deselect the sarcophagus peg
+
+    - When blue triangle is selected:
+      - Tapping on an empty canvas should display the blue triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the blue triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the blue triangle
+      - Tapping at the white panel should not render the blue triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the blue triangle at the palette panel should deselect the blue triangle
+
+    - When orange triangle is selected:
+      - Tapping on an empty canvas should display the orange triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the orange triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the orange triangle
+      - Tapping at the white panel should not render the orange triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the orange triangle at the palette panel should deselect the orange triangle
+
+    - When purple triangle is selected:
+      - Tapping on an empty canvas should display the purple triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the purple triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the purple triangle
+      - Tapping at the white panel should not render the purple triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the purple triangle at the palette panel should deselect the purple triangle
+
+    - When green triangle is selected:
+      - Tapping on an empty canvas should display the green triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the green triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the green triangle
+      - Tapping at the white panel should not render the green triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the green triangle at the palette panel should deselect the green triangle
+
+    - When yellow triangle is selected:
+      - Tapping on an empty canvas should display the yellow triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the yellow triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the yellow triangle
+      - Tapping at the white panel should not render the yellow triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the yellow triangle at the palette panel should deselect the yellow triangle
+
+    - When grey triangle is selected:
+      - Tapping on an empty canvas should display the grey triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the grey triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the grey triangle
+      - Tapping at the white panel should not render the grey triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the grey triangle at the palette panel should deselect the grey triangle
+
+    - When pink triangle is selected:
+      - Tapping on an empty canvas should display the pink triangle at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the pink triangle at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the pink triangle
+      - Tapping at the white panel should not render the pink triangle
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the pink triangle at the palette panel should deselect the pink triangle
+
+    - When pyramid is selected:
+      - Tapping on an empty canvas should display the pyramid at that location
+      - Tapping on canvas with pegs at a spot which is not near other pegs should display the pyramid at that location
+      - Long pressing (1 second) on any peg of any color should delete the peg.
+      - Tapping at the end of the screen should not render the pyramid
+      - Tapping at the white panel should not render the pyramid
+      - Dragging of any peg should not snap to grid, but rather should move smoothly along valid pixels
+      - Tapping again on the pyramid at the palette panel should deselect the pyramid
+
+    - When delete is selected:
+      - Tapping on an empty canvas should not add any objects
       - Tapping on the empty canvas should not cause the canvas to blink
-      - Tapping on a peg at the canvas, regardless of color, should delete the peg
-      - Dragging of a peg at the canvas should unselect the delete button and should drag the peg around
+      - Tapping on a object at the canvas, regardless of color, should delete the object
+      - Dragging of a object at the canvas should unselect the delete button and should drag the object around
       - Tapping on the edges of the canvas should not do anything
-      - Tapping on the last peg in the canvas and attempting to save should display a canvas should display an alert with message "There must be at least one peg on the game board"
-      - Tapping on a peg and attempting to load a level should attempt to load the level, assuming the level is valid
+      - Tapping on the last object in the canvas and attempting to save should display a canvas should display an alert with message "There must be at least one object on the game board"
+      - Tapping on a object and attempting to load a level should attempt to load the level, assuming the level is valid
       - Re-tapping on the delete button should unselect it
-      - Tapping on a peg in the canvas after unselecting the delete button should not delete the peg
+      - Tapping on a object in the canvas after unselecting the delete button should not delete the object
+
+    - When resize is selected:
+      - Tapping on an empty canvas should not add any objects
+      - Tapping on the empty canvas should not cause the canvas to blink
+      - Dragging outwards on a object at the canvas, regardless of color, should increase the size of the object
+      - Dragging inwards on a object at the canvas, regardless of color, should decrease the size of the object
+      - Tapping on the edges of the canvas should not do anything
+      - Re-tapping on the resize button should unselect it
+      - Dragging on a object in the canvas after unselecting the resize button should not resize the object
+      - Saving the newly resized objects should save successfully
+      - Loading the resized object level should display the correct last saved rotated position
+
+    - When rotate peg is selected:
+      - Tapping on an empty canvas should not add any objects
+      - Tapping on the empty canvas should not cause the canvas to blink
+      - Dragging on a object at the canvas clockwise, regardless of color, should rotate the object clockwise
+      - Dragging on a object at the canvas anticlockwise, regardless of color, should rotate the object anticlockwise
+      - Tapping on the edges of the canvas should not do anything
+      - Re-tapping on the rotate button should unselect it
+      - Dragging on a object in the canvas after unselecting the rotate button should not rotate the object
+      - Saving the newly rotated objects should save successfully
+      - Loading the rotated object level should display the correct last saved rotated position
 
     - When load is selected:
       - Tapping on the load button without any text in the text field should display the list of saved levels
@@ -689,8 +961,6 @@ I have also inserted screenshots depicting the intended UI views of various acti
             - Lighting up should not change the action object to an action object
             - Removing from gameplay should not change the action object to an action object
             - Colliding with a motion object should make the shape size remain the same
-
-            TODO: Add more tests for recently implemented things
 
 ## Written Answers
 
