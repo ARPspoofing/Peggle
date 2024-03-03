@@ -16,7 +16,7 @@ struct InstructionView: View {
 
     private let shooter = "shooterItem-rotate"
     private let capture = "captureObjectItem"
-    private let buttonText = "Done"
+    private let buttonText = "Show Levels"
     private let shooterText = "Rotate the scarab shooter, then tap on the background to shoot."
     private let captureText = "When a ball falls into the scarab, you receive a free ball, but the limit is 10."
 
