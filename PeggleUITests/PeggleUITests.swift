@@ -19,7 +19,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_startButton_launchObject() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
 
         let backgroundImage = app.images["mainMap"]
@@ -30,7 +31,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_DeleteButton_normalObjectDeleted() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
         app.images["mainMap"].tap()
         app.images["delete"].tap()
@@ -39,7 +41,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_DeleteButton_actionObjectDeleted() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["actionObject"].tap()
         app.images["mainMap"].tap()
         app.images["delete"].tap()
@@ -47,56 +50,64 @@ final class PeggleUITests: XCTestCase {
 
     func test_DeleteButton_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["delete"].tap()
         app.images["delete"].tap()
     }
 
     func test_OrangePeg_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["actionObject"].tap()
         app.images["actionObject"].tap()
     }
 
     func test_BluePeg_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
         app.images["normalObject"].tap()
     }
 
     func test_OrangePegBlue_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["actionObject"].tap()
         app.images["normalObject"].tap()
     }
 
     func test_BluePegOrange_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
         app.images["actionObject"].tap()
     }
 
     func test_BluePegDelete_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
         app.images["delete"].tap()
     }
 
     func test_OrangePegDelete_untoggle() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["actionObject"].tap()
         app.images["delete"].tap()
     }
 
     func test_ResetButtonCanvas_cancelBlueReset() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
 
         let backgroundImage = app.images["mainMap"]
@@ -118,7 +129,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_ResetButtonCanvas_cancelOrangeReset() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["actionObject"].tap()
 
         let backgroundImage = app.images["mainMap"]
@@ -140,7 +152,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_ResetButtonCanvas_confirmBlueReset() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["normalObject"].tap()
 
         let backgroundImage = app.images["mainMap"]
@@ -162,7 +175,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_ResetButtonCanvas_confirmOrangeReset() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.images["actionObject"].tap()
 
         let backgroundImage = app.images["mainMap"]
@@ -184,7 +198,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_LoadButtonCanvas_shouldShowSheet() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.buttons["LOAD"].tap()
         app.buttons["Cancel"].tap()
 
@@ -192,7 +207,8 @@ final class PeggleUITests: XCTestCase {
 
     func test_SaveButtonEmptyCanvas_shouldNotSave() {
         app.buttons["scroll"].tap()
-        app.buttons["Done"].tap()
+        app.buttons["Show Levels"].tap()
+        app.buttons["Cancel"].tap()
         app.buttons["SAVE"].tap()
 
         let alert = app.alerts.firstMatch
