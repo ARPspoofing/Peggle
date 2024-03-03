@@ -31,7 +31,7 @@ class MotionObject: GameObject, StateChangeObject, CircularMovableObject {
         self.radius = radius
         self.startPoint = center.deepCopy()
     }
-
+    
     init(center: Point, name: String, velocity: Vector) {
         super.init(center: center, name: name)
         let speedUpFactor = 10.0

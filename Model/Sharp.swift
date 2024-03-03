@@ -130,7 +130,7 @@ class Sharp: GameObject, TriangularMovableObject {
         let newY = initialTop.yCoord + circumradius * (1 - cos(rotationAngle))
         return Point(xCoord: newX, yCoord: newY)
     }
-
+    
     override func changeOrientation(to end: Double) {
         orientation = end
         let newTop = rotateTopPoint(rotationAngle: end)

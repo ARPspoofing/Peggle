@@ -118,9 +118,9 @@ struct Point: Codable {
 }
 
 extension Point: Equatable {
-static func == (lhs: Point, rhs: Point) -> Bool {
-    lhs.xCoord == rhs.xCoord && lhs.yCoord == rhs.yCoord
-    && lhs.radial == rhs.radial && lhs.theta == rhs.theta
+    static func == (lhs: Point, rhs: Point) -> Bool {
+        lhs.xCoord == rhs.xCoord && lhs.yCoord == rhs.yCoord
+        && lhs.radial == rhs.radial && lhs.theta == rhs.theta
     }
 }
 

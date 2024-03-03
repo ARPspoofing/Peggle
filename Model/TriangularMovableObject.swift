@@ -15,7 +15,7 @@ protocol TriangularMovableObject: MovableObject, Polygon {
 
 extension TriangularMovableObject {
 
-     func isIntersecting(with peg: CircularMovableObject) -> Bool {
+    func isIntersecting(with peg: CircularMovableObject) -> Bool {
         let squaredRadius = peg.radius * peg.radius
         for edge in edges {
             guard peg.center.squareDistance(to: edge.start) >= squaredRadius else {
@@ -32,7 +32,7 @@ extension TriangularMovableObject {
         line.distanceFromPointToLine(point: point)
     }
 
-     func edgeIsIntersectingWithPeg(edge: Line, peg: CircularMovableObject) -> Bool {
+    func edgeIsIntersectingWithPeg(edge: Line, peg: CircularMovableObject) -> Bool {
         guard edge.projectionOfPointOntoLineIsOnLine(peg.center) else {
             return false
         }
@@ -42,13 +42,13 @@ extension TriangularMovableObject {
         return edgeIsIntersectingPeg
     }
 
-     func circleInsideTriangle(peg: CircularMovableObject) -> Bool {
+    func circleInsideTriangle(peg: CircularMovableObject) -> Bool {
         pointIsInsideTriangle(point: peg.center)
-            && min(edges[0].squaredLength, edges[1].squaredLength, edges[2].squaredLength)
-            > peg.radius * peg.radius
+        && min(edges[0].squaredLength, edges[1].squaredLength, edges[2].squaredLength)
+        > peg.radius * peg.radius
     }
 
-     func pointIsInsideTriangle(point: Point) -> Bool {
+    func pointIsInsideTriangle(point: Point) -> Bool {
         let totalArea = triangleArea(left: left, top: top, right: right)
         let area1 = triangleArea(left: top, top: left, right: point)
         let area2 = triangleArea(left: left, top: right, right: point)
@@ -58,7 +58,7 @@ extension TriangularMovableObject {
 
     func triangleArea(left: Point, top: Point, right: Point) -> Double {
         abs((left.xCoord - top.xCoord) * (right.yCoord - top.yCoord)
-                   - (right.xCoord - top.xCoord) * (left.yCoord - top.yCoord))
+            - (right.xCoord - top.xCoord) * (left.yCoord - top.yCoord))
     }
 
     func isNotIntersecting(with triangle: TriangularMovableObject) -> Bool {

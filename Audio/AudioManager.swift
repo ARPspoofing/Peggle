@@ -70,7 +70,7 @@ class AudioManager: ObservableObject {
     }
 
     func stopAll() {
-            mainMenuAudioPlayer?.stop()
-            buttonClickAudioPlayer?.stop()
-        }
+        mainMenuAudioPlayer?.stop()
+        buttonClickAudioPlayer?.stop()
+    }
 }

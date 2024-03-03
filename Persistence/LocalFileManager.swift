@@ -218,9 +218,9 @@ class LocalFileManager {
 
     private func getAllItemsInMainFolder() -> [String]? {
         guard let mainFolderURL = FileManager.default
-                .urls(for: .documentDirectory, in: .userDomainMask)
-                .first?
-                .appendingPathComponent(folderName)
+            .urls(for: .documentDirectory, in: .userDomainMask)
+            .first?
+            .appendingPathComponent(folderName)
         else { return nil }
 
         do {

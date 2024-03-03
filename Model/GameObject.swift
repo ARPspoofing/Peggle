@@ -82,7 +82,7 @@ class GameObject: NSObject, Identifiable, Codable, DisappearObject {
     func distance(to object: GameObject) -> Double {
         self.center.distance(to: object.center)
     }
-
+    
     func calcDistance(point: CGPoint) -> Double {
         let newPoint = Point(xCoord: point.x, yCoord: point.y)
         let deltaX = newPoint.xCoord - center.xCoord

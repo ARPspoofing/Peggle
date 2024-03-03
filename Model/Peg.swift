@@ -43,7 +43,7 @@ class Peg: GameObject {
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-
+    
     override func checkBorders() -> Bool {
         checkRightBorder() && checkLeftBorder() && checkBottomBorder() && checkTopBorder()
     }
