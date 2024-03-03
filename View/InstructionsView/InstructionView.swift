@@ -78,14 +78,14 @@ extension InstructionView {
         Button(action: {
             AudioManager.shared.playButtonClickAudio()
             readyToNavigate = true
-            }) {
-                Text(buttonText)
-                    .font(.system(size: fontSize, weight: .bold))
-                    .foregroundColor(.black)
-                    .padding(.horizontal, 100)
-                    .padding(.vertical, 20)
-                    .background(desertDarkBrown)
-                    .cornerRadius(8)
+        }) {
+            Text(buttonText)
+                .font(.system(size: fontSize, weight: .bold))
+                .foregroundColor(.black)
+                .padding(.horizontal, 100)
+                .padding(.vertical, 20)
+                .background(desertDarkBrown)
+                .cornerRadius(8)
         }
     }
 }

@@ -136,9 +136,9 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         let objectToInsert: GameObject = modelMap.getEntity(center: point, type: selectedObject,
                                                             halfWidth: Constants.defaultHalfWidth,
                                                             orientation: 0.0)
-            guard checkCanInsert(objectToInsert) else {
-                return
-            }
+        guard checkCanInsert(objectToInsert) else {
+            return
+        }
         gameObjects.append(objectToInsert)
     }
 

@@ -45,7 +45,7 @@ class CaptureObject: MotionObject {
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-    
+
     func calcTopLine() {
         let top: Point = center.subtract(vector: Vector(horizontal: 0.0, vertical: Constants.defaultCircleDiameter))
         let topLeft: Point = top.subtract(vector:

@@ -42,7 +42,7 @@ struct StatusView: View {
                 StatView(
                     width: countWidth,
                     text: "Total Objects: \(viewModel.countObjects())\n" +
-                          "Orange Pegs: \(viewModel.countActiveObjects())"
+                    "Orange Pegs: \(viewModel.countActiveObjects())"
                 )
             }.background(desertLightBrown)
         }

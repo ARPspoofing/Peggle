@@ -14,17 +14,17 @@ struct PaletteButtonsView: View {
     @EnvironmentObject var viewModel: CanvasViewModel
 
     var body: some View {
-            HStack {
-                pegOptionsDisplay
-                Spacer()
-                rotateOptionDisplay
-                Spacer().frame(width: constants.rotateWidth)
-                resizeOptionDisplay
-                Spacer().frame(width: constants.resizeWidth)
-                deleteOptionDisplay
-            }
-            .padding([.leading, .trailing], constants.leadingPadding)
+        HStack {
+            pegOptionsDisplay
+            Spacer()
+            rotateOptionDisplay
+            Spacer().frame(width: constants.rotateWidth)
+            resizeOptionDisplay
+            Spacer().frame(width: constants.resizeWidth)
+            deleteOptionDisplay
         }
+        .padding([.leading, .trailing], constants.leadingPadding)
+    }
 }
 
 extension PaletteButtonsView {
@@ -39,9 +39,9 @@ extension PaletteButtonsView {
                             ObjectView(name: selectedObject,
                                        isHighlighted: viewModel.selectedObject == selectedObject,
                                        width: constants.objectWidth)
-                                .onTapGesture { _ in
-                                    viewModel.tapObject(selectedObject)
-                                }
+                            .onTapGesture { _ in
+                                viewModel.tapObject(selectedObject)
+                            }
                         } else {
                             Spacer()
                         }
@@ -100,6 +100,7 @@ extension PaletteButtonsView {
                       size: constants.rotateSize)
     }
 }
+
 struct PegButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         PaletteButtonsView().previewInterfaceOrientation(.landscapeLeft)

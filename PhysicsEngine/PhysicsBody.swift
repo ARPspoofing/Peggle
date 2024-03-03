@@ -89,7 +89,7 @@ class PhysicsBody: PhysicsElasticCollision, PhysicsRigidBody {
         let srcVelProj = getProjection(vector: tanVec, velocity: src.velocity)
         return tanVec.scale(srcVelProj)
     }
-    
+
     internal func assignResultantVel(normVel: Vector, tanVel: Vector,
                                      collider: inout PhysicsBody, collidee: inout PhysicsBody) {
         let resultantNormVel = resultantNormVec(normVec: normVel, src: collider, dst: collidee)

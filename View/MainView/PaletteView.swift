@@ -19,9 +19,10 @@ struct PaletteView: View {
                     NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { notif in
                         handleKeyboardWillShow(notif)
                 }
-                .onReceive(NotificationCenter .default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+                    .onReceive(
+                        NotificationCenter .default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
                         handleKeyboardWillHide()
-                }
+                    }
         }
     }
 

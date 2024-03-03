@@ -16,7 +16,7 @@ struct IntroDisplayView: View {
         ZStack {
             Image(base)
             Text(intro)
-            .font(.system(size: fontSize, weight: .bold))
+                .font(.system(size: fontSize, weight: .bold))
         }
     }
 }

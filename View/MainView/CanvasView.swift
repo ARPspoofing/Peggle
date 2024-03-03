@@ -137,20 +137,20 @@ extension CanvasView {
                        isDisappear: object.isDisappear, width: object.halfWidth,
                        orientation: object.orientation, isNoHealth: object.health == 0,
                        health: object.health)
-                .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
-                .onTapGesture {
-                    handleTapGesture(index)
-                }
-                .onLongPressGesture(minimumDuration: Constants.longDuration) {
-                    handleLongPressGesture(index)
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            handleDragGestureChange(index, value)
-                        }
-                        .onEnded { _ in }
-                )
+            .position(x: object.retrieveXCoord(), y: object.retrieveYCoord())
+            .onTapGesture {
+                handleTapGesture(index)
+            }
+            .onLongPressGesture(minimumDuration: Constants.longDuration) {
+                handleLongPressGesture(index)
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        handleDragGestureChange(index, value)
+                    }
+                    .onEnded { _ in }
+            )
         }
     }
 
@@ -206,7 +206,7 @@ extension CanvasView {
             .resizable()
             .opacity(glassOpacity)
             .frame(width: glassWidth, height: glassHeight)
-                        .position(x: glassX, y: glassY)
+            .position(x: glassX, y: glassY)
     }
 }
 

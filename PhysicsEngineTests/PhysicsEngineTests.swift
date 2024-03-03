@@ -164,7 +164,9 @@ final class PhysicsEngineTests: XCTestCase {
         var captureObjects: [CaptureObject] = []
         var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects, captureObjects: &captureObjects, ammo: &ammo)
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
         canvasViewModel.motionObjects = motionObjects

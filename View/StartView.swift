@@ -36,23 +36,23 @@ struct StartView: View {
         NavigationStack {
             ZStack {
                 startScreenDisplay
-                .overlay(
-                    Button(action: {
-                    }) {
-                        ZStack(alignment: .bottom) {
-                        scrollDisplay
+                    .overlay(
                         Button(action: {
-                            AudioManager.shared.playButtonClickAudio()
-                            readyToNavigate = true
                         }) {
-                            textDisplay
+                            ZStack(alignment: .bottom) {
+                                scrollDisplay
+                                Button(action: {
+                                    AudioManager.shared.playButtonClickAudio()
+                                    readyToNavigate = true
+                                }) {
+                                    textDisplay
+                                }
+                                .padding(.bottom, paddingBottom)
+                                .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
+                            }
                         }
-                        .padding(.bottom, paddingBottom)
-                        .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
-                        }
-                    }
-                .padding(paddingSides)
-                )
+                            .padding(paddingSides)
+                    )
                 Text(headingText)
                     .font(.system(size: headingSize, weight: .bold))
                     .font(.title)
@@ -88,7 +88,7 @@ extension StartView {
                     .fill(desertBrown)
                     .overlay(
                         RoundedRectangle(cornerRadius: radius)
-                        .stroke(Color.black, lineWidth: width)
+                            .stroke(Color.black, lineWidth: width)
                     )
             )
             .cornerRadius(radius)

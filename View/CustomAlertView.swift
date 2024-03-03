@@ -178,7 +178,7 @@ struct CustomAlertButton: View {
         NavigationLink(destination: CanvasView(), isActive: $isNavigationActive) {
             EmptyView()
         }
-            .hidden()
+        .hidden()
         Button(action: {
             isNavigationActive = true
         }) {

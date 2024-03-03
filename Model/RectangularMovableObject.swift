@@ -68,9 +68,9 @@ extension RectangularMovableObject {
 
     func pointOnLine(point: Point, line: Line) -> Bool {
         (point.xCoord >= min(line.start.xCoord, line.end.xCoord) &&
-                point.xCoord <= max(line.start.xCoord, line.end.xCoord)) &&
-               (point.yCoord >= min(line.start.yCoord, line.end.yCoord) &&
-                point.yCoord <= max(line.start.yCoord, line.end.yCoord))
+         point.xCoord <= max(line.start.xCoord, line.end.xCoord)) &&
+        (point.yCoord >= min(line.start.yCoord, line.end.yCoord) &&
+         point.yCoord <= max(line.start.yCoord, line.end.yCoord))
     }
 
     func isNotIntersecting(with object: Polygon) -> Bool {
@@ -80,48 +80,48 @@ extension RectangularMovableObject {
             }
         }
         guard self.edges[0].end.xCoord < object.edges[1].start.xCoord
-            && self.edges[1].start.xCoord > object.edges[0].end.xCoord
-            && self.edges[0].end.yCoord < object.edges[1].start.yCoord
-            && self.edges[1].start.yCoord > object.edges[0].end.yCoord else {
+                && self.edges[1].start.xCoord > object.edges[0].end.xCoord
+                && self.edges[0].end.yCoord < object.edges[1].start.yCoord
+                && self.edges[1].start.yCoord > object.edges[0].end.yCoord else {
             return true
         }
         return false
     }
 
-   func checkNoIntersection(with gameObject: GameObject) -> Bool {
-       if let object = gameObject as? CircularMovableObject {
-           return !(isIntersecting(with: object))
-       } else if let object = gameObject as? Polygon {
-           return isNotIntersecting(with: object)
-       } else {
-           return true
-       }
-   }
+    func checkNoIntersection(with gameObject: GameObject) -> Bool {
+        if let object = gameObject as? CircularMovableObject {
+            return !(isIntersecting(with: object))
+        } else if let object = gameObject as? Polygon {
+            return isNotIntersecting(with: object)
+        } else {
+            return true
+        }
+    }
 }
 
 extension RectangularMovableObject {
 
-   func checkRightBorder() -> Bool {
-       self.center.xCoord + self.base / 2 < Constants.screenWidth
-   }
+    func checkRightBorder() -> Bool {
+        self.center.xCoord + self.base / 2 < Constants.screenWidth
+    }
 
-   func checkLeftBorder() -> Bool {
-       self.center.xCoord - self.base / 2 > 0
-   }
+    func checkLeftBorder() -> Bool {
+        self.center.xCoord - self.base / 2 > 0
+    }
 
-   func checkBottomBorder() -> Bool {
-       self.center.yCoord + self.height / 2 < Constants.screenHeight
-   }
+    func checkBottomBorder() -> Bool {
+        self.center.yCoord + self.height / 2 < Constants.screenHeight
+    }
 
-   func checkBottomBorderGame() -> Bool {
-       self.center.yCoord + self.height / 2 < Constants.gameHeight
-   }
+    func checkBottomBorderGame() -> Bool {
+        self.center.yCoord + self.height / 2 < Constants.gameHeight
+    }
 
-   func checkTopBorder() -> Bool {
-       self.center.yCoord - self.height / 2 > Constants.topWidth
-   }
+    func checkTopBorder() -> Bool {
+        self.center.yCoord - self.height / 2 > Constants.topWidth
+    }
 
-   func getArea() -> Double {
-       base * height
-   }
+    func getArea() -> Double {
+        base * height
+    }
 }

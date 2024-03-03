@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MotionObjectView: View {
-
     private let name: String = "motionObject"
     private var isHighlighted = false
     private let defaultDiameter = 50.0
