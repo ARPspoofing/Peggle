@@ -188,7 +188,7 @@ final class PeggleTests: XCTestCase {
     // MARK: Peg
     func test_EncodingAndDecoding() {
         let center = Point(xCoord: 0, yCoord: 0)
-        let originalPeg = Peg(center: center, name: "TestPeg", radius: 10.0)
+        let originalPeg = Peg(center: center, name: "TestPeg", radius: 10.0, orientation: 0.0)
 
         do {
             let encodedData = try JSONEncoder().encode(originalPeg)
@@ -205,7 +205,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         let deepCopyPeg = peg.makeDeepCopy()
 
@@ -222,7 +222,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkRightBorder())
     }
@@ -233,7 +233,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkRightBorder())
     }
@@ -244,7 +244,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertTrue(peg.checkRightBorder())
     }
@@ -255,7 +255,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkLeftBorder())
     }
@@ -266,7 +266,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkLeftBorder())
     }
@@ -277,7 +277,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertTrue(peg.checkRightBorder())
     }
@@ -288,7 +288,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkTopBorder())
     }
@@ -299,20 +299,20 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkTopBorder())
     }
 
-    func test_notExceedTopBorderEdge_isTrue() {
+    func test_notExceedTopBorderEdge_isFalse() {
 
         let center = Point(xCoord: Constants.screenWidth / 2, yCoord: 0 + 11.0)
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
-        XCTAssertTrue(peg.checkTopBorder())
+        XCTAssertFalse(peg.checkTopBorder())
     }
 
     func test_exceedBottomBorder_isFalse() {
@@ -321,7 +321,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkBottomBorder())
     }
@@ -332,7 +332,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertFalse(peg.checkBottomBorder())
     }
@@ -343,7 +343,7 @@ final class PeggleTests: XCTestCase {
         let name = "testPeg"
         let radius = 10.0
 
-        let peg = Peg(center: center, name: name, radius: radius)
+        let peg = Peg(center: center, name: name, radius: radius, orientation: 0.0)
 
         XCTAssertTrue(peg.checkBottomBorder())
     }

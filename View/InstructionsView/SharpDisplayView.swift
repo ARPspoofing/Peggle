@@ -2,7 +2,7 @@
 //  SharpDisplayView.swift
 //  Peggle
 //
-//  Created by Muhammad  Reyaaz on 29/2/24.
+//  Created by Muhammad Reyaaz on 29/2/24.
 //
 
 import SwiftUI

@@ -47,7 +47,6 @@ class AudioManager: ObservableObject {
 
     private func play(fileName: String, isLooping: Bool, player: inout AVAudioPlayer?) {
         guard let soundURL = Bundle.main.url(forResource: fileName, withExtension: "mp3") else {
-            print(notFound)
             return
         }
         do {

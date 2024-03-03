@@ -152,7 +152,6 @@ class CanvasViewModel: ObservableObject, GameEngineDelegate {
         guard checkCanDrag(objectDeepCopy, index) else {
             return
         }
-        print("can drag")
         object.changeCenter(newCenter: newPoint)
         gameObjects[index] = object
     }

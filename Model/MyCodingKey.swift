@@ -2,7 +2,7 @@
 //  MyCodingKey.swift
 //  Peggle
 //
-//  Created by Muhammad  Reyaaz on 18/2/24.
+//  Created by Muhammad Reyaaz on 18/2/24.
 //
 
 struct MyCodingKey: CodingKey {

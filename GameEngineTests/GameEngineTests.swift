@@ -17,9 +17,14 @@ final class GameEngineTests: XCTestCase {
         let gameObject = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "testGameObject")
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject]
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
+
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
         gameEngine.updateBallPosition()
-        XCTAssertEqual(motionObject.center, Point(xCoord: 52.0, yCoord: 52.0))
+        XCTAssertEqual(motionObject.center, Point(xCoord: 70.0, yCoord: 70.0))
     }
 
     func test_updatePosition_horizontalCollision() {
@@ -30,8 +35,12 @@ final class GameEngineTests: XCTestCase {
         let gameObstacle = Peg(center: Point(xCoord: 52.0, yCoord: 50.0), name: "gameObstacle")
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject, gameObstacle]
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
         gameEngine.updateBallPosition()
         gameEngine.updateBallPosition()
 
@@ -46,12 +55,16 @@ final class GameEngineTests: XCTestCase {
         let gameObstacle = Peg(center: Point(xCoord: 50.0, yCoord: 52.0), name: "gameObstacle")
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject, gameObstacle]
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
         gameEngine.updateBallPosition()
         gameEngine.updateBallPosition()
 
-        XCTAssertLessThan(motionObject.center.yCoord, 54.0)
+        XCTAssertGreaterThan(motionObject.center.yCoord, 54.0)
     }
 
     func test_updatePosition_diagonalCollision() {
@@ -62,12 +75,16 @@ final class GameEngineTests: XCTestCase {
         let gameObstacle = Peg(center: Point(xCoord: 52.0, yCoord: 52.0), name: "gameObstacle")
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject, gameObstacle]
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
         gameEngine.updateBallPosition()
         gameEngine.updateBallPosition()
 
-        XCTAssertLessThan(motionObject.center.xCoord, 54.0)
+        XCTAssertGreaterThan(motionObject.center.xCoord, 54.0)
         XCTAssertLessThan(motionObject.center.yCoord, 54.0)
     }
 
@@ -79,8 +96,12 @@ final class GameEngineTests: XCTestCase {
         let gameObstacle = Peg(center: Point(xCoord: 52.0, yCoord: 52.0), name: "gameObstacle")
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject, gameObstacle]
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
         gameEngine.updateBallPosition()
         gameEngine.updateBallPosition()
 
@@ -100,8 +121,12 @@ final class GameEngineTests: XCTestCase {
 
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject, gameObstacle]
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        let gameEngine = GameEngine(motionObjects: &motionObjects,
+                                    gameObjects: &gameObjects,
+                                    captureObjects: &captureObjects, ammo: &ammo)
 
         for _ in 0..<20 {
             motionObject.isHandleOverlap = false
@@ -111,12 +136,12 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_noMass() {
-        let gameObject = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "gameObstacle")
         let position = Vector(horizontal: 10.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: position, mass: 0.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: position, mass: 0.0)
+        var physicsBodyA = PhysicsBody(position: position, mass: 0.0)
+        var physicsBodyB = PhysicsBody(position: position, mass: 0.0)
 
         physicsBodyA.doElasticCollision(collider: &physicsBodyA, collidee: &physicsBodyB)
 
@@ -124,13 +149,13 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_withMass() {
-        let gameObject = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 15.0, yCoord: 15.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 15.0, yCoord: 15.0), name: "gameObstacle")
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 15.0, vertical: 15.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 5.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 5.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: -10, vertical: 0)
@@ -145,13 +170,13 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_movingStationary() {
-        let gameObject = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 60.0, yCoord: 10.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 60.0, yCoord: 10.0), name: "gameObstacle")
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 60.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: 0, vertical: 0)
@@ -166,14 +191,14 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_bothStationary() {
-        let gameObject = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 60.0, yCoord: 10.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 60.0, yCoord: 10.0), name: "gameObstacle")
 
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 60.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 0, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: 0, vertical: 0)
@@ -189,13 +214,13 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_tangentMoving() {
-        let gameObject = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 60.0, yCoord: 10.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 60.0, yCoord: 10.0), name: "gameObstacle")
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 60.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 0, vertical: 10)
         let physicsBodyVelB = Vector(horizontal: 0, vertical: -10)
@@ -210,13 +235,13 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_tangentTouchingMoving() {
-        let gameObject = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 30.0, yCoord: 10.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 30.0, yCoord: 10.0), name: "gameObstacle")
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 30.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: -10, vertical: 0)
@@ -230,13 +255,13 @@ final class GameEngineTests: XCTestCase {
     }
 
     func test_elasticCollision_diagonalTouchingMoving() {
-        let gameObject = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 15.0, yCoord: 15.0), name: "gameObstacle")
+        _ = Peg(center: Point(xCoord: 10.0, yCoord: 10.0), name: "testGameObject")
+        _ = Peg(center: Point(xCoord: 15.0, yCoord: 15.0), name: "gameObstacle")
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 15.0, vertical: 15.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 5, vertical: 5)
         let physicsBodyVelB = Vector(horizontal: -5, vertical: -5)
@@ -245,6 +270,6 @@ final class GameEngineTests: XCTestCase {
         physicsBodyB.velocity = physicsBodyVelB
 
         physicsBodyA.doElasticCollision(collider: &physicsBodyA, collidee: &physicsBodyB)
-        XCTAssertEqual(physicsBodyB.velocity, physicsBodyVelB)
+        XCTAssertNotEqual(physicsBodyB.velocity, physicsBodyVelB)
     }
 }

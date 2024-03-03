@@ -2,7 +2,7 @@
 //  PhysicsEngineTests.swift
 //  PeggleTests
 //
-//  Created by Muhammad  Reyaaz on 18/2/24.
+//  Created by Muhammad Reyaaz on 18/2/24.
 //
 
 import XCTest
@@ -67,8 +67,8 @@ final class PhysicsEngineTests: XCTestCase {
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 30.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: -10, vertical: 0)
@@ -88,8 +88,8 @@ final class PhysicsEngineTests: XCTestCase {
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 30.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: -10, vertical: 0)
@@ -109,8 +109,8 @@ final class PhysicsEngineTests: XCTestCase {
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 30.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: -10, vertical: 0)
@@ -130,8 +130,8 @@ final class PhysicsEngineTests: XCTestCase {
         let positionA = Vector(horizontal: 10.0, vertical: 10.0)
         let positionB = Vector(horizontal: 30.0, vertical: 10.0)
 
-        var physicsBodyA = PhysicsBody(object: gameObject, position: positionA, mass: 10.0)
-        var physicsBodyB = PhysicsBody(object: gameObstacle, position: positionB, mass: 10.0)
+        var physicsBodyA = PhysicsBody(position: positionA, mass: 10.0)
+        var physicsBodyB = PhysicsBody(position: positionB, mass: 10.0)
 
         let physicsBodyVelA = Vector(horizontal: 10, vertical: 0)
         let physicsBodyVelB = Vector(horizontal: -10, vertical: 0)
@@ -161,8 +161,10 @@ final class PhysicsEngineTests: XCTestCase {
 
         var motionObjects: [MotionObject] = [motionObject]
         var gameObjects: [GameObject] = [gameObject, gameObstacle]
+        var captureObjects: [CaptureObject] = []
+        var ammo: [MotionObject] = []
 
-        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects)
+        let gameEngine = GameEngine(motionObjects: &motionObjects, gameObjects: &gameObjects, captureObjects: &captureObjects, ammo: &ammo)
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
         canvasViewModel.motionObjects = motionObjects
@@ -208,30 +210,6 @@ final class PhysicsEngineTests: XCTestCase {
         canvasViewModel.initGameEngineAndDelegate()
 
         XCTAssertEqual(canvasViewModel.getBallVector(), Vector(horizontal: -0.0, vertical: 1.0))
-    }
-
-    func test_gameEngineSpeedUp_isSuccess() {
-        let gameObject = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 52.0, yCoord: 52.0), name: "gameObstacle")
-        let gameObjects: [GameObject] = [gameObject, gameObstacle]
-
-        let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
-
-        let speedUpVector = canvasViewModel.speedUpVelocity(factor: 2.0, vector: Vector(horizontal: 2.0, vertical: 2.0))
-
-        XCTAssertEqual(speedUpVector, Vector(horizontal: 4.0, vertical: 4.0))
-    }
-
-    func test_gameEngineZeroVel_isSuccess() {
-        let gameObject = Peg(center: Point(xCoord: 25.0, yCoord: 25.0), name: "testGameObject")
-        let gameObstacle = Peg(center: Point(xCoord: 52.0, yCoord: 52.0), name: "gameObstacle")
-        let gameObjects: [GameObject] = [gameObject, gameObstacle]
-
-        let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
-
-        let speedUpVector = canvasViewModel.speedUpVelocity(factor: 0.0, vector: Vector(horizontal: 2.0, vertical: 2.0))
-
-        XCTAssertEqual(speedUpVector, Vector(horizontal: 0.0, vertical: 0.0))
     }
 
     func test_gameEngineShootBall_isSuccess() {

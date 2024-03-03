@@ -20,11 +20,12 @@ class CoreDataManager: ObservableObject {
     private let errorLoadingPrompt = "Level not found!"
     private let errorDetingLevelFolder = "Error deleting level folder!"
     private let emptyErrorMessage = ""
-
     private let successSavingLevelMessage = "Successfully saved level!"
     private let successDelete = "Success deleting level."
-
     private let failedToSaveLevel = "Failed to save level!"
+    private let firstLevelData = "firstLevelData"
+    private let secondLevelData = "secondLevelData"
+    private let thirdLevelData = "thirdLevelData"
 
     let container: NSPersistentContainer
     let context: NSManagedObjectContext
@@ -180,19 +181,19 @@ class CoreDataManager: ObservableObject {
 
     func getFirstPreLevel() -> [GameObject] {
         var firstLevel = FirstLevel()
-        firstLevel.level = Optional(String(getLevelData("firstLevelData")))
+        firstLevel.level = Optional(String(getLevelData(firstLevelData)))
         return getObjectsPreloadedLevel(firstLevel)
     }
 
     func getSecondPreLevel() -> [GameObject] {
         var secondLevel = SecondLevel()
-        secondLevel.level = Optional(String(getLevelData("secondLevelData")))
+        secondLevel.level = Optional(String(getLevelData(secondLevelData)))
         return getObjectsPreloadedLevel(secondLevel)
     }
 
     func getThirdPreLevel() -> [GameObject] {
         var thirdLevel = ThirdLevel()
-        thirdLevel.level = Optional(String(getLevelData("thirdLevelData")))
+        thirdLevel.level = Optional(String(getLevelData(thirdLevelData)))
         return getObjectsPreloadedLevel(thirdLevel)
     }
 

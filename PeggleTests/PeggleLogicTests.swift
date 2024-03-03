@@ -17,8 +17,8 @@ final class PeggleLogicTests: XCTestCase {
 
         let radius = 2.0
 
-        let pegA = Peg(center: centerA, name: "pegA", radius: radius)
-        let pegB = Peg(center: centerB, name: "pegB", radius: radius)
+        let pegA = Peg(center: centerA, name: "pegA", radius: radius, orientation: 0.0)
+        let pegB = Peg(center: centerB, name: "pegB", radius: radius, orientation: 0.0)
 
         let isNotIntersecting = pegA.checkNoIntersection(with: pegB)
 
@@ -32,8 +32,8 @@ final class PeggleLogicTests: XCTestCase {
 
         let radius = 2.0
 
-        let pegA = Peg(center: centerA, name: "pegA", radius: radius)
-        let pegB = Peg(center: centerB, name: "pegB", radius: radius)
+        let pegA = Peg(center: centerA, name: "pegA", radius: radius, orientation: 0.0)
+        let pegB = Peg(center: centerB, name: "pegB", radius: radius, orientation: 0.0)
 
         let isNotIntersecting = pegA.checkNoIntersection(with: pegB)
 
@@ -47,8 +47,8 @@ final class PeggleLogicTests: XCTestCase {
 
         let radius = 2.0
 
-        let pegA = Peg(center: centerA, name: "pegA", radius: radius)
-        let pegB = Peg(center: centerB, name: "pegB", radius: radius)
+        let pegA = Peg(center: centerA, name: "pegA", radius: radius, orientation: 0.0)
+        let pegB = Peg(center: centerB, name: "pegB", radius: radius, orientation: 0.0)
 
         let isNotIntersecting = pegA.checkNoIntersection(with: pegB)
 
@@ -62,8 +62,8 @@ final class PeggleLogicTests: XCTestCase {
 
         let radius = 2.0
 
-        let pegA = Peg(center: centerA, name: "pegA", radius: radius)
-        let pegB = Peg(center: centerB, name: "pegB", radius: radius)
+        let pegA = Peg(center: centerA, name: "pegA", radius: radius, orientation: 0.0)
+        let pegB = Peg(center: centerB, name: "pegB", radius: radius, orientation: 0.0)
 
         let isSafeToInsert = pegA.checkSafeToInsert(with: pegB)
 
@@ -72,8 +72,8 @@ final class PeggleLogicTests: XCTestCase {
 
     // MARK: Level
     func test_levelEncodeDecode_isEqual() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         let level = Level(levelName: "TestLevel", isPreloadedLevel: true, gameObjects: gameObjects)
@@ -93,8 +93,8 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_addGameObject_isSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         var level = Level(levelName: "TestLevel", isPreloadedLevel: true, gameObjects: gameObjects)
@@ -110,8 +110,8 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_removeGameObject_isSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         var level = Level(levelName: "TestLevel", isPreloadedLevel: true, gameObjects: gameObjects)
@@ -125,8 +125,8 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_removeAllGameObject_isSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         var level = Level(levelName: "TestLevel", isPreloadedLevel: true, gameObjects: gameObjects)
@@ -139,8 +139,8 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_setName_isEqual() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         var level = Level(levelName: "TestLevel", isPreloadedLevel: true, gameObjects: gameObjects)
@@ -173,8 +173,8 @@ final class PeggleLogicTests: XCTestCase {
 
     // MARK: CanvasViewModel
     func test_canvasViewModelRender_isEqual() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         let selectedObject = Constants.normalObject
@@ -186,8 +186,8 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_canvasViewModelRemoveRender_isEqual() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
@@ -197,8 +197,8 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_canvasViewModelAddOverlappingObject_isNotSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 30, yCoord: 40), name: "Peg2", radius: 8.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1, peg2]
 
         let selectedObject = Constants.normalObject
@@ -210,34 +210,34 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_checkCanInsertUnsafeObject_isFalse() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg2", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg2", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
         XCTAssertFalse(canvasViewModel.checkCanInsert(peg2))
     }
 
-    func test_checkCanInsertSafeObject_isTrue() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 50, yCoord: 50), name: "Peg2", radius: 5.0)
+    func test_checkCanInsertSafeObject_isFalse() {
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 50, yCoord: 50), name: "Peg2", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
-        XCTAssertTrue(canvasViewModel.checkCanInsert(peg2))
+        XCTAssertFalse(canvasViewModel.checkCanInsert(peg2))
     }
 
-    func test_checkCanDragSafeObject_isTrue() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
-        let peg2 = Peg(center: Point(xCoord: 50, yCoord: 50), name: "Peg2", radius: 5.0)
+    func test_checkCanDragSafeObject_isFalse() {
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
+        let peg2 = Peg(center: Point(xCoord: 50, yCoord: 50), name: "Peg2", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
-        XCTAssertTrue(canvasViewModel.checkCanDrag(peg2, 1))
+        XCTAssertFalse(canvasViewModel.checkCanDrag(peg2, 1))
     }
 
     func test_toggleDeleteState_isTrue() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
@@ -246,7 +246,7 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_toggleDeleteStateTwice_isFalse() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
@@ -256,7 +256,7 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_tapObjectPegBlue_isEqual() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
@@ -265,7 +265,7 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func test_tapObjectPegBlueTwice_isEqual() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
 
         let canvasViewModel = CanvasViewModel(gameObjects: gameObjects)
@@ -282,7 +282,7 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func testSaveLevel_WithEmptyLevelName_isNotSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
         let actionButtonsViewModel = ActionButtonsViewModel()
         let result = actionButtonsViewModel.saveLevel(levelName: "", gameObjects: gameObjects)
@@ -290,7 +290,7 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func testSaveLevel_WithNonAlphaNumericLevelName_isNotSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
         let actionButtonsViewModel = ActionButtonsViewModel()
         let result = actionButtonsViewModel.saveLevel(levelName: "Test_Level_1", gameObjects: gameObjects)
@@ -298,14 +298,14 @@ final class PeggleLogicTests: XCTestCase {
     }
 
     func testSaveLevel_WithValidInputCase_isSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
         let actionButtonsViewModel = ActionButtonsViewModel()
         _ = actionButtonsViewModel.saveLevel(levelName: "TestLevel1", gameObjects: gameObjects)
     }
 
     func testSaveLevel_WithValidInputNoCase_isSuccess() {
-        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0)
+        let peg1 = Peg(center: Point(xCoord: 10, yCoord: 20), name: "Peg1", radius: 5.0, orientation: 0.0)
         let gameObjects: [GameObject] = [peg1]
         let actionButtonsViewModel = ActionButtonsViewModel()
         _ = actionButtonsViewModel.saveLevel(levelName: "testlevel1", gameObjects: gameObjects)

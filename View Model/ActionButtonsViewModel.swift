@@ -73,10 +73,9 @@ class ActionButtonsViewModel: ObservableObject {
     }
 
     func saveLevels() {
-        print(manager.getFirstPreLevel())
-        savePreloadedLevel(name: "firstLevel", manager.getFirstPreLevel())
-        savePreloadedLevel(name: "secondLevel", manager.getSecondPreLevel())
-        savePreloadedLevel(name: "thirdLevel", manager.getThirdPreLevel())
+        savePreloadedLevel(name: constants.firstLevel, manager.getFirstPreLevel())
+        savePreloadedLevel(name: constants.secondLevel, manager.getSecondPreLevel())
+        savePreloadedLevel(name: constants.thirdLevel, manager.getThirdPreLevel())
     }
 
     func savePreloadedLevel(name: String, _ decodedLevelObjects: [GameObject]) {
