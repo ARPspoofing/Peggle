@@ -674,6 +674,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When blue peg is selected:
       - Tapping on an empty canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the blue peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the blue peg
@@ -684,6 +686,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When orange peg is selected:
       - Tapping on an empty canvas should display the orange peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the orange peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the orange peg
@@ -693,6 +697,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When purple peg is selected:
       - Tapping on an empty canvas should display the purple peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the purple peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the purple peg
@@ -702,6 +708,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When green peg is selected:
       - Tapping on an empty canvas should display the green peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the green peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the green peg
@@ -711,6 +719,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When yellow peg is selected:
       - Tapping on an empty canvas should display the yellow peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the yellow peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the yellow peg
@@ -720,6 +730,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When grey peg is selected:
       - Tapping on an empty canvas should display the grey peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the grey peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the grey peg
@@ -729,6 +741,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When pink peg is selected:
       - Tapping on an empty canvas should display the pink peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the pink peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the pink peg
@@ -738,6 +752,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When sarcophagus peg is selected:
       - Tapping on an empty canvas should display the sarcophagus peg at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the sarcophagus peg at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the sarcophagus peg
@@ -747,6 +763,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When blue triangle is selected:
       - Tapping on an empty canvas should display the blue triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the blue triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the blue triangle
@@ -756,6 +774,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When orange triangle is selected:
       - Tapping on an empty canvas should display the orange triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the orange triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the orange triangle
@@ -765,6 +785,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When purple triangle is selected:
       - Tapping on an empty canvas should display the purple triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the purple triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the purple triangle
@@ -774,6 +796,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When green triangle is selected:
       - Tapping on an empty canvas should display the green triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the green triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the green triangle
@@ -783,6 +807,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When yellow triangle is selected:
       - Tapping on an empty canvas should display the yellow triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the yellow triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the yellow triangle
@@ -792,6 +818,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When grey triangle is selected:
       - Tapping on an empty canvas should display the grey triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the grey triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the grey triangle
@@ -801,6 +829,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When pink triangle is selected:
       - Tapping on an empty canvas should display the pink triangle at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the pink triangle at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the pink triangle
@@ -810,6 +840,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 
     - When pyramid is selected:
       - Tapping on an empty canvas should display the pyramid at that location
+      - Tapping on a valid location in the canvas should display the blue peg at that location
+      - Tapping on a valid location in the canvas should increase total object count in status bar by 1
       - Tapping on canvas with pegs at a spot which is not near other pegs should display the pyramid at that location
       - Long pressing (1 second) on any peg of any color should delete the peg.
       - Tapping at the end of the screen should not render the pyramid
@@ -893,6 +925,7 @@ I have also inserted screenshots depicting the intended UI views of various acti
          - Tapping on the cancel in the start confirmation should not start the game
          - Tapping on the start in the start confirmation should display the cannon at the top center of the canvas
          - Tapping on start in the start confirmation should remove the palette options and display the full background
+         - Starting a game will start decreasing the time remaining
 
    - Game Engine:
       - Cannon:
@@ -905,6 +938,7 @@ I have also inserted screenshots depicting the intended UI views of various acti
          - Tapping on the existing game objects should not launch the ball
          - Dragging and then releasing should not launch the ball, but only change the cannon head's rotation
          - Tapping on the screen should not change any orientation of the existing game objects
+         - Shooting a ball should decrease ammo count by 1
       
       - CannonBall:
          - Launching a ball directly straight down should not cause the ball the change any directions
@@ -1002,6 +1036,12 @@ I have also inserted screenshots depicting the intended UI views of various acti
             - Glowing should not change the triangle object to an triangle object
             - Lighting up should not change the triangle object to an triangle object
             - Removing from gameplay should not change the triangle object to an triangle object
+          
+          - CaptureObject (Bucket)
+            - Starting the game should make the capture object move horizontally
+            - Spook power up mode should make the ammo ball bounce off the top of the capture object
+            - In non-spook power up, an ammo ball falling into the capture object should increase ammo count by one
+            - In non-spook power up, an ammo ball falling into the capture object should display a rainbow confetti animation 
 
 ## Written Answers
 
