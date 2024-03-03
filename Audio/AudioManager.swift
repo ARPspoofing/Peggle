@@ -21,6 +21,10 @@ class AudioManager: ObservableObject {
     let game = "gameAudio"
     let victory = "victoryAudio"
     let button = "buttonClickAudio"
+    let angel = "angelAudio"
+    let blast = "blastAudio"
+    let cannon = "cannonAudio"
+    let spooky = "spookyAudio"
     let notFound = "Sound file not found"
 
     init() {}
@@ -43,6 +47,22 @@ class AudioManager: ObservableObject {
 
     func playGameOverAudio(isLooping: Bool = false) {
         play(fileName: gameOver, isLooping: isLooping, player: &mainMenuAudioPlayer)
+    }
+
+    func playAngelAudio(isLooping: Bool = false) {
+        play(fileName: angel, isLooping: isLooping, player: &buttonClickAudioPlayer)
+    }
+
+    func playBlastAudio(isLooping: Bool = false) {
+        play(fileName: blast, isLooping: isLooping, player: &buttonClickAudioPlayer)
+    }
+
+    func playCannonAudio(isLooping: Bool = false) {
+        play(fileName: cannon, isLooping: isLooping, player: &buttonClickAudioPlayer)
+    }
+
+    func playSpookyAudio(isLooping: Bool = false) {
+        play(fileName: spooky, isLooping: isLooping, player: &buttonClickAudioPlayer)
     }
 
     private func play(fileName: String, isLooping: Bool, player: inout AVAudioPlayer?) {

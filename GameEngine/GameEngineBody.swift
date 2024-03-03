@@ -136,9 +136,11 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
                 continue
             }
             if object.isReappear {
+                AudioManager.shared.playSpookyAudio()
                 handleBounce(for: &mutatableCaptureObject, and: &object)
             } else {
                 object.isAdd = true
+                AudioManager.shared.playAngelAudio()
             }
         }
     }
@@ -161,6 +163,9 @@ class GameEngineBody: GameEngineWorld, CollisionGameEngine, GravityGameEngine {
 
     internal func toggleBlast(for gameObject: inout GameObject) {
         if gameObject.isBlast && !gameObject.hasBlasted {
+            AudioManager.shared.playBlastAudio()
+            //AudioManager.shared.playSpookyAudio()
+            //AudioManager.shared.playAngelAudio()
             var blastObjects: [GameObject] = getBlastObjects(from: &gameObject)
             setObjectsActive(gameObjects: &blastObjects)
         }

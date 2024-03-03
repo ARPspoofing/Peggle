@@ -103,6 +103,7 @@ extension CanvasViewModel {
         guard !isShooting, !isAnimating, !remainingAmmo.isEmpty else {
             return
         }
+        AudioManager.shared.playCannonAudio()
         isShooting = true
         isDoneShooting = false
         isShowingCircle = true
