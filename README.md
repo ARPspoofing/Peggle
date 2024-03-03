@@ -18,7 +18,6 @@
    some exceptions may be made as long as code quality is not compromised.
 3. Do not burn out. Have fun!
 
-
 ## Notes
 
 To input a direction, players must drag across the screen to rotate the cannon head. If the drag registers successfully, the cannon head will rotate towards the direction of the drag while the user is dragging.
@@ -410,18 +409,110 @@ The conditions are similar to the original Peggle game.
 - If there are no ammo balls left and there is still orange pegs, the player loses.
 - If there is one ammo ball left, and the player activated spook ball, the spook ball must clear all orange pegs within 5 seconds, otherwise the player loses.
 - If there is one ammo ball left, and the player did not activate spook ball, and the ammo ball falls into the capture bucket, the player does not lose because an additional ammo ball will be given everytime an ammo ball falls into the capture bucket.
+- The score system is merely for the user to compete with the user's previous scores. There is no limit to the actual score, and hitting a certain score will not win the game unless all the orange pegs have been removed within 60 seconds
 
 ## Level Designer Additional Features
 
 ### Peg Rotation
-Please explain how the player rotates the triangular pegs.
+The player first selects the rotate button in the palette buttons. (Insert image) Then, the player presses on the game object intended for rotation, and drags clockwise or anti clockwise. The rotation would be about the center of the peg. After the player is satisfied with the newly rotated game object, the player will have to unselect the rotation mode. This can be done in two ways:
+- Tap again on the rotate button
+- Tap on any of the other palette button options
+
+Here is one of the many possibility of having rotated game objects: [Insert Image]
+
+For rotation, the same rules of no overlapping pegs/blocks at any time still apply. One should be able to rotate as long as they are not superimposed with others at any time, including when the user's finger is still on the screen.
+
+Note that the pegs/blocks is able to be rotated to any angle from 0 to 360 degrees (or 0 to 2pi in Radians)
+
+While the rotated circle has no effect on the actual intersection handler, the image does indeed rotate as seen by the change in lighting orientation of the circle.
 
 ### Peg Resizing
-Please explain how the player resizes the pegs.
+The player first selects the resize button (insert image). Then, the player presses on the game object intended for resizing, and drags outwards from the center of the game object towards the borders of the screen to resize it to become bigger, and drag inwards towards the center to resize it to become smaller.
+
+The minimum size is the default size of the game objects. The maximum size is 4 times the area of the minimum size. Hence, this abides by the requirement of: the maximum size (if it exists) should be at least 4 times the size of the minimum size (if it exists) in area (i.e. 2 times the radius).
+
+For resizing, the same rules of no overlapping pegs/blocks at any time still apply. One should be able to resize as long as they are not superimposed with others at any time, including when the user's finger is still on the screen.
+
+Here is one of the many possibility of having resized game objects: [Insert Image]
+
+Also, the combination of resized and rotated objects should still apply the same rules of no overlapping pegs/blocks at any time.
+
+Here is one of the many possibility of having resized and rotated game objects: [Insert Image]
 
 ## Bells and Whistles
-Please write all of the additional features that you have implemented so that
-your grader can award you credit.
+
+### Sound effect and music
+
+- A background music for the level designer and main menu.
+
+- A background music for the gameplay.
+
+- Click sounds that get played when start and Show Levels buttons are tapped
+
+- Cannon shoot sound
+
+- Angel sound when there is a free ball when the bucket is hit
+
+- A victory sound when the game is won
+
+- A retry sound when the game is lost
+
+- An explosion sound effect when an orange peg is hit (kaboom power-up)
+
+- A ghostly sound effect when the green peg is hit (spooky power-up)
+
+
+### Score system
+
+- Blue peg (normal object): 10 points
+- Green peg (spooky object): 10 points
+- Orange peg (action object): 100 points
+- Purple peg (oscillate object): 500 points
+
+### Status Bar
+
+- Displaying the total number of balls left in game
+- Displaying the total number of balls left in level designer
+- Displaying the total number of orange pegs left in game
+- Displaying the total number of orange pegs left in level designer
+- Displaying the time remaining in seconds in the game
+- Displaying the total ammo left in the game (initially 10)
+- Displaying the score count with animating increasing number style in game
+
+### Instructions Page (insert image here)
+
+- Displaying the instruction of how to use the cannon with animation of the cannon rotating
+- Displaying the instruction of how the capture object works with animation of the capture object moving
+- Displaying the instruction of special game objects with blinking animation
+- Displaying the information of egyptian theme game objects
+   - The rectangular obstacle is represented as a sarcophagus
+   - A special themed triangular object represented as a pyramid
+
+### Ancient Egypt Theme
+
+- Start page with Ancient Egypt theme and sound
+- Instruction page with Ancient Egypt theme and sound
+- Level designer page with Ancient Egypt theme and sound
+- Ancient Egypt scarab shooter as the cannon (insert image)
+- Ancient Egypt scarab bettle as the capture bucket object (insert image)
+
+### Styling
+- Ball trajectory from the cannon in the game
+- Exploding blast white effect when kaboom object is hit
+- Rainbow effect when ammo falls into capture object when spook is not activated
+- When spook is activated, the capture object closes and the ammo ball will bounce off it, like in the original Peggle game
+- Ammmo glass panel at the side to with animation of reloading the cannon
+- Special golden ammo instead of regular grey ammo to represent abundance of wealth and gold in Ancient Egypt
+- Removal of cannon when game is over to simulate more like an actual game
+- Custom alert rather than the normal iOS alert
+- Custom alert that displays win or retry status
+- Triangular objects that was not required in the problem set but still implemented. Has also intersection handling with rectangular and circular objects
+- Fading animation of palette objects when level naming text field is active for smoothing efffect so that the user will be able to see what is being typed
+- Multiple colored pegs implemented for more realistic game simulation
+- Each colored peg has its own corresponding color glow when it is being hit (a triangular obstacle and a rectangular obstacle will not have a glow because they are merely obstacles. Only circular pegs will have glow)
+- One-by-one pop out animation similar to the peggle game play
+- Health bar and remaining health left text on top of the opacity to display health status
+
 
 ## Tests
  TODO: Update link
