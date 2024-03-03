@@ -70,9 +70,12 @@ struct ModelMap {
     func getEntityScore(for object: GameObject) -> Double {
         let entityScore: [String: Double] = [
             Constants.normalObject: 10.0,
-            Constants.reappearObject: 10.0,
             Constants.actionObject: 100.0,
-            Constants.oscillateObject: 500.0
+            Constants.oscillateObject: 500.0,
+            Constants.reappearObject: 10.0,
+            Constants.glowObject: 20.0,
+            Constants.solidObject: 30.0,
+            Constants.bounceObject: 40.0
         ]
         return entityScore[object.name] ?? 0.0
     }

@@ -47,7 +47,7 @@ struct Constants {
     static var gameHeight = UIScreen.main.bounds.size.height
     static var canvasHeight = UIScreen.main.bounds.size.height * 0.8
     static var screenHeight = UIScreen.main.bounds.size.height * 0.8
-    static var paletteHeight = UIScreen.main.bounds.size.height * 0.15
+    static var paletteHeight = UIScreen.main.bounds.size.height * 0.18
     static var activeHeight = UIScreen.main.bounds.size.height * 0.1
     static let defaultHalfWidth: CGFloat = 25
 

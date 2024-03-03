@@ -452,8 +452,11 @@ Additionally, the combination of resized and rotated objects should still adhere
 
 - Blue peg (normal object): 10 points
 - Green peg (spooky object): 10 points
-- Orange peg (action object): 100 points
+- Orange peg (action kaboom object): 100 points
 - Purple peg (oscillate object): 500 points
+- Yellow peg (normal object): 20 points
+- Grey peg (normal object): 30 points
+- Pink peg (normal object): 40 points
 
 ### Status Bar
 

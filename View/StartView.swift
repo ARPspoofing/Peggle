@@ -68,9 +68,8 @@ extension StartView {
             .resizable()
             .scaledToFill()
             .edgesIgnoringSafeArea(.all)
-            .navigationBarBackButtonHidden(true)
             .navigationDestination(isPresented: $readyToNavigate) {
-                InstructionView()
+                InstructionView().navigationBarBackButtonHidden(true)
             }
     }
 }

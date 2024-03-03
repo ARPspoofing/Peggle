@@ -66,9 +66,8 @@ extension InstructionView {
             ))
             .edgesIgnoringSafeArea(.all)
             .frame(width: Constants.screenWidth)
-            .navigationBarBackButtonHidden(true)
             .navigationDestination(isPresented: $readyToNavigate) {
-                CanvasView()
+                CanvasView().navigationBarBackButtonHidden(true)
             }
     }
 }
