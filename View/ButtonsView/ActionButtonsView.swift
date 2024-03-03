@@ -15,7 +15,7 @@ struct ActionButtonsView: View {
     @StateObject var actionButtonsViewModel = ActionButtonsViewModel()
 
     @State internal var isTextFieldActive = false
-    @State internal var isLevelSelectionPresented = false
+    @State internal var isLevelSelectionPresented = true
     @State internal var inputText: String = ""
     @State internal var loadLevelErrorMessage: String?
 

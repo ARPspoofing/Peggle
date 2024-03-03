@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: Once click start again after going back, cannot start. Need fix
 struct StartView: View {
     @State private var readyToNavigate = false
     @State private var isButtonClicked = false
