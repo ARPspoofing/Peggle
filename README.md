@@ -20,11 +20,7 @@
 
 ## Notes
 
-To input a direction, players must drag across the screen to rotate the cannon head. If the drag registers successfully, the cannon head will rotate towards the direction of the drag while the user is dragging.
-
-Once the player has selected the suitable rotation for the cannon head, to launch the ball, they must tap any empty space. This means that tapping on the cannon image itself or on any of the game objects will not launch the cannonball. After tapping on the cannonball, the ball will be subjected to gravity once it leaves the cannon.
-
-It is important to note that the cannon head can only rotate until it is parallel to the horizontal surface. This means that the cannon will not be able to launch the ball upwards, adhering to the restrictions of the game.
+The kaboom peg is the orange peg and the spook ball is the green peg
 
 Since no ios requirements has been specified, some of the animations would work with ios 15 and below.
 
@@ -73,8 +69,6 @@ In this application, three view models are employed. One of them is the `ObjectV
 The other view model is `CanvasViewModel`, which handles the logic of rendering of pegs on the screen as well as the logic of dragging of pegs on the screen. The `CanvasViewModel` is the intermediary between the `Peg` model, the `GameObject` model and the `Level` model.
 
 The final view model in the application is the `ActionButtonsViewModel`. This view model acts as an intermediary, updating the persistence `CoreDataManager` when the user clicks "save" on valid data or "load" on saved levels. Data is considered valid when the level name contains only alphanumeric characters and there is at least one game object present on the canvas view.
-
-TODO: Add detail high level architecture diagram
 
 ## View
 <a name="view"></a>
@@ -491,6 +485,12 @@ Additionally, the combination of resized and rotated objects should still adhere
 - Incorporated an Ancient Egypt scarab wings as the capture bucket object
 ![MVVM](./assets/scarabShooterGold.png)
 
+## Special Power Ups
+- Kaboom powerup is the orange peg. It affects all pegs who are within 100 CGFloat away from its center
+- Spook powerup is the green peg. It lasts for 5 seconds
+- Oscillate object is the purple peg. It oscillates for approximately 2 seconds
+- All the triangles and the rectangular block will not disappear. They merely become active, as they are just obstacles
+
 ### Styling
 
 - Introduced a ball trajectory feature from the cannon in the game for realistic gameplay mechanics.
@@ -510,7 +510,6 @@ Additionally, the combination of resized and rotated objects should still adhere
 - Displayed a health bar and remaining health left text on top of the opacity to convey health status effectively during gameplay.
 
 ## Tests
- TODO: Update link
 I have implemented both unit tests and UI tests. The unit tests are located in the [PeggleTests folder](https://github.com/cs3217-2324/problem-set-4-ARPspoofing/tree/master/PeggleTests), while the UI tests can be found in the [PeggleUiTests folder](https://github.com/cs3217-2324/problem-set-4-ARPspoofing/tree/master/PeggleUITests). The recently implemented game engine has tests that can be found in the [GameEngineTests folder](https://github.com/cs3217-2324/problem-set-4-ARPspoofing/tree/master/GameEngineTests).
 
 Due to certain limitations in the keyboard functionality of the UI tests, I opted to create both exhaustive UI tests and exhaustive integration tests here.
@@ -942,25 +941,67 @@ I have also inserted screenshots depicting the intended UI views of various acti
          - Colliding between a ball and a game object should result in the application crashing
       
       - GameObject
-         - NormalObject
+         - NormalObject (blue, yellow, grey, pink pegs)
             - Not colliding with any balls should make the normal object remain a normal object
             - Colliding with any balls should make the normal object remain a normal object
+            - Colliding with the motion ammo ball should set it to active state
+            - Colliding with the motion ammo ball should have a corresponding glow animation
             - Disappearing should not change the normal object to an action object
             - Reappearing should not change the normal object to an action object
             - Glowing should not change the normal object to an action object
             - Lighting up should not change the normal object to an action object
-            - Removing from gameplay should not change the normal object to an action object
+            - Removing from gameplay should not change the normal object state
             - Colliding with a motion object should make the shape size remain the same
 
-         - ActionObject
+         - ActionObject (ka-boom)
             - Not colliding with any balls should make the action object remain a action object
             - Colliding with any balls should make the action object remain a action object
+            - Colliding with the motion ammo ball should set the action object to active state
+            - Colliding with the motion ammo ball should have an orange glow animation around the action object
+            - Colliding with the motion ammo ball should have ka-boom animation and affect 
             - Disappearing should not change the action object to an action object
             - Reappearing should not change the action object to an action object
             - Glowing should not change the action object to an action object
             - Lighting up should not change the action object to an action object
-            - Removing from gameplay should not change the action object to an action object
+            - Removing from gameplay should not change the action object state
             - Colliding with a motion object should make the shape size remain the same
+
+         - OscillateObject (purple peg)
+            - Not colliding with any balls should make the oscillate object remain a oscillate object
+            - Colliding with any balls should make the oscillate object remain a oscillate object
+            - Colliding with the motion ammo ball should set it to active state
+            - Colliding with the motion ammo ball should have an purple glow animation
+            - Disappearing should not change the oscillate object to an oscillate object
+            - Reappearing should not change the oscillate object to an oscillate object
+            - Glowing should not change the oscillate object to an oscillate object
+            - Lighting up should not change the oscillate object to an oscillate object
+            - Removing from gameplay should not change the oscillate object to an oscillate object
+            - Colliding with a motion object should make the shape size remain the same but make the object oscillate about the center for about 2 seconds
+
+         - SpookObject (green peg)
+            - Not colliding with any balls should make the spook object remain a spook object
+            - Colliding with any balls should make the spook object remain a spook object
+            - Colliding with the motion ammo ball should set it to active state
+            - Colliding with the motion ammo ball should have an green glow animation
+            - Disappearing should not change the spook object to an spook object
+            - Reappearing should not change the spook object to an spook object
+            - Glowing should not change the spook object to an spook object
+            - Lighting up should not change the spook object to an spook object
+            - Removing from gameplay should not change the spook object to an spook object
+            - Colliding with a spook object should make the motion ball reappear at the x coordinate position that it went out of bounds at the top of the game screen
+            - Colliding with a spook object should make the capture bucket close
+            - Colliding with a spook object and then the capture object should bounce off the top of the capture object
+
+         - Obstacle Objects (blue, orange, purple, green, yellow, grey, pink, pyramid triangles, and rectangular sarcophagus obstacle)
+            - Not colliding with any balls should make the triangle object remain a triangle object
+            - Colliding with any balls should make the triangle object remain a triangle object
+            - Colliding with the motion ammo ball should set it to active state
+            - Colliding with the motion ammo ball should not have any glow animation
+            - Disappearing should not change the triangle object to an triangle object
+            - Reappearing should not change the triangle object to an triangle object
+            - Glowing should not change the triangle object to an triangle object
+            - Lighting up should not change the triangle object to an triangle object
+            - Removing from gameplay should not change the triangle object to an triangle object
 
 ## Written Answers
 
