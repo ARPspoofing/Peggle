@@ -315,7 +315,7 @@ This capability stems from the GameEngine utilizing a pattern similar to the Vis
 
 Here is the overall interaction between GameEngine and PhysicsEngine
 
-![MVVM](./Diagrams/PhysicsDiagrams/gamephysics.png)
+![MVVM](./Diagrams/EngineDiagrams/gamephysics.png)
 
 
 ### MotionObject (The ball)
@@ -416,8 +416,6 @@ The player initiates rotation by selecting the rotate button from the palette bu
 - Tapping again on the rotate button
 - Tapping on any other palette button option
 
-Here is one of the many possibilities of rotated game objects: [Insert Image]
-
 During rotation, the same rule applies: no overlapping pegs/blocks should occur at any time. Rotation is permissible as long as the objects do not overlap with others, including when the user's finger is still on the screen.
 
 It's important to note that pegs/blocks can be rotated to any angle from 0 to 360 degrees (or 0 to 2π radians).
@@ -431,11 +429,7 @@ The minimum size corresponds to the default size of the game objects. The maximu
 
 During resizing, the same rule applies: no overlapping pegs/blocks should occur at any time. Resizing is permitted as long as the objects do not overlap with others, including when the user's finger is still on the screen.
 
-Here is one of the many possibilities of resized game objects: [Insert Image]
-
 Additionally, the combination of resized and rotated objects should still adhere to the same rule of no overlapping pegs/blocks at any time.
-
-Here is one of the many possibilities of resized and rotated game objects: [Insert Image]
 
 ## Bells and Whistles
 
@@ -477,7 +471,7 @@ Here is one of the many possibilities of resized and rotated game objects: [Inse
 - Show the total ammo remaining in the game (initially 10).
 - Display the score count with an animated increasing number style during the game.
 
-### Instructions Page (insert image here)
+### Instructions Page
 
 - Display the instructions on how to use the cannon, accompanied by an animated rotation of the cannon.
 - Show the instructions on how the capture object works, accompanied by an animated movement of the capture object.
@@ -491,8 +485,11 @@ Here is one of the many possibilities of resized and rotated game objects: [Inse
 - Begins with a start page featuring an Ancient Egypt theme accompanied by thematic sound effects.
 - Provides an instruction page with an Ancient Egypt theme and corresponding sound effects.
 - Designed the level designer page with an Ancient Egypt theme and immersive sound.
-- Integrated an Ancient Egypt scarab shooter as the cannon (insert image for visual representation).
-- Incorporated an Ancient Egypt scarab beetle as the capture bucket object (insert image for visual representation).
+- Integrated an Ancient Egypt scarab shooter as the cannon
+![MVVM](./assets/scarabBeetle.png)
+
+- Incorporated an Ancient Egypt scarab beetle as the capture bucket object
+![MVVM](./assets/scarabShooterGold.png)
 
 ### Styling
 
