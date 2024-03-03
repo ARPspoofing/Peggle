@@ -38,8 +38,6 @@ This information has been mentioned in the integration test, but I believe it's 
 
 ## Developer Guide
 
-TODO: Update all screenshots
-
 ### 
 
 This project utilizes the Model-View-ViewModel (MVVM) design pattern. MVVM effectively segregates the business and presentation logic of the Peggle application from its user interface (UI). The domain logic is the Model, while the presentation logic is the View Model. The View is responsible for displaying the User Interface (UI) elements to the user. This segregation simplifies unit testing, enabling the creation of tests for the view model and model without involving the view directly. Consequently, the unit tests for the view model accurately simulate the functionality experienced by the user, facilitating integration testing.
@@ -47,11 +45,6 @@ This project utilizes the Model-View-ViewModel (MVVM) design pattern. MVVM effec
 Additionally, MVVM allows the modification of the view independently of the logic and vice versa. For instance, the style of the palette buttons could be modified by aligning the pegs to the left and the delete button to the right without altering the underlying logic. Thus, maintaining a clear division between application logic and the UI addresses various development challenges, enhances testability, simplifies maintenance, and encourages code reusability. The main interactions between components of the MVVM can be seen here:
 
 ![MVVM](./Diagrams/ClassDiagram/mvvm-pattern.png)
-
-TODO: Modify this to show more details
-Here is the high level architecture diagram of this appliation that utilizes the MVVM pattern. To best organize the code for these objects, I structured the Model, View, and ViewModel into separate folders. Additionally, there is a constants file. Furthermore, I avoided consolidating all protocol methods into a single class, but separating them through extensions or across multiple classes and structs.
-
-![Architecture Class Diagram](./Diagrams/ClassDiagram/ArchitectureDiagram.png)
 
 We will start from the bottom layer, which is the Model, followed by the View Model, and finally, the View.
 
@@ -63,7 +56,7 @@ The primary purpose of the `Vector` struct is to model the displacement of point
 
 Furthermore, there is a `Level` struct designed to conform to the Codable protocol. This conformance enables seamless encoding and decoding, facilitating the storage of level data within the CoreDataManager, a feature which will be elaborated on later in the guide.
 
-In the Model, a superclass named `GameObject` has been created to represent game objects. The decision to use classes for these representations was motivated by the need to mutate game object data while maintaining reference to the original object. To ensure rigorous software engineering principles, `makeDeepCopy()` in classes ensures deep copy done. This enables functionalities like dragging pegs across the screen while following software principles. Subsequently, a `MovableObject` protocol was established, inheriting from `GameObject`. From there, a `CircularMovableObject` protocol was derived, inheriting from `MovableObject`. The `Peg` class extends both `CircularMovableObject` and `GameObject`. The rationale behind introducing `CircularMovableObject` is twofold: to adhere to object-oriented principles and to employ a design pattern reminiscent of the decorator pattern. This design approach ensures extensibility while preserving closure to modification, thereby upholding the open-closed principle. For instance, if new game objects such as triangles or rectangles are introduced in the future, the system can accommodate them without violating the open-closed principle. Instead of augmenting the existing attributes like radius with additional properties such as width or length, new protocols like `RectangleMovableObject` or `TriangleMovableObject` can be created, each incorporating the necessary additional variables.
+In the Model, a superclass named `GameObject` has been created to represent game objects. The decision to use classes for these representations was motivated by the need to mutate game object data while maintaining reference to the original object. To ensure rigorous software engineering principles, `makeDeepCopy()` in classes ensures deep copy done. This enables functionalities like dragging pegs across the screen while following software principles. Subsequently, a `MovableObject` protocol was established, inheriting from `GameObject`. From there, a `CircularMovableObject` protocol, `TriangularMovableProtocol` and `RectangularMovableProtocol` was derived, inheriting from `MovableObject`. The `Peg` class extends both `CircularMovableObject` and `GameObject`. The rationale behind introducing the shape protocols is twofold: to adhere to object-oriented principles and to employ a design pattern reminiscent of the decorator pattern. This design approach ensures extensibility while preserving closure to modification, thereby upholding the open-closed principle.
 
 Here is the class diagram representing the various aforementioned models present in the application.
 
@@ -75,11 +68,13 @@ In order to adhere to the MVVM design pattern, it's essential that models remain
 
 Each view model serves to provide data from a model in a format that the view can readily utilize. To achieve this, the view model often engages in data conversion. Placing this conversion logic within the view model is advantageous as it furnishes properties that the view can seamlessly bind to.
 
-In this application, three view models are employed. One of them is the `PegViewModel`, which conducts straightforward data conversion by deriving the width via `calculateWidth()` and the height via `calculateHeight()` from the radius. Additionally, it sets the `isSelected` option to false initially. This approach ensures that the view does not highlight any elements initially, aligning with the correct behavior, as highlighting a peg should only occur upon tapping the corresponding peg in the palette button panel. Furthermore, the view models refrain from referencing view types, such as Button and ListView, from within the view models. By adhering to the principles outlined here, view models can be tested in isolation, thereby minimizing the likelihood of software defects by constraining the scope.
+In this application, three view models are employed. One of them is the `ObjectViewModel`, which conducts straightforward data conversion by deriving the width via `calculateWidth()` and the height via `calculateHeight()` from the radius. Additionally, it sets the `isSelected` option to false initially. This approach ensures that the view does not highlight any elements initially, aligning with the correct behavior, as highlighting a peg should only occur upon tapping the corresponding peg in the palette button panel. Furthermore, the view models refrain from referencing view types, such as Button and ListView, from within the view models. By adhering to the principles outlined here, view models can be tested in isolation, thereby minimizing the likelihood of software defects by constraining the scope.
 
 The other view model is `CanvasViewModel`, which handles the logic of rendering of pegs on the screen as well as the logic of dragging of pegs on the screen. The `CanvasViewModel` is the intermediary between the `Peg` model, the `GameObject` model and the `Level` model.
 
 The final view model in the application is the `ActionButtonsViewModel`. This view model acts as an intermediary, updating the persistence `CoreDataManager` when the user clicks "save" on valid data or "load" on saved levels. Data is considered valid when the level name contains only alphanumeric characters and there is at least one game object present on the canvas view.
+
+TODO: Add detail high level architecture diagram
 
 ## View
 <a name="view"></a>
@@ -90,11 +85,11 @@ The CanvasView, referenced in subsequent sections, is labelled here:
 
 ![Canvas View](./Diagrams/ViewDiagram/canvasview.png)
 
-The PegView, BackgroundView, and PaletteView are labelled here:
+The ObjectView, BackgroundView, and PaletteView are labelled here:
 
 ![Palette View](./Diagrams/ViewDiagram/paletteview.png)
 
-The PaletteButtonsView, PegView, DeleteButtonView, and ActionButtonView are labelled here:
+The PaletteButtonsView, ObjectView, DeleteButtonView, and ActionButtonView are labelled here:
 
 ![Palette Buttons View](./Diagrams/ViewDiagram/palettebuttons.png)
 
@@ -168,6 +163,8 @@ Since PhysicsEngine implements the aforementioned two protocols, it enables the 
 - Resultant normal vector after elastic collision `func resultantNormVec`
 - Resultant tangent vector after elastic collision `func resultantTanVector`
 - Resultant velocity after elastic collision `func assignResultantVel`
+
+It is important to note that the PhysicsEngine does not have knowledge of the existence of `GameObject`. It functions as a calculator, where it computes new velocities based on given positions and velocities under specific circumstances.
 
 ### Details of Physics Engine
 
@@ -286,7 +283,7 @@ Here is the translation of the mathematical equations into an activity diagram:
 
 The Physics Engine represents a more general implementation approach, while Peggle-specific logic resides within the Game Engine. The Game Engine possesses knowledge regarding the pegs, the shooting ball, its position, and the removal of illuminated pegs when the shooting ball exits the bounds.
 
-Before delving into the specifics of the Game Engine, adhering to abstraction and good software engineering principles, the game engine serves as a superclass for game objects. To ensure extensibility for various situations in the future, I have created the `CollisionGameEngine` Protocol and the `GravityGameEngine` Protocol which `GameEngineBody` implements. `GameEngine` inherits from `GameEngineBody`, with the GameLoop serving as the primary functionality in `GameEngine`. The GameLoop utilizes `CADisplayLink`. Unlike other mechanism timings, `CADisplayLink` syncs with the display refresh directly. It currently utilizes 120 FPS.
+Before delving into the specifics of the Game Engine, adhering to abstraction and good software engineering principles, to ensure extensibility for various situations in the future, I have created the `CollisionGameEngine` Protocol and the `GravityGameEngine` Protocol which `GameEngineBody` implements. `GameEngine` also inherits from `GameEngineWorld` which handles more general calculations that would be needed due to additional features implemented. `GameEngine` inherits from `GameEngineBody`, with the GameLoop serving as the primary functionality in `GameEngine`. The GameLoop utilizes `CADisplayLink`. Unlike other mechanism timings, `CADisplayLink` syncs with the display refresh directly. It currently utilizes 120 FPS.
 
 `CADisplayLink` in Swift is set to 120 frames per second (FPS) rather than 60 FPS due to hardware capabilities and the nature of CADisplayLink. With newer iOS devices featuring ProMotion displays capable of 120 Hz refresh rates, opting for 120 FPS synchronizes the display with smoother animations and interactions, aligning closely with the hardware's refresh rate for enhanced visual quality. This choice prioritizes a more responsive user experience, particularly in applications like gaming or augmented reality, although it may entail higher battery consumption, necessitating a balance between performance and energy efficiency considerations.
 
@@ -298,7 +295,7 @@ This adherence to Protocol-Oriented Programming naturally facilitates openness t
 
 ### Game Engine Pegs
 
-The Game Engine views `Peg` as a `GameObject` since `Peg` is a subclass of `GameObject`. Therefore, most of the functions in the GameEngine are able to handle various forms of `GameObjects`, not just `Peg`. Consequently, in the future, should there be multiple other subclasses of `GameObject`, the GameEngine would still be able to function, maintaining openness to extension and closure for modifications.
+The Game Engine views `Peg`, `Sharp`, and `ObstacleObject` as a `GameObject` since all of the three are subclasses of `GameObject`. Therefore, most of the functions in the GameEngine are able to handle various forms of `GameObjects`. Consequently, in the future, should there be multiple other subclasses of `GameObject`, the GameEngine would still be able to function, maintaining openness to extension and closure for modifications.
 
 This capability stems from the GameEngine utilizing a pattern similar to the Visitor pattern. Essentially, the methods in `GameEngineBody` accept a general `GameObject` type variable. Subsequently, these methods invoke the variable's method, which would be implemented differently in various subclasses of `GameObjects`. Here is one example:
 
@@ -313,6 +310,13 @@ This capability stems from the GameEngine utilizing a pattern similar to the Vis
 ```
 
 `checkTopBorder()` can be implemented differently in various subclasses of `GameObject`. Therefore, with the addition of future subclasses, the GameEngine can remain unchanged, thus adhering to the open-closed principle.
+
+### Overall interaction between GameEngine and PhysicsEngine
+
+Here is the overall interaction between GameEngine and PhysicsEngine
+
+![MVVM](./Diagrams/PhysicsDiagrams/gamephysics.png)
+
 
 ### MotionObject (The ball)
 
@@ -363,11 +367,6 @@ The views that have been added are labelled in this diagram:
 
 ![MVVM](./Diagrams/PhysicsDiagrams/LightUpOrangeView.png)
 
-Finally, here is the updated interaction between the various views across the application:
-
-![MVVM](./Diagrams/PhysicsDiagrams/view.png)
-
-
 ### Performance Constraints
 
 While this application strives for efficient rendering, it may experience slight lag if more than half of the screen is filled with game objects. However, the slight lag does not significantly affect the user experience since this application is a small game. Filling half of the canvas with game objects would defeat the purpose of the game, as the ball shot from the cannon would not reach the bucket but instead be stuck on the canvas. Therefore, users typically place a reasonable number of game objects such that the ball can reach the bucket. As a result, the lag is rarely encountered in most scenarios, ensuring that users still have the best user experience possible.
@@ -377,8 +376,6 @@ To conclude, as it stands, the application can handle various functionalities, i
 ## Rules of the Game
 
 ### Cannon Direction
-
-TODO: Update cannon screenshots
 
 To launch the ball: 
 
@@ -401,43 +398,44 @@ The launching of the ball involves multiple components across the application. I
 ![MVVM](./Diagrams/PhysicsDiagrams/ballLaunch.png)
 
 ### Win and Lose Conditions
-The conditions are similar to the original Peggle game.
+The conditions are similar to those of the original Peggle game:
 
-- In order to win the game, the player must clear all the orange pegs within 60 seconds.
-- Start with 10 ammo balls. Everytime the player shoots a ball, the number of balls gets subtracted by one.
-- If the 60 seconds timer runs out before the player clears all the orange pegs, the player loses.
-- If there are no ammo balls left and there is still orange pegs, the player loses.
-- If there is one ammo ball left, and the player activated spook ball, the spook ball must clear all orange pegs within 5 seconds, otherwise the player loses.
-- If there is one ammo ball left, and the player did not activate spook ball, and the ammo ball falls into the capture bucket, the player does not lose because an additional ammo ball will be given everytime an ammo ball falls into the capture bucket.
-- The score system is merely for the user to compete with the user's previous scores. There is no limit to the actual score, and hitting a certain score will not win the game unless all the orange pegs have been removed within 60 seconds
+- To win the game, the player must clear all the orange pegs within 60 seconds.
+- The player starts with 10 ammo balls. Each time the player shoots a ball, the number of balls decreases by one.
+- If the 60-second timer runs out before the player clears all the orange pegs, the player loses.
+- If there are no ammo balls left and there are still orange pegs remaining, the player loses.
+- If there is only one ammo ball left and the player activates the spook ball, the spook ball must clear all orange pegs within 5 seconds; otherwise, the player loses.
+- If there is only one ammo ball left and the player does not activate the spook ball, but the ammo ball falls into the capture bucket, the player does not lose because an additional ammo ball will be given every time an ammo ball falls into the capture bucket.
+- The score system is primarily for the user to compete with their previous scores. There is no limit to the actual score, and reaching a certain score will not win the game unless all the orange pegs have been removed within 60 seconds.
 
 ## Level Designer Additional Features
 
 ### Peg Rotation
-The player first selects the rotate button in the palette buttons. (Insert image) Then, the player presses on the game object intended for rotation, and drags clockwise or anti clockwise. The rotation would be about the center of the peg. After the player is satisfied with the newly rotated game object, the player will have to unselect the rotation mode. This can be done in two ways:
-- Tap again on the rotate button
-- Tap on any of the other palette button options
+The player initiates rotation by selecting the rotate button from the palette buttons. (Insert image) Subsequently, the player taps on the game object intended for rotation and drags either clockwise or counterclockwise. The rotation occurs around the center of the peg. Once satisfied with the newly rotated game object, the player must deactivate the rotation mode. This can be achieved in two ways:
 
-Here is one of the many possibility of having rotated game objects: [Insert Image]
+- Tapping again on the rotate button
+- Tapping on any other palette button option
 
-For rotation, the same rules of no overlapping pegs/blocks at any time still apply. One should be able to rotate as long as they are not superimposed with others at any time, including when the user's finger is still on the screen.
+Here is one of the many possibilities of rotated game objects: [Insert Image]
 
-Note that the pegs/blocks is able to be rotated to any angle from 0 to 360 degrees (or 0 to 2pi in Radians)
+During rotation, the same rule applies: no overlapping pegs/blocks should occur at any time. Rotation is permissible as long as the objects do not overlap with others, including when the user's finger is still on the screen.
 
-While the rotated circle has no effect on the actual intersection handler, the image does indeed rotate as seen by the change in lighting orientation of the circle.
+It's important to note that pegs/blocks can be rotated to any angle from 0 to 360 degrees (or 0 to 2π radians).
+
+While the rotated circle has no effect on the actual intersection handler, the image indeed rotates, as evidenced by the change in lighting orientation of the circle.
 
 ### Peg Resizing
-The player first selects the resize button (insert image). Then, the player presses on the game object intended for resizing, and drags outwards from the center of the game object towards the borders of the screen to resize it to become bigger, and drag inwards towards the center to resize it to become smaller.
+The player initiates resizing by selecting the resize button (insert image). Subsequently, the player taps on the game object intended for resizing and drags outwards from the center of the game object towards the borders of the screen to increase its size, and drags inwards towards the center to decrease its size.
 
-The minimum size is the default size of the game objects. The maximum size is 4 times the area of the minimum size. Hence, this abides by the requirement of: the maximum size (if it exists) should be at least 4 times the size of the minimum size (if it exists) in area (i.e. 2 times the radius).
+The minimum size corresponds to the default size of the game objects. The maximum size is four times the area of the minimum size. Therefore, this complies with the requirement that the maximum size (if applicable) should be at least four times the size of the minimum size (if applicable) in terms of area (i.e., two times the radius).
 
-For resizing, the same rules of no overlapping pegs/blocks at any time still apply. One should be able to resize as long as they are not superimposed with others at any time, including when the user's finger is still on the screen.
+During resizing, the same rule applies: no overlapping pegs/blocks should occur at any time. Resizing is permitted as long as the objects do not overlap with others, including when the user's finger is still on the screen.
 
-Here is one of the many possibility of having resized game objects: [Insert Image]
+Here is one of the many possibilities of resized game objects: [Insert Image]
 
-Also, the combination of resized and rotated objects should still apply the same rules of no overlapping pegs/blocks at any time.
+Additionally, the combination of resized and rotated objects should still adhere to the same rule of no overlapping pegs/blocks at any time.
 
-Here is one of the many possibility of having resized and rotated game objects: [Insert Image]
+Here is one of the many possibilities of resized and rotated game objects: [Insert Image]
 
 ## Bells and Whistles
 
@@ -471,48 +469,48 @@ Here is one of the many possibility of having resized and rotated game objects: 
 
 ### Status Bar
 
-- Displaying the total number of balls left in game
-- Displaying the total number of balls left in level designer
-- Displaying the total number of orange pegs left in game
-- Displaying the total number of orange pegs left in level designer
-- Displaying the time remaining in seconds in the game
-- Displaying the total ammo left in the game (initially 10)
-- Displaying the score count with animating increasing number style in game
+- Display the total number of balls remaining in the game.
+- Show the total number of balls remaining in the level designer.
+- Indicate the total number of orange pegs remaining in the game.
+- Provide the total number of orange pegs remaining in the level designer.
+- Present the remaining time in seconds during the game.
+- Show the total ammo remaining in the game (initially 10).
+- Display the score count with an animated increasing number style during the game.
 
 ### Instructions Page (insert image here)
 
-- Displaying the instruction of how to use the cannon with animation of the cannon rotating
-- Displaying the instruction of how the capture object works with animation of the capture object moving
-- Displaying the instruction of special game objects with blinking animation
-- Displaying the information of egyptian theme game objects
-   - The rectangular obstacle is represented as a sarcophagus
-   - A special themed triangular object represented as a pyramid
+- Display the instructions on how to use the cannon, accompanied by an animated rotation of the cannon.
+- Show the instructions on how the capture object works, accompanied by an animated movement of the capture object.
+- Present the instructions on special game objects with a blinking animation to draw attention.
+- Provide information on Egyptian-themed game objects:
+   - Represent the rectangular obstacle as a sarcophagus.
+   - Represent a special themed triangular object as a pyramid.
 
 ### Ancient Egypt Theme
 
-- Start page with Ancient Egypt theme and sound
-- Instruction page with Ancient Egypt theme and sound
-- Level designer page with Ancient Egypt theme and sound
-- Ancient Egypt scarab shooter as the cannon (insert image)
-- Ancient Egypt scarab bettle as the capture bucket object (insert image)
+- Begins with a start page featuring an Ancient Egypt theme accompanied by thematic sound effects.
+- Provides an instruction page with an Ancient Egypt theme and corresponding sound effects.
+- Designed the level designer page with an Ancient Egypt theme and immersive sound.
+- Integrated an Ancient Egypt scarab shooter as the cannon (insert image for visual representation).
+- Incorporated an Ancient Egypt scarab beetle as the capture bucket object (insert image for visual representation).
 
 ### Styling
-- Ball trajectory from the cannon in the game
-- Exploding blast white effect when kaboom object is hit
-- Rainbow effect when ammo falls into capture object when spook is not activated
-- When spook is activated, the capture object closes and the ammo ball will bounce off it, like in the original Peggle game
-- Ammmo glass panel at the side to with animation of reloading the cannon
-- Special golden ammo instead of regular grey ammo to represent abundance of wealth and gold in Ancient Egypt
-- Removal of cannon when game is over to simulate more like an actual game
-- Custom alert rather than the normal iOS alert
-- Custom alert that displays win or retry status
-- Triangular objects that was not required in the problem set but still implemented. Has also intersection handling with rectangular and circular objects
-- Fading animation of palette objects when level naming text field is active for smoothing efffect so that the user will be able to see what is being typed
-- Multiple colored pegs implemented for more realistic game simulation
-- Each colored peg has its own corresponding color glow when it is being hit (a triangular obstacle and a rectangular obstacle will not have a glow because they are merely obstacles. Only circular pegs will have glow)
-- One-by-one pop out animation similar to the peggle game play
-- Health bar and remaining health left text on top of the opacity to display health status
 
+- Introduced a ball trajectory feature from the cannon in the game for realistic gameplay mechanics.
+- Introduced an exploding blast white effect when the kaboom object is hit, adding excitement to the gameplay.
+- Implemented a rainbow effect when ammo falls into the capture object, providing visual interest and feedback.
+- Activated spook mode to close the capture object and allow the ammo ball to bounce off it, similar to the original Peggle game.
+- Added an ammo glass panel at the side with an animation depicting the reloading of the cannon.
+- Used special golden ammo instead of regular grey ammo to symbolize the abundance of wealth and gold in Ancient Egypt.
+- Removed the cannon when the game is over to enhance the realism of the gameplay experience.
+- Implemented a custom alert system rather than the standard iOS alert for a more personalized user experience.
+- Customized alerts to display win or retry status, enhancing player engagement and feedback.
+- Introduced triangular objects with intersection handling with rectangular and circular objects for added gameplay complexity.
+- Applied fading animation to palette objects when the level naming text field is active, providing a smooth user experience.
+- Introduced multiple colored pegs for increased variety and challenge in the game.
+- Assigned each colored peg its own corresponding color glow when hit, enhancing visual feedback and immersion. A triangular obstacle and a rectangular obstacle will not have a glow because they are merely obstacles. Only circular pegs will have glow
+- Implemented a one-by-one pop-out animation similar to the Peggle gameplay style for added excitement.
+- Displayed a health bar and remaining health left text on top of the opacity to convey health status effectively during gameplay.
 
 ## Tests
  TODO: Update link
@@ -700,16 +698,8 @@ I have also inserted screenshots depicting the intended UI views of various acti
 ## Written Answers
 
 ### Reflecting on your Design
-> Now that you have integrated the previous parts, comment on your architecture
-> in problem sets 2 and 3. Here are some guiding questions:
-> - do you think you have designed your code in the previous problem sets well
->   enough?
-> - is there any technical debt that you need to clean in this problem set?
-> - if you were to redo the entire application, is there anything you would
->   have done differently?
+I have designed the previous problem sets adequately. Since I had a game object that did not have any hardcoded size but had a default size and could take in dynamic properties, adding the resizable feature was rather straightforward. Integrating rotation was also feasible, but implementing the actual rotation and intersection handling when rotating rectangular, triangular, and circular pegs was challenging to ensure correct implementation. However, this pertains to heuristics and not directly to the previous problem sets. Hence, in relation to this question, I believe I have designed the previous problem sets well enough. Additionally, in the previous problem sets, I implemented both core data and a file manager. Therefore, to have preloaded levels, I could leverage the JSON decoder and encoder in the file manager, rather than dealing with constructing SQL statements, which would be much more time-consuming. Thus, I truly believe that in the previous problem sets, I was able to plan ahead.
 
-I have designed the previous problem sets well enough. Since I had a game object that did not have any hardcoded size, but has a default size and able to take in dynamic properties, adding the resizable was rather a breeze. Integrating the rotation was also doable, but the actual rotation and intersection handling when rotating of the rectangular, triangular, and circular pegs was diffcult to ensure that it was correctly implemented. However, this has got to do with the heuristics and not to do with the previous problem sets, and hence with respect to this question, I have designed the previous problem sets well enough. Additionally, in the previous problem sets, I implemented both core data and file manager. Hence, in order to have pre loaded levels, I could simply leverage on the JSON decoder and encoder in the file manager, rather than dealing with constructing SQL statements which would be much more time consuming. Hence, I truly beleive in the previous problem sets, I was able to plan ahead.
+If there is any technical debt, I would probably make some of the animations available for iOS 16 and above as well. Currently, some of the animations are only available for iOS 15. However, apart from this, I do not believe there is any technical debt, as I have adhered to the open-closed principle and many software engineering principles as best as I could. Perhaps the only thing I did not manage to try was using Storyboard, which is a more legacy version compared to SwiftUI. However, this is more of a learning experience rather than technical debt.
 
-If there is any technical debt, I would probably make some of the animations available for iOS 16 and above as well. Currently, some of the animations is only available for iOS 15. However, apart from this, I do not believe there is any technical debt as I have abided by open-closed principle and many software engineering principles as best as I could. Perhaps the only thing I did not manage to try was using storyboard, which is a more legacy version compared to SwiftUI. However, this is more of a learning experience rather than a technical debt.
-
-Overall, I would not have done anything major diffrently as there were many tutorials and help online for SwiftUI. A minor thing was probably to learn more about SwiftUI before starting, but that is trivial and just to implement the application more efficiently rather than keep on refactoring until I am satisfied.
+Overall, I would not have done anything major differently as there were many tutorials and helpful resources online for SwiftUI. A minor thing would probably have been to learn more about SwiftUI before starting, but that is trivial and would have allowed me to implement the application more efficiently, rather than continually refactoring until I am satisfied.
