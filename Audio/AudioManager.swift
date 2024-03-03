@@ -20,7 +20,7 @@ class AudioManager: ObservableObject {
     let gameOver = "gameOverAudio"
     let game = "gameAudio"
     let victory = "victoryAudio"
-    let button = "buttonClickAudio"
+    let button = "buttonClick"
     let angel = "angelAudio"
     let blast = "blastAudio"
     let cannon = "cannonAudio"
