@@ -49,7 +49,30 @@ class Peg: GameObject {
     }
 
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        checkNoIntersection(with: gameObject) && checkBorders()
+        let collisionDetector = CollisionDetector()
+        //return collisionDetector.checkSafeToInsert(source: self, with: gameObject)
+        return checkNoIntersection(with: gameObject) && checkBorders()
+    }
+
+    func checkNoIntersection(with gameObject: GameObject) -> Bool {
+        if let peg = gameObject as? CircularMovableObject {
+            let distanceBetweenMotionObjectSquared: Double = center.squareDistance(to: peg.center)
+            let sumMotionObjectsRadiusSquared: Double = (radius + peg.radius) * (radius + peg.radius)
+            return distanceBetweenMotionObjectSquared > sumMotionObjectsRadiusSquared
+        } else if let sharp = gameObject as? TriangularMovableObject {
+            return /*!(sharp.isIntersecting(with: self)
+                    || /*sharp.circleInsideTriangle(peg: self)*/sharp.pointInPolygon(point: center))*/
+            //!(sharp.isIntersecting(with: self) || sharp.contains(circle: self))
+            //sharp.checkNoIntersection(with: self)
+
+            //!(sharp.isIntersecting(with: self) || sharp.contains(circle: self))
+            sharp.checkSafeToInsert(with: self)
+
+        } else if let obstacle = gameObject as? RectangularMovableObject {
+            return !obstacle.isIntersecting(with: self)
+        } else {
+            return false
+        }
     }
 
     override func makeDeepCopy() -> Peg {

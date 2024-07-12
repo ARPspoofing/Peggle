@@ -24,7 +24,8 @@ struct Level: Identifiable, Codable {
 
         try container.encode(id, forKey: .id)
         try container.encode(isPreloadedLevel, forKey: .isPreloadedLevel)
-        try encodeGameObjects(container: &container)
+        try container.encode(gameObjects, forKey: .gameObjects)
+        //try encodeGameObjects(container: &container)
     }
 
     func encodeGameObjects(container: inout KeyedEncodingContainer<CodingKeys>) throws {

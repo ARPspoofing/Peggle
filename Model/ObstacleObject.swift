@@ -139,7 +139,10 @@ class ObstacleObject: GameObject, RectangularMovableObject {
     }
 
     override func checkSafeToInsert(with gameObject: GameObject) -> Bool {
-        checkNoIntersection(with: gameObject) && checkBorders()
+        let collisionDetector = CollisionDetector()
+        return collisionDetector.checkSafeToInsert(source: self, with: gameObject)
+
+        //checkNoIntersection(with: gameObject) && checkBorders()
     }
 
     func rotateTopPoint(rotationAngle: Double) -> Point {

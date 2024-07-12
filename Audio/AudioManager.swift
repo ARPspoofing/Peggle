@@ -30,39 +30,39 @@ class AudioManager: ObservableObject {
     init() {}
 
     func playMainMenuAudio(isLooping: Bool = true) {
-        play(fileName: mainMenu, isLooping: isLooping, player: &mainMenuAudioPlayer)
+        //play(fileName: mainMenu, isLooping: isLooping, player: &mainMenuAudioPlayer)
     }
 
     func playButtonClickAudio(isLooping: Bool = false) {
-        play(fileName: button, isLooping: isLooping, player: &buttonClickAudioPlayer)
+        //play(fileName: button, isLooping: isLooping, player: &buttonClickAudioPlayer)
     }
 
     func playGameAudio(isLooping: Bool = false) {
-        play(fileName: game, isLooping: isLooping, player: &mainMenuAudioPlayer)
+        //play(fileName: game, isLooping: isLooping, player: &mainMenuAudioPlayer)
     }
 
     func playVictoryAudio(isLooping: Bool = false) {
-        play(fileName: victory, isLooping: isLooping, player: &mainMenuAudioPlayer)
+        //play(fileName: victory, isLooping: isLooping, player: &mainMenuAudioPlayer)
     }
 
     func playGameOverAudio(isLooping: Bool = false) {
-        play(fileName: gameOver, isLooping: isLooping, player: &mainMenuAudioPlayer)
+        //play(fileName: gameOver, isLooping: isLooping, player: &mainMenuAudioPlayer)
     }
 
     func playAngelAudio(isLooping: Bool = false) {
-        play(fileName: angel, isLooping: isLooping, player: &buttonClickAudioPlayer)
+        //play(fileName: angel, isLooping: isLooping, player: &buttonClickAudioPlayer)
     }
 
     func playBlastAudio(isLooping: Bool = false) {
-        play(fileName: blast, isLooping: isLooping, player: &buttonClickAudioPlayer)
+        //play(fileName: blast, isLooping: isLooping, player: &buttonClickAudioPlayer)
     }
 
     func playCannonAudio(isLooping: Bool = false) {
-        play(fileName: cannon, isLooping: isLooping, player: &buttonClickAudioPlayer)
+        //play(fileName: cannon, isLooping: isLooping, player: &buttonClickAudioPlayer)
     }
 
     func playSpookyAudio(isLooping: Bool = false) {
-        play(fileName: spooky, isLooping: isLooping, player: &buttonClickAudioPlayer)
+        //play(fileName: spooky, isLooping: isLooping, player: &buttonClickAudioPlayer)
     }
 
     private func play(fileName: String, isLooping: Bool, player: inout AVAudioPlayer?) {

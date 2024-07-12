@@ -25,6 +25,8 @@
 		91517C112B7375B100F1E45D /* MotionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91517C102B7375B100F1E45D /* MotionObject.swift */; };
 		915E033B2B82346D005A41D1 /* MyCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915E033A2B82346D005A41D1 /* MyCodingKey.swift */; };
 		916211042B763C95002F51A9 /* GameEngineBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916211032B763C95002F51A9 /* GameEngineBody.swift */; };
+		916A7D2C2BA1492A00319C26 /* CollisionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916A7D2B2BA1492A00319C26 /* CollisionDetector.swift */; };
+		916A7D9C2BA3B6FF00319C26 /* TriangularMovableObjectDup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916A7D9B2BA3B6FF00319C26 /* TriangularMovableObjectDup.swift */; };
 		916E677C2B85E98200960D5D /* CaptureObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677B2B85E98200960D5D /* CaptureObject.swift */; };
 		916E677E2B85EA3000960D5D /* CaptureObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677D2B85EA3000960D5D /* CaptureObjectView.swift */; };
 		916E67802B8620E200960D5D /* TriangularMovableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916E677F2B8620E200960D5D /* TriangularMovableObject.swift */; };
@@ -156,6 +158,8 @@
 		91517C102B7375B100F1E45D /* MotionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionObject.swift; sourceTree = "<group>"; };
 		915E033A2B82346D005A41D1 /* MyCodingKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCodingKey.swift; sourceTree = "<group>"; };
 		916211032B763C95002F51A9 /* GameEngineBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineBody.swift; sourceTree = "<group>"; };
+		916A7D2B2BA1492A00319C26 /* CollisionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionDetector.swift; sourceTree = "<group>"; };
+		916A7D9B2BA3B6FF00319C26 /* TriangularMovableObjectDup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangularMovableObjectDup.swift; sourceTree = "<group>"; };
 		916E677B2B85E98200960D5D /* CaptureObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureObject.swift; sourceTree = "<group>"; };
 		916E677D2B85EA3000960D5D /* CaptureObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureObjectView.swift; sourceTree = "<group>"; };
 		916E677F2B8620E200960D5D /* TriangularMovableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangularMovableObject.swift; sourceTree = "<group>"; };
@@ -442,6 +446,8 @@
 				91D997782B8EDD6300DB5364 /* ReappearObject.swift */,
 				91D9977A2B8EF99C00DB5364 /* RectangularMovableObject.swift */,
 				91D9977C2B8F16F700DB5364 /* ObstacleObject.swift */,
+				916A7D2B2BA1492A00319C26 /* CollisionDetector.swift */,
+				916A7D9B2BA3B6FF00319C26 /* TriangularMovableObjectDup.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -739,6 +745,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				916A7D2C2BA1492A00319C26 /* CollisionDetector.swift in Sources */,
 				916E67932B86D4E900960D5D /* CanvasViewModelConstants.swift in Sources */,
 				91AD1B3F2B78E544009E6BC6 /* GameEngineDelegate.swift in Sources */,
 				916E678E2B86D3A400960D5D /* JaggedCircle.swift in Sources */,
@@ -792,6 +799,7 @@
 				915E033B2B82346D005A41D1 /* MyCodingKey.swift in Sources */,
 				91986EDC2B5F4A1700D1C72C /* CanvasViewModel.swift in Sources */,
 				91D997792B8EDD6300DB5364 /* ReappearObject.swift in Sources */,
+				916A7D9C2BA3B6FF00319C26 /* TriangularMovableObjectDup.swift in Sources */,
 				916E677C2B85E98200960D5D /* CaptureObject.swift in Sources */,
 				91986EC42B5E1D7600D1C72C /* PaletteView.swift in Sources */,
 				91C2B66E2B9063490013DD9F /* StatusView.swift in Sources */,

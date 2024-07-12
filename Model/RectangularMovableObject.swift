@@ -18,6 +18,12 @@ protocol RectangularMovableObject: MovableObject, Polygon {
 
 extension RectangularMovableObject {
 
+    /*
+    let distanceBetweenMotionObjectSquared: Double = center.squareDistance(to: peg.center)
+    let sumMotionObjectsRadiusSquared: Double = (radius + peg.radius) * (radius + peg.radius)
+    return distanceBetweenMotionObjectSquared > sumMotionObjectsRadiusSquared
+    */
+
     func isIntersecting(with peg: CircularMovableObject) -> Bool {
         let squaredRadius = peg.radius * peg.radius
         for edge in edges {
@@ -27,9 +33,11 @@ extension RectangularMovableObject {
             guard distanceFromPointToLine(point: peg.center, line: edge) >= peg.radius else {
                 return true
             }
+            /*
             guard !checkDotProducts(for: peg) else {
                 return true
             }
+            */
         }
         return false
     }
